@@ -7,7 +7,6 @@ package servlets;
 
 import gestionnaires.GestionnaireUtilisateurs;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import modeles.Utilisateur;
 
 /**
  *
@@ -23,7 +23,7 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "LoginServlet", urlPatterns = {"/LoginServlet"})
 public class LoginServlet extends HttpServlet {
     @EJB
-    private GestionnaireUtilisateurs gestionnaireUtilisateurs;
+    private GestionnaireUtilisateurs gu;
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -33,7 +33,10 @@ public class LoginServlet extends HttpServlet {
         if (action != null) {
             if (action.equals("authentification")) {
                 HttpSession session = request.getSession();
-                session.setAttribute("USER", request.getParameter("pseudo"));
+                String user = request.getParameter("pseudo");
+                Utilisateur profil = gu.getUtilisateur(user);
+                session.setAttribute("USER", user);
+                session.setAttribute("PROFIL", profil);
                 response.sendRedirect("index.jsp");
                 
             }           

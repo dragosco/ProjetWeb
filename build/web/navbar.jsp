@@ -1,7 +1,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <nav class="navbar navbar-default">
-  <div class="container-fluid">
+  <div class="container">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -13,11 +13,10 @@
         <a class="navbar-brand" href="#"><span style="color: lightseagreen">etu</span>mercatus</a>
     </div>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Accueil <span class="sr-only">(current)</span></a></li>
-        <li><a href="#">Déposer une annonce</a></li>
+        <li><a href="index.jsp">Accueil</a></li>
+        <li><a href="depotAnnonce.jsp">Déposer une annonce</a></li>
         
       </ul>
         <c:if test="${sessionScope.USER == null}">
@@ -49,9 +48,11 @@
         <c:if test="${sessionScope.USER != null}">
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profil <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <span class="glyphicon glyphicon-user"></span> Mon compte <span class="caret"></span>
+                    </a>
                   <ul class="dropdown-menu">
-                    <li><a href="#">Mon profil</a></li>
+                    <li><a href="profil.jsp">Mon profil</a></li>
                     <li><a href="#">Mes annonces</a></li>
                     <li role="separator" class="divider"></li>
                     <li><a href="LogoutServlet">Se déconnecter</a></li>

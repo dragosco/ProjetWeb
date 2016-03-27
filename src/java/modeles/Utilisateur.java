@@ -6,17 +6,21 @@
 package modeles;
 
 import java.io.Serializable;
+import java.util.Collection;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  *
  * @author Dragos
  */
-@Entity
+@Entity(name="UtilisateurOMBid")
 public class Utilisateur implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -24,15 +28,14 @@ public class Utilisateur implements Serializable {
     private int id;
     private String nom;
     private String prenom;
-    @Column(unique=true)
     private String pseudo;
     private String motDePasse;
     private String ecole;
-    @Column(unique=true)
     private String mail;
     private String tel;
     //private byte[] photo;
-
+    private Collection<Offre> offres;
+    
     public Utilisateur() {
         
     }
@@ -109,6 +112,23 @@ public class Utilisateur implements Serializable {
 
     public void setTel(String tel) {
         this.tel = tel;
+    }
+
+//    public byte[] getPhoto() {
+//        return photo;
+//    }
+//
+//    public void setPhoto(byte[] photo) {
+//        this.photo = photo;
+//    }
+    
+    @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="utilisateur")
+    public Collection<Offre> getOffres() {
+        return offres;
+    }
+
+    public void setOffres(Collection<Offre> offres) {
+        this.offres = offres;
     }
 
     @Override
