@@ -24,8 +24,12 @@
         
         <div class="container">
             <h1>PAGE D'ACCUEIL (UNDER CONSTRUCTION)</h1>
+            <div class="container">
+                    <a href="${pageContext.request.contextPath}/Profil?user=adminThais">
+                    THAIS
+                    </a>
+                
+            </div>
         </div>
-        
-        
     </body>
 </html>

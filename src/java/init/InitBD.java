@@ -6,13 +6,11 @@
 package init;
 
 import gestionnaires.GestionnaireUtilisateurs;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import modeles.Utilisateur;
 
 /**
  *

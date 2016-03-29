@@ -18,6 +18,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.transaction.UserTransaction;
@@ -26,12 +27,14 @@ import javax.transaction.UserTransaction;
  *
  * @author Dragos
  */
-@Entity(name="OffreOMBid")
+@Entity(name="Offre")
 public class Offre implements Serializable {
     private static final long serialVersionUID = 1L;
+    
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
+    
     private String titre;
     private String categorie;
     private double prix;
@@ -41,6 +44,8 @@ public class Offre implements Serializable {
     private Date dateDepot;
     @Temporal(TemporalType.DATE)
     private Date dateFin;
+    
+    @ManyToOne
     private Utilisateur auteur;
 
     public Offre() {
@@ -120,7 +125,6 @@ public class Offre implements Serializable {
         this.dateFin = dateFin;
     }
     
-    @ManyToOne
     public Utilisateur getAuteur() {
         return auteur;
     }
@@ -153,30 +157,6 @@ public class Offre implements Serializable {
     @Override
     public String toString() {
         return "modeles.Offre[ id=" + id + " ]";
-    }
-
-    public void persist(Object object) {
-        /* Add this to the deployment descriptor of this module (e.g. web.xml, ejb-jar.xml):
-         * <persistence-context-ref>
-         * <persistence-context-ref-name>persistence/LogicalName</persistence-context-ref-name>
-         * <persistence-unit-name>ProjetWebPU</persistence-unit-name>
-         * </persistence-context-ref>
-         * <resource-ref>
-         * <res-ref-name>UserTransaction</res-ref-name>
-         * <res-type>javax.transaction.UserTransaction</res-type>
-         * <res-auth>Container</res-auth>
-         * </resource-ref> */
-        try {
-            Context ctx = new InitialContext();
-            UserTransaction utx = (UserTransaction) ctx.lookup("java:comp/env/UserTransaction");
-            utx.begin();
-            EntityManager em = (EntityManager) ctx.lookup("java:comp/env/persistence/LogicalName");
-            em.persist(object);
-            utx.commit();
-        } catch (Exception e) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", e);
-            throw new RuntimeException(e);
-        }
     }
     
 }

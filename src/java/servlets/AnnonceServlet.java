@@ -12,6 +12,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -46,7 +47,8 @@ public class AnnonceServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //à compléter
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("depotAnnonce.jsp") ;
+        requestDispatcher.include(request, response) ;
     }
 
     /**
@@ -77,7 +79,7 @@ public class AnnonceServlet extends HttpServlet {
                             null,
                             null
                     );
-                    response.sendRedirect("depotAnnonce.jsp");
+                    response.sendRedirect("Accueil");
                 }
         }
     }
