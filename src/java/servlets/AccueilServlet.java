@@ -21,7 +21,7 @@ import modeles.Offre;
  *
  * @author thais
  */
-@WebServlet(name = "AccueilServlet", urlPatterns = {"/AccueilServlet"})
+@WebServlet(name = "Accueil", urlPatterns = {"/Accueil"})
 public class AccueilServlet extends HttpServlet {
     @EJB
     private GestionnaireOffres gestionnaireOffres;

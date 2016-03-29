@@ -18,7 +18,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Dragos
  */
-@WebServlet(name = "LogoutServlet", urlPatterns = {"/LogoutServlet"})
+@WebServlet(name = "Logout", urlPatterns = {"/Logout"})
 public class LogoutServlet extends HttpServlet {
 
     
@@ -29,7 +29,7 @@ public class LogoutServlet extends HttpServlet {
         HttpSession session = request.getSession();
         System.out.println(session.getAttribute("USER") + " s'est déconnecté");
         session.invalidate();
-        response.sendRedirect("index.jsp");
+        response.sendRedirect("Accueil");
     }
     
     @Override

@@ -15,8 +15,9 @@
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-       <li><a href="AccueilServlet">Accueil</a></li> <!-- index.jsp?action=listerAnnonces-->
-        <li><a href="depotAnnonce.jsp">Déposer une annonce</a></li>
+
+        <li><a href="Accueil">Accueil</a></li>
+        <li><a href="Annonce">Déposer une annonce</a></li>
         
       </ul>
         <c:if test="${sessionScope.USER == null}">
@@ -25,16 +26,19 @@
                     <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Se connecter</button>
 
                     <!-- Modal -->
-                    <div class="modal fade" id="myModal" role="dialog">
+                    <div class="modal fade" id="myModal" role="dialog" style="margin-top: 200px;">
                       <div class="modal-dialog">
 
                         <!-- Modal content-->
                         <div class="modal-content">
-                            <form action="LoginServlet" method="post">
+                            <form action="Login" method="post">
                                 <input class="form-control" type="text" name="pseudo" placeholder="Username" required/>
                                 <input class="form-control" type="password" name="motDePasse" placeholder="Password" required/>
                                 <input type="hidden" name="action" value="authentification"/>
                                 <button type="submit" value="login" name="submit">Me connecter</button>
+                                <hr>
+                                <a href="nouveauCompte.jsp">Créer un compte</a>
+                                
                             </form> 
                         </div>
 
@@ -52,10 +56,10 @@
                         <span class="glyphicon glyphicon-user"></span> Mon compte <span class="caret"></span>
                     </a>
                   <ul class="dropdown-menu">
-                    <li><a href="profil.jsp">Mon profil</a></li>
+                    <li><a href="Profil?user=${sessionScope.USER}">Mon profil</a></li>
                     <li><a href="#">Mes annonces</a></li>
                     <li role="separator" class="divider"></li>
-                    <li><a href="LogoutServlet">Se déconnecter</a></li>
+                    <li><a href="Logout">Se déconnecter</a></li>
                   </ul>
                 </li>
              </ul>

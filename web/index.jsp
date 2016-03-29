@@ -23,6 +23,7 @@
         <jsp:include page='navbar.jsp'/>
         
         <div class="container">
+
             <!-- <h1>PAGE D'ACCUEIL (UNDER CONSTRUCTION)</h1> -->            
             <main>
                 <section>

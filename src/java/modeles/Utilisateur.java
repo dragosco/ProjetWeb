@@ -8,31 +8,38 @@ package modeles;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 
 /**
  *
  * @author Dragos
  */
-@Entity(name="UtilisateurOMBid")
+@Entity(name="Utilisateur")
 public class Utilisateur implements Serializable {
     private static final long serialVersionUID = 1L;
+    
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
+    
     private String nom;
     private String prenom;
+    @Column(unique=true)
     private String pseudo;
     private String motDePasse;
     private String ecole;
+    @Column(unique=true)
     private String mail;
     private String tel;
     private byte[] photo;
+    
+    @OneToMany(targetEntity=Offre.class)
     private Collection<Offre> offres;
     
     public Utilisateur() {
@@ -114,15 +121,14 @@ public class Utilisateur implements Serializable {
         this.tel = tel;
     }
 
-//    public byte[] getPhoto() {
-//        return photo;
-//    }
-//
-//    public void setPhoto(byte[] photo) {
-//        this.photo = photo;
-//    }
+    public byte[] getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(byte[] photo) {
+        this.photo = photo;
+    }
     
-    @OneToMany(cascade={CascadeType.ALL},fetch=FetchType.EAGER,mappedBy="utilisateur")
     public Collection<Offre> getOffres() {
         return offres;
     }

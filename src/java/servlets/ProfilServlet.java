@@ -27,7 +27,6 @@ public class ProfilServlet extends HttpServlet {
     private GestionnaireUtilisateurs gu;
     
     
-// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -40,7 +39,12 @@ public class ProfilServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("profil.jsp") ;
+        String pseudo = request.getParameter("user");
+        if (pseudo != null) {
+            Utilisateur user = gu.getUtilisateur(pseudo);
+            request.setAttribute("viewUser", user);
+        }
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("profil.jsp?user=" + pseudo) ;
         requestDispatcher.include(request, response) ;
     }
 
@@ -75,7 +79,7 @@ public class ProfilServlet extends HttpServlet {
             }
             Utilisateur profilActu = gu.getUtilisateur(user);
             session.setAttribute("PROFIL", profilActu);
-            response.sendRedirect("profil.jsp");
+            response.sendRedirect("Profil?user=" + user);
             
         }
     }

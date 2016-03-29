@@ -45,7 +45,7 @@ public class GestionnaireOffres {
 
     public Collection<Offre> getOffres() {
         // Exécution d'une requête équivalente à un select *
-        Query q = em.createQuery("select o from OffreOMBid o");
+        Query q = em.createQuery("select o from Offre o");
         return q.getResultList();
     }
 }

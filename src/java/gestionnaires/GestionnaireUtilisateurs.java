@@ -7,6 +7,7 @@ package gestionnaires;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import modeles.Utilisateur;
@@ -34,9 +35,13 @@ public class GestionnaireUtilisateurs {
     }
     
     public Utilisateur getUtilisateur(String pseudo) {
-        Query q = em.createQuery("select u from UtilisateurOMBid u where u.pseudo = :pseudo");
-        q.setParameter("pseudo", pseudo);
-        return (Utilisateur) q.getSingleResult();
+        try{
+            Query q = em.createQuery("select u from Utilisateur u where u.pseudo = :pseudo");
+            q.setParameter("pseudo", pseudo);
+            return (Utilisateur) q.getSingleResult();
+        } catch(NoResultException e) {
+            return null;
+        }
     }
     
     public void updateProfil(String pseudo, String motDePasse, String nom, String prenom, String ecole, String mail, String tel) {
@@ -61,44 +66,63 @@ public class GestionnaireUtilisateurs {
     }
     
     public void changeMotDePasse(String pseudo, String motDePasse) {
-        Query q = em.createQuery("update UtilisateurOMBid u set u.motDePasse = :motDePasse where u.pseudo = :pseudo");
+        Query q = em.createQuery("update Utilisateur u set u.motDePasse = :motDePasse where u.pseudo = :pseudo");
         q.setParameter("pseudo", pseudo);
         q.setParameter("motDePasse", motDePasse);
         q.executeUpdate();
     }
     
     public void changeNom(String pseudo, String nom) {
-        Query q = em.createQuery("update UtilisateurOMBid u set u.nom = :nom where u.pseudo = :pseudo");
+        Query q = em.createQuery("update Utilisateur u set u.nom = :nom where u.pseudo = :pseudo");
         q.setParameter("pseudo", pseudo);
         q.setParameter("nom", nom);
         q.executeUpdate();
     }
     
     public void changePrenom(String pseudo, String prenom) {
-        Query q = em.createQuery("update UtilisateurOMBid u set u.prenom = :prenom where u.pseudo = :pseudo");
+        Query q = em.createQuery("update Utilisateur u set u.prenom = :prenom where u.pseudo = :pseudo");
         q.setParameter("pseudo", pseudo);
         q.setParameter("prenom", prenom);
         q.executeUpdate();
     }
     
     public void changeEcole(String pseudo, String ecole) {
-        Query q = em.createQuery("update UtilisateurOMBid u set u.ecole = :ecole where u.pseudo = :pseudo");
+        Query q = em.createQuery("update Utilisateur u set u.ecole = :ecole where u.pseudo = :pseudo");
         q.setParameter("pseudo", pseudo);
         q.setParameter("ecole", ecole);
         q.executeUpdate();
     }
     
     public void changeMail(String pseudo, String mail) {
-        Query q = em.createQuery("update UtilisateurOMBid u set u.mail = :mail where u.pseudo = :pseudo");
+        Query q = em.createQuery("update Utilisateur u set u.mail = :mail where u.pseudo = :pseudo");
         q.setParameter("pseudo", pseudo);
         q.setParameter("mail", mail);
         q.executeUpdate();
     }
     
     public void changeTel(String pseudo, String tel) {
-        Query q = em.createQuery("update UtilisateurOMBid u set u.tel = :tel where u.pseudo = :pseudo");
+        Query q = em.createQuery("update Utilisateur u set u.tel = :tel where u.pseudo = :pseudo");
         q.setParameter("pseudo", pseudo);
         q.setParameter("tel", tel);
         q.executeUpdate();
+    }
+    
+    public boolean verifierAuthentification(String pseudo, String motDePasse) {
+        boolean OK = false;
+        if (existe(pseudo)) {
+            Utilisateur u = this.getUtilisateur(pseudo);
+            if (u.getMotDePasse().equals(motDePasse)) {
+                OK = true;
+            }
+        }
+        return OK;
+    }
+    
+    public boolean existe(String pseudo) {
+        boolean OK = false;
+        if (getUtilisateur(pseudo) != null) {
+            OK = true;
+        }
+        return OK;
     }
 }
