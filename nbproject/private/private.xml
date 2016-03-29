@@ -3,15 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Dragos/Documents/NetBeansProjects/ProjetWeb/src/java/gestionnaires/GestionnaireUtilisateurs.java</file>
-            <file>file:/C:/Users/Dragos/Documents/NetBeansProjects/ProjetWeb/src/java/servlets/Profil.java</file>
-            <file>file:/C:/Users/Dragos/Documents/NetBeansProjects/ProjetWeb/src/java/servlets/ProjetWebServlet.java</file>
-            <file>file:/C:/Users/Dragos/Documents/NetBeansProjects/ProjetWeb/src/java/init/InitBD.java</file>
-            <file>file:/C:/Users/Dragos/Documents/NetBeansProjects/ProjetWeb/web/js/main.js</file>
-            <file>file:/C:/Users/Dragos/Documents/NetBeansProjects/ProjetWeb/src/java/modeles/Utilisateur.java</file>
-            <file>file:/C:/Users/Dragos/Documents/NetBeansProjects/ProjetWeb/src/java/servlets/LoginServlet.java</file>
-            <file>file:/C:/Users/Dragos/Documents/NetBeansProjects/ProjetWeb/web/navbar.jsp</file>
-            <file>file:/C:/Users/Dragos/Documents/NetBeansProjects/ProjetWeb/web/profil.jsp</file>
+            <file>file:/home/thais/NetBeansProjects/ProjetWeb/web/index.jsp</file>
+            <file>file:/home/thais/NetBeansProjects/ProjetWeb/src/java/servlets/AccueilServlet.java</file>
+            <file>file:/home/thais/NetBeansProjects/ProjetWeb/src/java/servlets/LoginServlet.java</file>
         </group>
     </open-files>
 </project-private>

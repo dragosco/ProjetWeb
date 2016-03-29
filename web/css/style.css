@@ -1,0 +1,14 @@
+.annonce {
+    height: 120px; 
+    border: 1px solid activeborder;
+}
+
+.couleurAnnonce {
+    background-color: red;
+    height: 100%; 
+}
+
+.photoEtudiant {
+    height: 80px;
+    width: 80px;
+}

@@ -68,17 +68,19 @@ public class AnnonceServlet extends HttpServlet {
         
         if(action != null) {
             if (action.equals("creerOffre")) {
-                    go.creerOffre(
-                            request.getParameter("titre"),
-                            request.getParameter("categorie"),
-                            Double.parseDouble(request.getParameter("prix")),
-                            request.getParameter("description"),
-                            getBytes(contenuImage),
-                            null,
-                            null
-                    );
-                    response.sendRedirect("depotAnnonce.jsp");
-                }
+                HttpSession session = request.getSession();
+                String user = (String) session.getAttribute("USER");
+                go.creerOffre(
+                        request.getParameter("titre"),
+                        request.getParameter("categorie"),
+                        Double.parseDouble(request.getParameter("prix")),
+                        request.getParameter("description"),
+                        getBytes(contenuImage),
+                        null,
+                        user
+                );
+                response.sendRedirect("depotAnnonce.jsp");
+            }
         }
     }
 

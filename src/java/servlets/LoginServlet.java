@@ -37,8 +37,8 @@ public class LoginServlet extends HttpServlet {
                 Utilisateur profil = gu.getUtilisateur(user);
                 session.setAttribute("USER", user);
                 session.setAttribute("PROFIL", profil);
-                response.sendRedirect("index.jsp");
-                
+                //response.sendRedirect("index.jsp");
+                response.sendRedirect("AccueilServlet");
             }           
         }
     }

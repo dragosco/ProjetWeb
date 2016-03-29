@@ -8,7 +8,6 @@ package modeles;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -33,7 +32,7 @@ public class Utilisateur implements Serializable {
     private String ecole;
     private String mail;
     private String tel;
-    //private byte[] photo;
+    private byte[] photo;
     private Collection<Offre> offres;
     
     public Utilisateur() {
@@ -50,6 +49,7 @@ public class Utilisateur implements Serializable {
         this.tel = tel;
     }
 
+    @Id
     public int getId() {
         return id;
     }

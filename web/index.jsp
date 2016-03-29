@@ -23,9 +23,36 @@
         <jsp:include page='navbar.jsp'/>
         
         <div class="container">
-            <h1>PAGE D'ACCUEIL (UNDER CONSTRUCTION)</h1>
+            <!-- <h1>PAGE D'ACCUEIL (UNDER CONSTRUCTION)</h1> -->            
+            <main>
+                <section>
+                    <ul class="list-group">
+                        <c:forEach var="o" items="${offres}">
+                            <li class="list-group-item">
+                                <div class="annonce">
+                                    <div class="couleurAnnonce col-md-1"></div>
+                                    <div class="infoEtudiant col-md-3">
+                                        <a href="#"><img src="/home/thais/Imagens/eu.jpg" class="img-rounded photoEtudiant"></a>
+                                        <p>${o.auteur.prenom} ${o.auteur.nom}</p>
+                                        <p>${o.auteur.ecole}</p>
+                                    </div>
+                                    <div class="infoProduit col-md-4">
+                                        <p>${o.titre}</p>
+                                        <p>${o.categorie}</p>
+                                        <p>Date</p>
+                                    </div>
+                                    <div class="prixProduit col-md-2">
+                                        <p>${o.prix} €</p>
+                                    </div>
+                                    <div class="photosProduit col-md-2">
+                                        <a href="#"><img src="/home/thais/Imagens/FestivalCannes/DSCN76841.jpg" class="img-rounded"></a>
+                                    </div>
+                                </div>
+                            </li>
+                        </c:forEach>
+                    </ul>
+                </section>
+            </main>
         </div>
-        
-        
     </body>
 </html>

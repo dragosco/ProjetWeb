@@ -15,7 +15,7 @@
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li><a href="index.jsp">Accueil</a></li>
+       <li><a href="AccueilServlet">Accueil</a></li> <!-- index.jsp?action=listerAnnonces-->
         <li><a href="depotAnnonce.jsp">Déposer une annonce</a></li>
         
       </ul>

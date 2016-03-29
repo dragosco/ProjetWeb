@@ -5,7 +5,6 @@
  */
 package modeles;
 
-import java.io.InputStream;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.logging.Level;
@@ -14,6 +13,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -56,6 +56,7 @@ public class Offre implements Serializable {
         this.auteur = auteur;
     }
     
+    @Id
     public int getId() {
         return id;
     }
@@ -120,7 +121,7 @@ public class Offre implements Serializable {
         this.dateFin = dateFin;
     }
     
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.EAGER)
     public Utilisateur getAuteur() {
         return auteur;
     }

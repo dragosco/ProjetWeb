@@ -5,13 +5,16 @@
  */
 package gestionnaires;
 
+import java.util.Collection;
 import java.util.Date;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.servlet.http.HttpSession;
 import modeles.Offre;
+import modeles.Utilisateur;
 
 /**
  *
@@ -33,9 +36,16 @@ public class GestionnaireOffres {
     }
 
     public Offre creerOffre(String titre, String categorie, double prix, String description, byte[] img, Date dateFin, String auteur) {
-        Offre o = new Offre(titre, categorie, prix, description, img, dateFin, null);
+        Utilisateur user = gu.getUtilisateur(auteur);
+        Offre o = new Offre(titre, categorie, prix, description, img, dateFin, user);
         em.persist(o);
         return o;
        
+    }
+
+    public Collection<Offre> getOffres() {
+        // Exécution d'une requête équivalente à un select *
+        Query q = em.createQuery("select o from OffreOMBid o");
+        return q.getResultList();
     }
 }
