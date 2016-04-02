@@ -4,11 +4,20 @@
 }
 
 .couleurAnnonce {
-    background-color: red;
+    background-color: #1b6d85;
     height: 100%; 
 }
 
 .photoEtudiant {
     height: 80px;
-    width: 80px;
+    width: auto;
+}
+
+.photoProduit {
+    height: 120px;
+    width: auto;
+}
+
+.photoDetailProduit {
+    width: 300px;
 }

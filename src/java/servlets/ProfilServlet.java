@@ -5,8 +5,10 @@
  */
 package servlets;
 
+import gestionnaires.GestionnaireAnnonces;
 import gestionnaires.GestionnaireUtilisateurs;
 import java.io.IOException;
+import java.util.Collection;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,6 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import modeles.Annonce;
 import modeles.Utilisateur;
 
 /**
@@ -25,7 +28,8 @@ import modeles.Utilisateur;
 public class ProfilServlet extends HttpServlet {
     @EJB
     private GestionnaireUtilisateurs gu;
-    
+    @EJB
+    private GestionnaireAnnonces ga;
     
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -38,13 +42,29 @@ public class ProfilServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setCharacterEncoding("UTF-8");
         HttpSession session = request.getSession();
         String pseudo = request.getParameter("user");
+        String forwardTo = "";
+        
         if (pseudo != null) {
             Utilisateur user = gu.getUtilisateur(pseudo);
-            request.setAttribute("viewUser", user);
+            Collection<Annonce> sesAnnonces = ga.getAnnoncesDe(user);
+            request.setAttribute("profil", user);
+            request.setAttribute("sesAnnonces", sesAnnonces);
+            forwardTo = "profil.jsp?user=" + pseudo;
+            
+            String action = request.getParameter("action");
+            if(action != null) {
+                if (action.equals("afficheAnnonces")) {
+                    forwardTo += "&action=afficheAnnonces";
+                }
+            }
         }
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("profil.jsp?user=" + pseudo) ;
+        
+            
+        
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher(forwardTo) ;
         requestDispatcher.include(request, response) ;
     }
 
@@ -92,6 +112,6 @@ public class ProfilServlet extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
 
 }

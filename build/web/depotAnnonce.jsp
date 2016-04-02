@@ -16,26 +16,40 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="css/bootstrap.min.css">
-        <script src="js/jquery-2.2.2.min.js"></script>
+        <script src="js/jquery-2.2.0.js"></script>
         <script src="js/bootstrap.min.js"></script>
-        <script src="js/main.js"></script>
+        
     </head>
     <body>
         <jsp:include page='navbar.jsp'/>
         
-        <div class="container" style="width: 300px;">
-            <form action="Annonce" method="post" enctype="multipart/form-data">
-                <input class="form-control" type="text" name="titre" placeholder="Titre" required/>
-                <input class="form-control" type="text" name="categorie" placeholder="Catégorie" required/>
-                <input class="form-control" type="number" name="prix" placeholder="Prix" required/>
-                <input class="form-control" type="text" name="description" placeholder="Description" required/>
-                <input class="form-control" type="file" name="file" placeholder="Image" accept="image/*" />
-                <input class="form-control" type="date" name="dateFin" placeholder="Date d'exp" required/>
-                <input type="hidden" name="action" value="creerOffre"/>
-                <button type="submit" value="addoffer" name="submit">Ajouter offre</button>
-            </form> 
+        <div class="container">
+            <div class="row" style="width: 600px; margin: 0 auto;">
+                <div class="col-md-6" >
+                    <form action="Annonce" method="post" enctype="multipart/form-data">
+                        <input class="form-control" type="text" name="titre" placeholder="Titre" required />
+                        <select class="form-control" type="text" name="categorie" placeholder="Catégorie" required>
+                            <c:forEach var="c" items="${requestScope.categories}">
+                                <option>${c.nom}</option>
+                            </c:forEach>
+                        </select>
+                        <input class="form-control" type="number" name="prix" placeholder="Prix" required />
+                        <input class="form-control" type="text" name="description" placeholder="Description" required/>
+                        <input class="form-control" type="file" name="files[]" placeholder="Image" id="files" multiple />
+                        <div id="dropArea" style="height: 100px; border: 2px #adadad dashed; padding: 30px; margin: 10px 0; text-align: center;">Drop files here</div>
+
+
+                        <input class="form-control" type="date" name="dateFin" placeholder="Date d'exp" required/>
+                        <button type="submit" value="creerAnnonce" name="action">Ajouter annonce</button>
+                    </form> 
+                </div>
+                <div class="col-md-6">
+                    <output id="previewImages"></output>
+                </div>
+            </div>
         </div>
-        
+        <script src="js/main.js"></script>
     </body>
+    
 </html>
 

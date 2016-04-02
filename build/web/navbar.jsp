@@ -1,3 +1,4 @@
+
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <nav class="navbar navbar-default">
@@ -18,6 +19,9 @@
 
         <li><a href="Accueil">Accueil</a></li>
         <li><a href="Annonce">Déposer une annonce</a></li>
+        <c:if test="${sessionScope.PRIVILEGE == 'admin'}">
+            <li><a href="Admin">ADMINISTRATION</a></li>
+        </c:if>
         
       </ul>
         <c:if test="${sessionScope.USER == null}">
@@ -37,9 +41,10 @@
                                 <input type="hidden" name="action" value="authentification"/>
                                 <button type="submit" value="login" name="submit">Me connecter</button>
                                 <hr>
-                                <a href="nouveauCompte.jsp">Créer un compte</a>
+                                <a href="Login">Créer un compte</a>
                                 
-                            </form> 
+                            </form>
+                            
                         </div>
 
                       </div>
@@ -57,7 +62,7 @@
                     </a>
                   <ul class="dropdown-menu">
                     <li><a href="Profil?user=${sessionScope.USER}">Mon profil</a></li>
-                    <li><a href="#">Mes annonces</a></li>
+                    <li><a href="Profil?user=${sessionScope.USER}&action=afficheAnnonces">Mes annonces</a></li>
                     <li role="separator" class="divider"></li>
                     <li><a href="Logout">Se déconnecter</a></li>
                   </ul>

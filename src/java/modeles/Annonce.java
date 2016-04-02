@@ -6,40 +6,42 @@
 package modeles;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.naming.Context;
-import javax.naming.InitialContext;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.EntityManager;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.transaction.UserTransaction;
 
 /**
  *
  * @author Dragos
  */
-@Entity(name="Offre")
-public class Offre implements Serializable {
+@Entity(name="Annonce")
+public class Annonce implements Serializable {
     private static final long serialVersionUID = 1L;
-    
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
     
     private String titre;
-    private String categorie;
+    @ManyToOne
+    private Categorie categorie;
     private double prix;
     private String description;
-    private byte[] img;
+    
+    @OneToMany(cascade={CascadeType.ALL},
+            fetch=FetchType.EAGER,
+            mappedBy="annonce")
+    private Collection<Photo> photos;
+    
     @Temporal(TemporalType.DATE)
     private Date dateDepot;
     @Temporal(TemporalType.DATE)
@@ -48,20 +50,19 @@ public class Offre implements Serializable {
     @ManyToOne
     private Utilisateur auteur;
 
-    public Offre() {
+    public Annonce() {
     }
 
-    public Offre(String titre, String categorie, double prix, String description, byte[] img, Date dateFin, Utilisateur auteur) {
+    public Annonce(String titre, Categorie categorie, double prix, String description, Date dateFin, Utilisateur auteur) {
         this.titre = titre;
         this.categorie = categorie;
         this.prix = prix;
         this.description = description;
-        this.img = img;
         this.dateFin = dateFin;
         this.auteur = auteur;
+        this.photos = new ArrayList<Photo>();
     }
     
-    @Id
     public int getId() {
         return id;
     }
@@ -78,11 +79,11 @@ public class Offre implements Serializable {
         this.titre = titre;
     }
 
-    public String getCategorie() {
+    public Categorie getCategorie() {
         return categorie;
     }
 
-    public void setCategorie(String categorie) {
+    public void setCategorie(Categorie categorie) {
         this.categorie = categorie;
     }
 
@@ -102,12 +103,12 @@ public class Offre implements Serializable {
         this.description = description;
     }
 
-    public byte[] getImg() {
-        return img;
+    public Collection<Photo> getPhotos() {
+        return photos;
     }
-
-    public void setImg(byte[] img) {
-        this.img = img;
+    
+    public void setPhotos(Collection<Photo> photos) {
+        this.photos = photos;
     }
 
     public Date getDateDepot() {
@@ -127,7 +128,6 @@ public class Offre implements Serializable {
     }
     
 
-    @ManyToOne(fetch=FetchType.EAGER)
     public Utilisateur getAuteur() {
         return auteur;
     }
@@ -136,6 +136,9 @@ public class Offre implements Serializable {
         this.auteur = auteur;
     }
     
+    public void addPhoto(Photo photo) {
+        photos.add(photo);
+    }
 
     @Override
     public int hashCode() {
@@ -147,10 +150,10 @@ public class Offre implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Offre)) {
+        if (!(object instanceof Annonce)) {
             return false;
         }
-        Offre other = (Offre) object;
+        Annonce other = (Annonce) object;
         if (this.id != other.id) {
             return false;
         }
@@ -159,7 +162,7 @@ public class Offre implements Serializable {
 
     @Override
     public String toString() {
-        return "modeles.Offre[ id=" + id + " ]";
+        return "modeles.Annonce[ id=" + id + " ]";
     }
     
 }

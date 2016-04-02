@@ -5,12 +5,15 @@
  */
 package servlets;
 
-import gestionnaires.GestionnaireOffres;
+import gestionnaires.GestionnaireAnnonces;
+import gestionnaires.GestionnaireCategories;
 import gestionnaires.GestionnaireUtilisateurs;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import static java.lang.System.gc;
+import java.util.Collection;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -21,6 +24,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
+import modeles.Annonce;
+import modeles.Categorie;
 
 /**
  *
@@ -30,7 +35,9 @@ import javax.servlet.http.Part;
 @MultipartConfig //Annotation nécessaire pour les servlets manipulant des BLOB
 public class AnnonceServlet extends HttpServlet {
     @EJB
-    private GestionnaireOffres go;
+    private GestionnaireCategories gc;
+    @EJB
+    private GestionnaireAnnonces go;
     @EJB
     private GestionnaireUtilisateurs gu;
 
@@ -47,8 +54,24 @@ public class AnnonceServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("depotAnnonce.jsp") ;
-        requestDispatcher.include(request, response) ;
+        response.setCharacterEncoding("UTF-8");
+        Collection<Categorie> categories = gc.getCategories();
+        request.setAttribute("categories", categories);
+        
+        String forwardTo = "";
+        
+        if(request.getParameter("id") != null) {
+            String id = request.getParameter("id");
+            Annonce annonce = go.getAnnonce(Integer.parseInt(id));
+            request.setAttribute("offre", annonce);
+            forwardTo = "detailsAnnonce.jsp?id=" + id;
+            
+        } else {
+            forwardTo = "depotAnnonce.jsp";
+        }
+        
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher(forwardTo);
+        requestDispatcher.include(request, response);
     }
 
     /**
@@ -63,25 +86,27 @@ public class AnnonceServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        Part filePart = request.getPart("file"); // Retrieves <input type="file" name="file">
+        Part filePart = request.getPart("files[]"); // Retrieves <input type="file" name="file">
         String nomImage = filePart.getSubmittedFileName();
         InputStream contenuImage = filePart.getInputStream();
         String action = request.getParameter("action");
         
+        
+        
         if(action != null) {
-            if (action.equals("creerOffre")) {
+            if (action.equals("creerAnnonce")) {
                 HttpSession session = request.getSession();
                 String user = (String) session.getAttribute("USER");
-                go.creerOffre(
+                go.creerAnnonce(
                         request.getParameter("titre"),
                         request.getParameter("categorie"),
                         Double.parseDouble(request.getParameter("prix")),
                         request.getParameter("description"),
-                        getBytes(contenuImage),
                         null,
-                        user
+                        user,
+                        getBytes(contenuImage)
                 );
-                response.sendRedirect("depotAnnonce.jsp");
+                response.sendRedirect("Annonce");
             }
         }
     }
@@ -114,5 +139,5 @@ public class AnnonceServlet extends HttpServlet {
           buf = bos.toByteArray();
         }
         return buf;
-  }
+    }
 }

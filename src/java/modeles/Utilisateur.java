@@ -6,10 +6,12 @@
 package modeles;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,7 +25,6 @@ import javax.persistence.SequenceGenerator;
 @Entity(name="Utilisateur")
 public class Utilisateur implements Serializable {
     private static final long serialVersionUID = 1L;
-    
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
@@ -38,15 +39,18 @@ public class Utilisateur implements Serializable {
     private String mail;
     private String tel;
     private byte[] photo;
+    private String privilege;
     
-    @OneToMany(targetEntity=Offre.class)
-    private Collection<Offre> offres;
+    @OneToMany(cascade={CascadeType.ALL},
+            fetch=FetchType.EAGER,
+            mappedBy="auteur")
+    private Collection<Annonce> annonces;
     
     public Utilisateur() {
         
     }
     
-    public Utilisateur(String nom, String prenom, String pseudo, String motDePasse, String ecole, String mail, String tel) {
+    public Utilisateur(String nom, String prenom, String pseudo, String motDePasse, String ecole, String mail, String tel, String privilege, byte[] photo) {
         this.nom = nom;
         this.prenom = prenom;
         this.pseudo = pseudo;
@@ -54,9 +58,11 @@ public class Utilisateur implements Serializable {
         this.ecole = ecole;
         this.mail = mail;
         this.tel = tel;
+        this.privilege = privilege;
+        this.photo = photo;
+        this.annonces = new ArrayList<Annonce>();
     }
 
-    @Id
     public int getId() {
         return id;
     }
@@ -129,14 +135,23 @@ public class Utilisateur implements Serializable {
         this.photo = photo;
     }
     
-    public Collection<Offre> getOffres() {
-        return offres;
+    public Collection<Annonce> getAnnonces() {
+        return annonces;
     }
 
-    public void setOffres(Collection<Offre> offres) {
-        this.offres = offres;
+    public void setAnnonces(Collection<Annonce> annonces) {
+        this.annonces = annonces;
     }
 
+    public String getPrivilege() {
+        return privilege;
+    }
+
+    public void setPrivilege(String privilege) {
+        this.privilege = privilege;
+    }
+
+    
     @Override
     public int hashCode() {
         int hash = 0;

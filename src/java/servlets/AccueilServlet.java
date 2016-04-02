@@ -4,57 +4,34 @@
  * and open the template in the editor.
  */
 package servlets;
-
-import gestionnaires.GestionnaireOffres;
-import java.io.IOException;
+import gestionnaires.GestionnaireAnnonces;
+import gestionnaires.GestionnaireUtilisateurs;
 import java.util.Collection;
 import javax.ejb.EJB;
+import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import modeles.Offre;
+import javax.servlet.http.HttpSession;
+import modeles.Annonce;
+import modeles.Utilisateur;
 
 /**
  *
- * @author thais
+ * @author Dragos
  */
 @WebServlet(name = "Accueil", urlPatterns = {"/Accueil"})
 public class AccueilServlet extends HttpServlet {
     @EJB
-    private GestionnaireOffres gestionnaireOffres;
+    private GestionnaireAnnonces ga;
+    @EJB
+    private GestionnaireUtilisateurs gu;
+    
+    
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String action = request.getParameter("action");    
-        //if (action != null) {
-            //if (action.equals("listerAnnonces")) {  
-                Collection<Offre> offres = gestionnaireOffres.getOffres();
-                System.out.println("entrou aqui");
-                System.out.println(offres);
-                request.setAttribute("offres", offres);
-                request.setAttribute("nOffres", 2);
-
-                RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
-                requestDispatcher.forward(request, response); 
-//            }
-//        } else {
-//            
-//        }
-    }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -66,8 +43,31 @@ public class AccueilServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
-        //requestDispatcher.include(request, response) ;
+        response.setCharacterEncoding("UTF-8");
+        HttpSession session = request.getSession();
+        Utilisateur u = (Utilisateur) session.getAttribute("PROFIL");
+        
+        Collection<Annonce> annonces = ga.getAnnonces();
+        request.setAttribute("annonces", annonces);
+        request.setAttribute("nAnnonces", 2);
+        
+        String action = request.getParameter("action");
+        if(action != null) {
+            
+            if (action.equals("supprimerAnnonce")) {
+                int id = Integer.parseInt(request.getParameter("id"));
+                //L'admin peut supprimer n'importe quelle annonce. Un user ne peut supprimer que les siens.
+                if (u.getPrivilege().equals("admin") || ga.getAnnonce(id).getAuteur().equals(u)){
+                    ga.supprimerAnnonce(id);
+                } else {
+                    //ne rien faire
+                }
+            }
+        }
+        
+        
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
+        requestDispatcher.forward(request, response);
     }
 
     /**
@@ -81,7 +81,10 @@ public class AccueilServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String action = "";
+        
+        
+        
     }
 
     /**
@@ -92,6 +95,5 @@ public class AccueilServlet extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
-
+    }
 }

@@ -5,6 +5,7 @@
  */
 package gestionnaires;
 
+import java.util.Collection;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -20,24 +21,31 @@ import modeles.Utilisateur;
 public class GestionnaireUtilisateurs {
     @PersistenceContext
     private EntityManager em;
-    
-    public void creerUtilisateursDeTest() {
-        
-        for (int i = 0; i < 10; i++) {
-            creerUtilisateur("nom"+i, "prenom"+i, "pseudo"+i, "motDePasse"+i, "ecole"+i, "mail"+i, "tel"+i);
-        }
-    }
 
-    public Utilisateur creerUtilisateur(String nom, String prenom, String pseudo, String motDePasse, String ecole, String mail, String tel) {
-        Utilisateur u = new Utilisateur(nom, prenom, pseudo, motDePasse, ecole, mail, tel);
+    public Utilisateur creerUtilisateur(String nom, String prenom, String pseudo, String motDePasse, String ecole, String mail, String tel, String privilege, byte[] photo) {
+        Utilisateur u = new Utilisateur(nom, prenom, pseudo, motDePasse, ecole, mail, tel, privilege, photo);
         em.persist(u);
         return u;
     }
     
+    public Collection<Utilisateur> getUtilisateurs() {
+        Query q = em.createQuery("select u from Utilisateur u");
+        return q.getResultList();
+    }
     public Utilisateur getUtilisateur(String pseudo) {
         try{
             Query q = em.createQuery("select u from Utilisateur u where u.pseudo = :pseudo");
             q.setParameter("pseudo", pseudo);
+            return (Utilisateur) q.getSingleResult();
+        } catch(NoResultException e) {
+            return null;
+        }
+    }
+    
+    public Utilisateur getUtilisateur(int id) {
+        try{
+            Query q = em.createQuery("select u from Utilisateur u where u.id = :id");
+            q.setParameter("id", id);
             return (Utilisateur) q.getSingleResult();
         } catch(NoResultException e) {
             return null;
