@@ -88,6 +88,12 @@ public class InitBD {
         
         gu.creerUtilisateur("COJOCARU", "Dragos", "adminDragos", "admin", "UNice", "cojocaru.dragos14@gmail.com", "0687711971", "admin", bFile2);
         gu.creerUtilisateur("MOTA DOS SANTOS", "Thais", "adminThais", "admin", "UNice", "thais.motasantos@gmail.com", "06*******", "admin", bFile3);
+        gu.creerUtilisateur("Potter", "Harry", "hp", "hp", "UNice", "hp@gmail.com", "06*******", "user", null);
+        gu.creerUtilisateur("Granger", "Hermione", "hermy", "hermy", "SKEMA", "hermy@gmail.com", "06*******", "user", null);
+        gu.creerUtilisateur("Weasley", "Ronald", "ronnie", "ronnie", "SKEMA", "ronnieW@gmail.com", "06*******", "user", null);
+        gu.creerUtilisateur("Longbottom", "Neville", "bottom", "bottom", "UNice", "lbtm@gmail.com", "06*******", "user", null);
+        gu.creerUtilisateur("Dupont", "Nathalie", "dun", "dun", "SKEMA", "dun@gmail.com", "06*******", "user", null);
+        gu.creerUtilisateur("Dupont", "Jean", "duj", "duj", "UNice", "duj@gmail.com", "06*******", "user", null);
 
         
     }

@@ -10,6 +10,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -20,16 +21,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
-import modeles.Utilisateur;
+import outils.InputStreamToByteArray;
 
 /**
  *
  * @author Dragos
  */
-@WebServlet(name = "Login", urlPatterns = {"/Login"})
-public class LoginServlet extends HttpServlet {
+@WebServlet(name = "Compte", urlPatterns = {"/Compte"})
+@MultipartConfig
+public class CompteServlet extends HttpServlet {
     @EJB
     private GestionnaireUtilisateurs gu;
+
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -43,10 +46,10 @@ public class LoginServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setCharacterEncoding("UTF-8");
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp") ;
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("nouveauCompte.jsp") ;
         requestDispatcher.include(request, response) ;
     }
-    
+
     /**
      * Handles the HTTP <code>POST</code> method.
      *
@@ -58,35 +61,49 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         String action = request.getParameter("action");
         String message = "";
         
-        if (action != null) {
-            
-            if (action.equals("authentification")) {
-                HttpSession session = request.getSession();
-                String pseudo = request.getParameter("pseudo");
-                String motDePasse = request.getParameter("motDePasse");
-                
-                if (gu.verifierAuthentification(pseudo, motDePasse)) {
-                    Utilisateur profil = gu.getUtilisateur(pseudo);
-                    session.setAttribute("PROFIL", profil);
-                    session.setAttribute("USER", pseudo);
-                    if (profil.getPrivilege().equals("admin")) {
-                        session.setAttribute("PRIVILEGE", "admin"); 
-                    } else {
-                        session.setAttribute("PRIVILEGE", "user"); 
-                    }
+        if(action != null) {
+            if(action.equals("creerNouveauCompte")) {
+                Part profilePic = request.getPart("profilePic");
+                InputStream contenuImage = profilePic.getInputStream();
+                InputStreamToByteArray ISBA = new InputStreamToByteArray(contenuImage);
+        
+                if(gu.getUtilisateur(request.getParameter("pseudo")) == null) {
+                    gu.creerUtilisateur(
+                        request.getParameter("nom"), 
+                        request.getParameter("prenom"), 
+                        request.getParameter("pseudo"), 
+                        request.getParameter("motDePasse"), 
+                        request.getParameter("ecole"), 
+                        request.getParameter("mail"), 
+                        request.getParameter("tel"),
+                        "user",
+                        ISBA.getBytes()
+                    );
                     response.sendRedirect("Accueil");
-                    
                 } else {
-                    message = "loginKO";
-                    response.sendRedirect("Compte?message=" + message);
+                    message = "compteKO";
+                    response.sendRedirect("Login?message=" + message);
                 }
-            } else if (action.equals("motDePassOublie")) {
-                
+            /*  
+                La servlet 'Compte' gère aussi le changement de photo de profil de l'utilisateur.
+                Cette implémentation a été nécessaire car l'upload de la nouvelle photo nécessite
+                que la servlet soit @MultipartConfig.
+            */
+            } else if(action.equals("changePhoto")) {
+                HttpSession session = request.getSession();
+                String user = (String) session.getAttribute("USER");
+                Part nouvProfilePic = request.getPart("nouvProfilePic");
+                InputStream nouvContenuImage = nouvProfilePic.getInputStream();
+                InputStreamToByteArray nouvISBA = new InputStreamToByteArray(nouvContenuImage);
+                gu.changePhoto(user, nouvISBA.getBytes());
+                response.sendRedirect("Profil?user=" + user);
             }
         }
+        
     }
 
     /**
@@ -98,5 +115,5 @@ public class LoginServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }
-   
+
 }

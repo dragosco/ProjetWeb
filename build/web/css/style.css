@@ -1,3 +1,7 @@
+.list-inline {
+    margin: 0 !important;
+}
+
 .annonce {
     height: 120px; 
     border: 1px solid activeborder;
@@ -20,4 +24,33 @@
 
 .photoDetailProduit {
     width: 300px;
+}
+
+.link-like-button {
+     background:none!important;
+     color: #c9302c;
+     font-size: 20px !important;
+     border:none !important; 
+     padding:0!important;
+     font: inherit;
+     cursor: pointer;
+}
+.link-like-button:hover {
+    color: red;
+}
+
+.modal-content {
+    padding: 50px;
+}
+
+.modal {
+    margin-top: 200px;
+}
+
+#dropAreaAnnonce {
+    height: 100px;
+    border: 2px #adadad dashed; 
+    padding: 30px; 
+    margin: 10px 0; 
+    text-align: center;
 }

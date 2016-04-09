@@ -1,5 +1,5 @@
 <%-- 
-    Document   : index
+    Document   : depotAnnonce
     Created on : 24 mars 2016, 14:50:35
     Authors     : Thais, Dragos
 --%>
@@ -24,7 +24,7 @@
         <jsp:include page='navbar.jsp'/>
         
         <div class="container">
-            <div class="row" style="width: 600px; margin: 0 auto;">
+            <div class="row">
                 <div class="col-md-6" >
                     <form action="Annonce" method="post" enctype="multipart/form-data">
                         <input class="form-control" type="text" name="titre" placeholder="Titre" required />
@@ -33,15 +33,13 @@
                                 <option>${c.nom}</option>
                             </c:forEach>
                         </select>
-                        <input class="form-control" type="number" name="prix" placeholder="Prix" required />
-                        <input class="form-control" type="text" name="description" placeholder="Description" required/>
+                        <input class="form-control" type="number" step="0.1" name="prix" min=0 placeholder="Prix" required />
                         <input class="form-control" type="file" name="files[]" placeholder="Image" id="files" multiple />
-                        <div id="dropArea" style="height: 100px; border: 2px #adadad dashed; padding: 30px; margin: 10px 0; text-align: center;">Drop files here</div>
-
-
+                        <div id="dropAreaAnnonce">Drop files here</div>
                         <input class="form-control" type="date" name="dateFin" placeholder="Date d'exp" required/>
+                        <textarea class="form-control" name="description">Décrivez le produit</textarea>
                         <button type="submit" value="creerAnnonce" name="action">Ajouter annonce</button>
-                    </form> 
+                    </form>
                 </div>
                 <div class="col-md-6">
                     <output id="previewImages"></output>
@@ -50,6 +48,5 @@
         </div>
         <script src="js/main.js"></script>
     </body>
-    
 </html>
 

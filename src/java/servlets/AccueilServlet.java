@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package servlets;
 import gestionnaires.GestionnaireAnnonces;
 import gestionnaires.GestionnaireUtilisateurs;
@@ -20,8 +15,7 @@ import modeles.Annonce;
 import modeles.Utilisateur;
 
 /**
- *
- * @author Dragos
+ * @authors Dragos, Thais
  */
 @WebServlet(name = "Accueil", urlPatterns = {"/Accueil"})
 public class AccueilServlet extends HttpServlet {
@@ -29,8 +23,6 @@ public class AccueilServlet extends HttpServlet {
     private GestionnaireAnnonces ga;
     @EJB
     private GestionnaireUtilisateurs gu;
-    
-    
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -51,21 +43,6 @@ public class AccueilServlet extends HttpServlet {
         request.setAttribute("annonces", annonces);
         request.setAttribute("nAnnonces", 2);
         
-        String action = request.getParameter("action");
-        if(action != null) {
-            
-            if (action.equals("supprimerAnnonce")) {
-                int id = Integer.parseInt(request.getParameter("id"));
-                //L'admin peut supprimer n'importe quelle annonce. Un user ne peut supprimer que les siens.
-                if (u.getPrivilege().equals("admin") || ga.getAnnonce(id).getAuteur().equals(u)){
-                    ga.supprimerAnnonce(id);
-                } else {
-                    //ne rien faire
-                }
-            }
-        }
-        
-        
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
         requestDispatcher.forward(request, response);
     }
@@ -81,19 +58,7 @@ public class AccueilServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String action = "";
-        
-        
         
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }
 }

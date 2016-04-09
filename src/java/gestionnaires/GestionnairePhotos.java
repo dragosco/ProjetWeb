@@ -33,5 +33,11 @@ public class GestionnairePhotos {
         return (Photo) q.getSingleResult();
     }
     
+    public void supprimerPhoto(int idPhoto) {
+        Query q = em.createQuery("delete from Photo p where p.id = :id");
+        q.setParameter("id", idPhoto);
+        q.executeUpdate();
+    }
+    
     
 }

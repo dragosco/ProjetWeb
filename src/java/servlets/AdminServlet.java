@@ -32,11 +32,12 @@ public class AdminServlet extends HttpServlet {
     @EJB
     private GestionnaireCategories gc;
     @EJB
-    private GestionnaireAnnonces go;
+    private GestionnaireAnnonces ga;
     @EJB
     private GestionnaireUtilisateurs gu;
     @EJB
     private GestionnairePhotos gp;
+    
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -64,13 +65,21 @@ public class AdminServlet extends HttpServlet {
             Collection<Photo> allPhotos = gp.getPhotos();
             request.setAttribute("allPhotos", allPhotos);
             
+            String action = request.getParameter("action");
+            if(action != null) {
+                if(action.equals("filtrerUtilisateurs")) {
+                    allUsers = gu.filtre(
+                            request.getParameter("pseudo"),
+                            request.getParameter("nom"),
+                            request.getParameter("ecole")
+                    );
+                    request.setAttribute("allUsers", allUsers);
+                }
+            }
             
             RequestDispatcher requestDispatcher = request.getRequestDispatcher(forwardTo);
             requestDispatcher.include(request, response);
-        } else {
-            
         }
-        
     }
 
     /**
@@ -84,27 +93,42 @@ public class AdminServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            String action = request.getParameter("action");
-            if(action != null) {
-                if(action.equals("creerCategorie")) {
+        String action = request.getParameter("action");
+        String redirection = "Admin";
+        if(action != null) {
+            switch(action) {
+                case "supprimerUtilisateur" : 
+                    gu.supprimerUtilisateur(request.getParameter("pseudo"));
+                    break;
+                case "changePrivilege" : 
+                    gu.changePrivilege(request.getParameter("pseudo"), request.getParameter("privilege"));
+                    break;
+                case "supprimerPhoto" :
+                    gp.supprimerPhoto(Integer.parseInt(request.getParameter("id")));
+                    break;
+                case "creerCategorie" :
                     gc.creerCategorie(request.getParameter("titre"));
-                    
-                } else if(action.equals("supprimerCategorie")) {
-                    gc.supprimerCategorie(request.getParameter("titre"));
-                }
-                response.sendRedirect("Admin");
+                    break;
+                case "supprimerCategorie" :
+                    gc.supprimerCategorie(Integer.parseInt(request.getParameter("id")));
+                    break;
+                case "supprimerAnnonce" :
+                    HttpSession session = request.getSession();
+                    String user = (String) session.getAttribute("USER");
+                    Utilisateur u = (Utilisateur) session.getAttribute("PROFIL");
+                    int id = Integer.parseInt(request.getParameter("id"));
+                    //L'admin peut supprimer n'importe quelle annonce. Un user ne peut supprimer que les siens.
+                    if (u.getPrivilege().equals("admin") || ga.getAnnonce(id).getAuteur().equals(u)){
+                        ga.supprimerAnnonce(id);
+                        response.sendRedirect("Profil?user=" + user + "&action=afficheAnnonces");
+                    } else {
+                        //ne rien faire
+                    }
+                    redirection = "Accueil";
+                    break;
             }
-            
+            response.sendRedirect(redirection);
+        }
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }
-
+    
 }

@@ -5,7 +5,8 @@
  */
 package gestionnaires;
 
-import static java.lang.System.gc;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import javax.ejb.EJB;
@@ -34,15 +35,18 @@ public class GestionnaireAnnonces {
     private EntityManager em;
     
 
-    public Annonce creerAnnonce(String titre, String categorie, double prix, String description, Date dateFin, String auteur, byte[] photo) {
+    public Annonce creerAnnonce(String titre, String categorie, double prix, String description, Date dateFin, String auteur, Collection<byte[]> photos) {
         Utilisateur user = gu.getUtilisateur(auteur);
         Categorie categ = gc.getCategorie(categorie);
         Annonce a = new Annonce(titre, categ, prix, description, dateFin, user);
-        if (photo != null) {
-            Photo p = new Photo(photo);
-            p.setAnnonce(a);
-            em.persist(p);
-            a.addPhoto(p);
+        a.setDateDepot(new Date());
+        for(byte[] photo : photos) {
+            if (photo != null) {
+                Photo p = new Photo(photo);
+                p.setAnnonce(a);
+                em.persist(p);
+                a.addPhoto(p);
+            }
         }
         em.persist(a);
         return a;
