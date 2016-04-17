@@ -41,21 +41,21 @@ public class InitBD {
     public void init() {
         
         
-//        File file = new File("C:/Users/Dragos/WebstormProjects/mySite/resources/logo.png");
-//        FileInputStream fileInputStream = null;
-//        
-//        byte[] bFile = new byte[(int) file.length()];
-//        
-//        try {
-//            //convert file into array of bytes
-//            fileInputStream = new FileInputStream(file);
-//	    fileInputStream.read(bFile);
-//	    fileInputStream.close();
-//        } catch (Exception ex) {
-//            Logger.getLogger(InitBD.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        File file = new File("/home/thais/NetBeansProjects/ProjetWeb/web/resources/blason-pa.png");
+        FileInputStream fileInputStream = null;
         
-        File file2 = new File("C:\\Users\\Dragos\\Documents\\NetBeansProjects\\ProjetWeb\\web\\resources\\dragos.jpg");
+        byte[] bFile = new byte[(int) file.length()];
+        
+        try {
+            //convert file into array of bytes
+            fileInputStream = new FileInputStream(file);
+	    fileInputStream.read(bFile);
+	    fileInputStream.close();
+        } catch (Exception ex) {
+            Logger.getLogger(InitBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        File file2 = new File("/home/thais/NetBeansProjects/ProjetWeb/web/resources/dragos.jpg");
         FileInputStream fileInputStream2 = null;
         
         byte[] bFile2 = new byte[(int) file2.length()];
@@ -69,7 +69,7 @@ public class InitBD {
             Logger.getLogger(InitBD.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        File file3 = new File("C:\\Users\\Dragos\\Documents\\NetBeansProjects\\ProjetWeb\\web\\resources\\thais.jpg");
+        File file3 = new File("/home/thais/NetBeansProjects/ProjetWeb/web/resources/thais.jpg");
         FileInputStream fileInputStream3 = null;
         
         byte[] bFile3 = new byte[(int) file3.length()];
@@ -84,7 +84,7 @@ public class InitBD {
         }
         
         Collection<byte[]> photos = new ArrayList<byte[]>();
-        photos.add(bFile2);
+        photos.add(bFile);
         
 //        gu.creerUtilisateur("COJOCARU", "Dragos", "adminDragos", "admin", "UNice", "cojocaru.dragos14@gmail.com", "0687711971", "admin", bFile2);
 //        gu.creerUtilisateur("MOTA DOS SANTOS", "Thais", "adminThais", "admin", "UNice", "thais.motasantos@gmail.com", "06*******", "admin", bFile2);
