@@ -39,9 +39,42 @@ public class AccueilServlet extends HttpServlet {
         HttpSession session = request.getSession();
         Utilisateur u = (Utilisateur) session.getAttribute("PROFIL");
         
-        Collection<Annonce> annonces = ga.getAnnonces();
-        request.setAttribute("annonces", annonces);
-        request.setAttribute("nAnnonces", 2);
+        Collection<Annonce> annonces;
+        
+        Collection<Categorie> categories = gc.getCategories();
+        request.setAttribute("categories", categories);
+        
+        Collection<Ecole> ecoles = ge.getEcoles();
+        request.setAttribute("ecoles", ecoles);
+        
+        String action = request.getParameter("action");
+        
+        if(action != null) {
+            if(action.equals("filtrerAnnonces")) {
+                annonces = ga.getAnnonces(request.getParameter("motscles"),
+                            request.getParameter("categorie"),
+                            request.getParameter("ecole"),
+                            request.getParameter("etudiant"),
+                            request.getParameter("prix"),
+                            request.getParameter("annonceType"));
+
+                request.setAttribute("annonces", annonces);
+            } else if (action.equals("supprimerAnnonce")) {
+                int id = Integer.parseInt(request.getParameter("id"));
+                //L'admin peut supprimer n'importe quelle annonce. Un user ne peut supprimer que les siens.
+                if (u.getPrivilege().equals("admin") || ga.getAnnonce(id).getAuteur().equals(u)){
+                    ga.supprimerAnnonce(id);
+                } else {
+                    //ne rien faire
+                }
+                
+                annonces = ga.getAnnonces();
+                request.setAttribute("annonces", annonces);
+            } 
+        } else {
+            annonces = ga.getAnnonces();
+            request.setAttribute("annonces", annonces);
+        }
         
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
         requestDispatcher.forward(request, response);

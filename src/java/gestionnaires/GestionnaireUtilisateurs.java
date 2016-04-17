@@ -150,7 +150,7 @@ public class GestionnaireUtilisateurs {
                 filtre += " and u.nom = :nom";
             }
             if (!ecole.equals("")) {
-                filtre += " and u.ecole = :ecole";
+                filtre += " and u.ecole.nom = :ecole";
             }
             
         } else {
@@ -158,11 +158,11 @@ public class GestionnaireUtilisateurs {
                 filtre += " where u.nom = :nom";
                 
                 if (!ecole.equals("")) {
-                    filtre += " and u.ecole = :ecole";
+                    filtre += " and u.ecole.nom = :ecole";
                 }
             } else {
                 if (!ecole.equals("")) {
-                    filtre += " where u.ecole = :ecole";
+                    filtre += " where u.ecole.nom = :ecole";
                 }
             }
         }

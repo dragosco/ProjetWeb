@@ -62,3 +62,45 @@ function imagesSelect(evt) {
 
 document.getElementById('files').addEventListener('change', imagesSelect, false);
 
+//var prixSlider = document.getElementById('prix');
+//
+//noUiSlider.create(prixSlider, {
+//    range: {
+//        'min': 0,
+//        '10%': 10,
+//        '20%': 20,
+//        '30%': 30,
+//	'40%': 40,
+//        '50%': 50,
+//        '60%': 60,
+//        '70%': 70,
+//	'80%': 80,
+//        '90%': 90,
+//        'max': 100
+//    },
+//    snap: true,
+//    start: [20, 90]
+//});
+//
+//var skipValues = [
+//	document.getElementById('skip-value-lower'),
+//	document.getElementById('skip-value-upper')
+//];
+//
+//prixSlider.noUiSlider.on('update', function( values, handle ) {
+//	skipValues[handle].innerHTML = values[handle];
+//});
+
+//$(function() {
+//    $( "#slider-range" ).slider({
+//        range: true,
+//        min: 0,
+//        max: 500,
+//        values: [ 75, 300 ],
+//        slide: function( event, ui ) {
+//            $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+//        }
+//    });
+//    $( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +
+//        " - $" + $( "#slider-range" ).slider( "values", 1 ) );
+//});

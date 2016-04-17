@@ -24,8 +24,18 @@
         <jsp:include page='navbar.jsp'/>
         
         <div class="container" style="width: 300px;">
-            
-            <img src="Image/produit/${offre.photos[0].id}" class="img-rounded photoDetailProduit"/>
+            <h4>${annonce.titre}</h4>
+            <section class="carousel">
+                <img src="Image/produit/${annonce.photos[0].id}" class="img-rounded photoDetailProduit"/>
+            </section>
+            <section class="properties">
+                <p>${annonce.dateDepot}</p>
+                <p><a href="Profil?user=${annonce.auteur.pseudo}">${annonce.auteur.prenom} ${annonce.auteur.nom}</a></p>
+                <p>Prix : ${annonce.prix}</p>
+                <p>Ecole : ${annonce.auteur.ecole.nom}</p>
+                <p>Description :</p>
+                <p>${annonce.description}</p>
+            </section>
             
             
         </div>

@@ -10,13 +10,15 @@ import gestionnaires.GestionnaireCategories;
 import gestionnaires.GestionnaireUtilisateurs;
 import java.io.File;
 import java.io.FileInputStream;
-import static java.lang.System.gc;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import modeles.Photo;
 
 /**
  *
@@ -77,24 +79,33 @@ public class InitBD {
         } catch (Exception ex) {
             Logger.getLogger(InitBD.class.getName()).log(Level.SEVERE, null, ex);
         }
-//            
-//            gu.creerUtilisateur("COJOCARU", "Dragos", "adminDragos", "admin", "UNice", "cojocaru.dragos14@gmail.com", "0687711971", "admin", bFile2);
-//            gu.creerUtilisateur("MOTA DOS SANTOS", "Thais", "adminThais", "admin", "UNice", "thais.motasantos@gmail.com", "06*******", "admin", bFile2);
-//            ga.creerAnnonce("titre1", "categorie1", 10, "description1", null, "adminThais", bFile);
-//            ga.creerAnnonce("titre2", "categorie2", 10, "description2", null, "adminDragos", bFile);
-//            ga.creerAnnonce("titretitretitretitretitre", "categorie3", 10, "descriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescription", null, "adminThais", bFile);
-//        }
+        
+        Collection<byte[]> photos = new ArrayList<byte[]>();
+        photos.add(bFile);
+        
+//        gu.creerUtilisateur("COJOCARU", "Dragos", "adminDragos", "admin", "UNice", "cojocaru.dragos14@gmail.com", "0687711971", "admin", bFile2);
+//        gu.creerUtilisateur("MOTA DOS SANTOS", "Thais", "adminThais", "admin", "UNice", "thais.motasantos@gmail.com", "06*******", "admin", bFile2);
+//        ga.creerAnnonce("titre1", "categorie1", 10, "description1", null, "adminThais", photos);
+//        ga.creerAnnonce("titre2", "categorie2", 10, "description2", null, "adminDragos", photos);
+//        ga.creerAnnonce("titretitretitretitretitre", "categorie3", 10, "descriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescription", null, "adminThais", photos);
+        
         gc.creerCategoriesDefaut();
         
-        gu.creerUtilisateur("COJOCARU", "Dragos", "adminDragos", "admin", "UNice", "cojocaru.dragos14@gmail.com", "0687711971", "admin", bFile2);
-        gu.creerUtilisateur("MOTA DOS SANTOS", "Thais", "adminThais", "admin", "UNice", "thais.motasantos@gmail.com", "06*******", "admin", bFile3);
-        gu.creerUtilisateur("Potter", "Harry", "hp", "hp", "UNice", "hp@gmail.com", "06*******", "user", null);
-        gu.creerUtilisateur("Granger", "Hermione", "hermy", "hermy", "SKEMA", "hermy@gmail.com", "06*******", "user", null);
-        gu.creerUtilisateur("Weasley", "Ronald", "ronnie", "ronnie", "SKEMA", "ronnieW@gmail.com", "06*******", "user", null);
-        gu.creerUtilisateur("Longbottom", "Neville", "bottom", "bottom", "UNice", "lbtm@gmail.com", "06*******", "user", null);
-        gu.creerUtilisateur("Dupont", "Nathalie", "dun", "dun", "SKEMA", "dun@gmail.com", "06*******", "user", null);
-        gu.creerUtilisateur("Dupont", "Jean", "duj", "duj", "UNice", "duj@gmail.com", "06*******", "user", null);
+        gu.creerUtilisateur("COJOCARU", "Dragos", "adminDragos", "admin", "Unice", "cojocaru.dragos14@gmail.com", "0687711971", "admin", bFile2);
+        gu.creerUtilisateur("MOTA DOS SANTOS", "Thais", "adminThais", "admin", "Unice", "thais.motasantos@gmail.com", "06*******", "admin", bFile3);
+        gu.creerUtilisateur("Potter", "Harry", "hp", "hp", "Unice", "hp@gmail.com", "06*******", "user", null);
+        gu.creerUtilisateur("Granger", "Hermione", "hermy", "hermy", "Skema", "hermy@gmail.com", "06*******", "user", null);
+        gu.creerUtilisateur("Weasley", "Ronald", "ronnie", "ronnie", "Skema", "ronnieW@gmail.com", "06*******", "user", null);
+        gu.creerUtilisateur("Longbottom", "Neville", "bottom", "bottom", "Unice", "lbtm@gmail.com", "06*******", "user", null);
+        gu.creerUtilisateur("Dupont", "Nathalie", "dun", "dun", "Skema", "dun@gmail.com", "06*******", "user", null);
+        gu.creerUtilisateur("Dupont", "Jean", "duj", "duj", "Skema", "duj@gmail.com", "06*******", "user", null);
 
+
+        //String titre, String categorie, double prix, String description, Date dateFin, String auteur, byte[] photo
         
+        ga.creerAnnonce("Smartphone samsung", "Multimédia", 200, "description", null, "adminThais", photos);
+        ga.creerAnnonce("titre2", "Immobilier", 10, "description2", null, "adminDragos", photos);
+        ga.creerAnnonce("titretitretitretitretitre", "Loisirs", 10, "descriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescription", null, "adminThais", photos);       
+        ga.creerAnnonce("titre5", "Loisirs", 10, "desc", null, "duj", photos);       
     }
 }

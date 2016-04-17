@@ -17,9 +17,31 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="css/bootstrap.min.css">
+        
         <script src="js/jquery-2.2.0.js"></script>
+        <script src="js/main.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/jquery-scripts.js"></script>
+        
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+        <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+        <link rel="stylesheet" href="/resources/demos/style.css">
+        <script>
+            $(function() {
+              $("#slider-range").slider({
+                range: true,
+                min: 0,
+                max: 500,
+                values: [0, 500],
+                slide: function(event, ui) {
+                  $("#amount").val(ui.values[0] + "€" + " - " + ui.values[1] + "€");
+                }
+              });
+              $("#amount").val($("#slider-range").slider("values", 0) + "€" +
+                " - " + $("#slider-range").slider("values", 1) + "€" );
+            });
+        </script>
     </head>
     <body>
         <jsp:include page='navbar.jsp'/>
@@ -51,6 +73,38 @@
             </c:if>
         </div>
         
+        <div class="container">
+            <form action="Accueil" method="get">
+                <div class="row">
+                    <div class="col-md-6">
+                        Mots clés : <input class="form-control" type="text" name="motscles" />
+                        Catégorie : <select class="form-control" type="text" name="categorie">
+                                        <option value="" selected>Toutes</option>
+                                        <c:forEach var="c" items="${categories}">
+                                            <option value="${c.nom}">${c.nom}</option>
+                                        </c:forEach>
+                                    </select>
+                        Prix :  <input type="text" id="amount" name="prix" readonly style="border:0; color:#f6931f; font-weight:bold;">
+                                <div id="slider-range"></div>
+                    </div>
+                    <div class="col-md-6">
+                        Ecole : <select class="form-control" type="text" name="ecole">
+                                    <option value="" selected>Toutes</option>
+                                    <c:forEach var="e" items="${ecoles}">
+                                        <option value="${e.nom}">${e.nom}</option>
+                                    </c:forEach>
+                                </select>
+                        Etudiant :  <input class="form-control" type="text" name="etudiant" />
+                        <input type="radio" name="annonceType" id="rtous" value="0" checked /> <label for="rtous"> Tous</label>
+                        <input type="radio" name="annonceType" id="rvente" value="1" /> <label for="rvente"> Vente</label>
+                        <input type="radio" name="annonceType" id="rrecherche" value="2" /> <label for="rrecherche"> Recherche</label>
+                    </div>  
+                </div>
+                <br>
+                <button class="btn btn-success" type="submit" value="filtrerAnnonces" name="action" style="float:right;">Chercher</button>
+            </form>
+        </div>
+        <br>
         <div class="container">
             <ul class="list-group">
                 <c:forEach var="a" items="${annonces}">
@@ -85,10 +139,10 @@
                                     </c:choose>
                                 </a>
                                 <p>${a.auteur.prenom} ${a.auteur.nom}</p>
-                                <p>${a.auteur.ecole}</p>
+                                <p>${a.auteur.ecole.nom}</p>
                             </div>
                             <div class="infoProduit col-md-4">
-                                <p>${a.titre}</p>
+                                <a href="Annonce?id=${a.id}"><p>${a.titre}</p></a>
                                 <p>${a.categorie.nom}</p>
                                 <p>Date ajout : <fmt:formatDate type="both" value="${a.dateDepot}" /></p>
                                 <p>Date fin : <fmt:formatDate type="date" value="${a.dateFin}" /></p>

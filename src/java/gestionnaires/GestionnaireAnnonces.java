@@ -5,10 +5,10 @@
  */
 package gestionnaires;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -56,6 +56,95 @@ public class GestionnaireAnnonces {
     public Collection<Annonce> getAnnonces() {
         // Exécution d'une requête équivalente à un select *
         Query q = em.createQuery("select a from Annonce a");
+        return q.getResultList();
+    }
+
+    public Collection<Annonce> getAnnonces(String motscles, String categorie, String ecole, String etudiant, String prix, String annonceType) {
+        // debut de la contruction de la requete        
+        String query = "select a from Annonce a "
+            + "where (:categorie = '' or a.categorie.nom = :categorie) "
+            + "and (:ecole = '' or a.auteur.ecole.nom = :ecole) ";
+        
+        // filtre par nom de l'etudiant
+        String[] nomsAuteur = null;
+                
+        if(!etudiant.isEmpty()) {        
+            nomsAuteur = etudiant.trim().split(" +");
+            if(nomsAuteur.length > 0) {
+                query += "and (:" + nomsAuteur[0] + " = ''";
+                System.out.println("etudiant : " + nomsAuteur[0]);
+
+                for (int i = 0; i < nomsAuteur.length; i++) {
+                    query += " or UPPER(a.auteur.nom) like UPPER(:" + nomsAuteur[i] + ") or UPPER(a.auteur.prenom) like UPPER(:" + nomsAuteur[i] + ")";
+                }
+
+                query += ") ";
+            }
+        }
+        
+        // filtre par mots-cles
+        String[] motsClesParts = null;
+        
+        if(!motscles.isEmpty()) {        
+            motsClesParts = motscles.trim().split(" +");
+            if(motsClesParts.length > 0) {
+                query += "and (:" + motsClesParts[0] + " = ''";
+
+                for (int i = 0; i < motsClesParts.length; i++) {
+                    query += " or UPPER(a.titre) like UPPER(:" + motsClesParts[i] + ") or UPPER(a.description) like UPPER(:" + motsClesParts[i] + ")";
+                }
+
+                query += ") ";
+            }
+        }
+
+        // filtre par prix min et max
+        String[] intervalePrix = prix.split(" - ");
+        
+        Pattern pattern = Pattern.compile("[0-9]+");
+        Matcher matcher = pattern.matcher(intervalePrix[0]);
+        String prixMin = "";
+        if (matcher.find())
+        {
+            prixMin = matcher.group(0);
+        }
+        
+        String prixMax = "";
+        if(intervalePrix.length > 0) {
+            matcher = pattern.matcher(intervalePrix[1]);
+            if (matcher.find())
+            {
+                prixMax = matcher.group(0);
+            }
+        }
+        
+        query += "and (:prixMin = '' or a.prix >= CAST(:prixMin as DECIMAL(9,2))) ";
+        query += "and (:prixMax = '' or a.prix <= CAST(:prixMax as DECIMAL(9,2))) ";
+
+        //System.out.println("query : " + query);
+        
+        // fin de la contruction de la requete
+        // debut du setParameter
+        Query q = em.createQuery(query);
+        q.setParameter("categorie", categorie);
+        q.setParameter("ecole", ecole);
+        
+        if(!etudiant.isEmpty()) {        
+            for (int i = 0; i < nomsAuteur.length; i++) {
+                q.setParameter(nomsAuteur[i], '%' + nomsAuteur[i] + '%');
+            }
+        }
+        
+        if(!motscles.isEmpty()) {        
+            for (int i = 0; i < motsClesParts.length; i++) {
+                q.setParameter(motsClesParts[i], '%' + motsClesParts[i] + '%');
+            }
+        }
+        
+        q.setParameter("prixMin", prixMin);
+        q.setParameter("prixMax", prixMax);
+        // fin du setParameter
+        
         return q.getResultList();
     }
     
