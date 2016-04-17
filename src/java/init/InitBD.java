@@ -7,6 +7,7 @@ package init;
 
 import gestionnaires.GestionnaireAnnonces;
 import gestionnaires.GestionnaireCategories;
+import gestionnaires.GestionnaireEcoles;
 import gestionnaires.GestionnaireUtilisateurs;
 import java.io.File;
 import java.io.FileInputStream;
@@ -28,12 +29,14 @@ import modeles.Photo;
 @Startup
 public class InitBD {
     @EJB
+    private GestionnaireEcoles ge;
+    @EJB
     private GestionnaireUtilisateurs gu;
     @EJB
     private GestionnaireAnnonces ga;
     @EJB
     private GestionnaireCategories gc;
-
+    
     @PostConstruct
     public void init() {
         
@@ -81,7 +84,7 @@ public class InitBD {
         }
         
         Collection<byte[]> photos = new ArrayList<byte[]>();
-        photos.add(bFile);
+        photos.add(bFile2);
         
 //        gu.creerUtilisateur("COJOCARU", "Dragos", "adminDragos", "admin", "UNice", "cojocaru.dragos14@gmail.com", "0687711971", "admin", bFile2);
 //        gu.creerUtilisateur("MOTA DOS SANTOS", "Thais", "adminThais", "admin", "UNice", "thais.motasantos@gmail.com", "06*******", "admin", bFile2);
@@ -90,6 +93,7 @@ public class InitBD {
 //        ga.creerAnnonce("titretitretitretitretitre", "categorie3", 10, "descriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescription", null, "adminThais", photos);
         
         gc.creerCategoriesDefaut();
+        ge.creerEcolesDefaut();
         
         gu.creerUtilisateur("COJOCARU", "Dragos", "adminDragos", "admin", "Unice", "cojocaru.dragos14@gmail.com", "0687711971", "admin", bFile2);
         gu.creerUtilisateur("MOTA DOS SANTOS", "Thais", "adminThais", "admin", "Unice", "thais.motasantos@gmail.com", "06*******", "admin", bFile3);

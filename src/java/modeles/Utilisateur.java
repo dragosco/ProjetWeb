@@ -15,8 +15,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 
 /**
  *
@@ -34,7 +34,6 @@ public class Utilisateur implements Serializable {
     @Column(unique=true)
     private String pseudo;
     private String motDePasse;
-    private String ecole;
     @Column(unique=true)
     private String mail;
     private String tel;
@@ -46,11 +45,14 @@ public class Utilisateur implements Serializable {
             mappedBy="auteur")
     private Collection<Annonce> annonces;
     
+    @ManyToOne
+    private Ecole ecole;
+    
     public Utilisateur() {
         
     }
     
-    public Utilisateur(String nom, String prenom, String pseudo, String motDePasse, String ecole, String mail, String tel, String privilege, byte[] photo) {
+    public Utilisateur(String nom, String prenom, String pseudo, String motDePasse, Ecole ecole, String mail, String tel, String privilege, byte[] photo) {
         this.nom = nom;
         this.prenom = prenom;
         this.pseudo = pseudo;
@@ -103,11 +105,11 @@ public class Utilisateur implements Serializable {
         this.motDePasse = motDePasse;
     }
 
-    public String getEcole() {
+    public Ecole getEcole() {
         return ecole;
     }
 
-    public void setEcole(String ecole) {
+    public void setEcole(Ecole ecole) {
         this.ecole = ecole;
     }
 

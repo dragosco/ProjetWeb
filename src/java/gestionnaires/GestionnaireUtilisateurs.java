@@ -5,18 +5,15 @@
  */
 package gestionnaires;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Collection;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import modeles.Ecole;
 import modeles.Utilisateur;
-import outils.InputStreamToByteArray;
 
 /**
  *
@@ -24,12 +21,18 @@ import outils.InputStreamToByteArray;
  */
 @Stateless
 public class GestionnaireUtilisateurs {
+    @EJB
+    private GestionnaireEcoles ge;
     @PersistenceContext
     private EntityManager em;
-
+    
     public Utilisateur creerUtilisateur(String nom, String prenom, String pseudo, String motDePasse, String ecole, String mail, String tel, String privilege, byte[] photo) {
-        Utilisateur u = new Utilisateur(nom, prenom, pseudo, motDePasse, ecole, mail, tel, privilege, photo);
+        Ecole e = ge.getEcole(ecole);
+        
+        Utilisateur u = new Utilisateur(nom, prenom, pseudo, motDePasse, e, mail, tel, privilege, photo);
         em.persist(u);
+        
+        e.addEtudiant(u);
         return u;
     }
     
@@ -188,6 +191,10 @@ public class GestionnaireUtilisateurs {
             }
         }
         return OK;
+    }
+
+    public void persist(Object object) {
+        em.persist(object);
     }
     
 }

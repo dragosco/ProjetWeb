@@ -1,5 +1,7 @@
 package servlets;
 import gestionnaires.GestionnaireAnnonces;
+import gestionnaires.GestionnaireCategories;
+import gestionnaires.GestionnaireEcoles;
 import gestionnaires.GestionnaireUtilisateurs;
 import java.util.Collection;
 import javax.ejb.EJB;
@@ -12,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import modeles.Annonce;
+import modeles.Categorie;
+import modeles.Ecole;
 import modeles.Utilisateur;
 
 /**
@@ -20,9 +24,13 @@ import modeles.Utilisateur;
 @WebServlet(name = "Accueil", urlPatterns = {"/Accueil"})
 public class AccueilServlet extends HttpServlet {
     @EJB
+    private GestionnaireEcoles ge;
+    @EJB
     private GestionnaireAnnonces ga;
     @EJB
     private GestionnaireUtilisateurs gu;
+    @EJB
+    private GestionnaireCategories gc;
 
     /**
      * Handles the HTTP <code>GET</code> method.
