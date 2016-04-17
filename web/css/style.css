@@ -1,5 +1,166 @@
+.logo {
+    font-family: "Trebuchet MS";
+    color: #FFFCC4 !important;
+    font-size: 30px;
+    font-weight: 900;
+}
+.etu {
+    color: #009393 !important;
+}
+.navbar {
+    background-color: #00585F !important;
+    border: none !important;
+    border-radius: 0 !important;
+    -webkit-box-shadow: 1px 11px 20px -1px rgba(92,87,92,0.65);
+    -moz-box-shadow: 1px 11px 20px -1px rgba(92,87,92,0.65);
+    box-shadow: 1px 11px 20px -1px rgba(92,87,92,0.65);
+}
+.navbar-default .navbar-nav > li > a {
+    color: #FFF !important;
+    line-height: 26px !important;
+    font-size: 15.5px;
+}
+.navbar-default .navbar-nav > li > a:hover {
+    color: #FF3800 !important;
+}
+
+/*
+ *  BOUTTON de CONNEXION
+ */
+.btn-info {
+    background-color: #FF3800 !important;
+    color: #FFF !important;
+    border: none !important;
+    font-size: 15.5px !important;
+}
+.btn-info:hover {
+    background-color: #FF4F00 !important;
+    color: #FFF !important;
+}
+
+/* 
+ *  MODAL DE CONNEXION
+ */
+.modal-dialog {
+    text-align: center;
+}
+.dismiss-button {
+    font-size: 30px !important;
+}
+#logoPACA {
+    width:auto; 
+    height:60px; 
+    margin: 0 auto -33px auto;
+}
+#modalConnection-content {
+    position: static;
+    background-image: url(../resources/background_modal.png);
+    background-position:right top;
+    background-size: cover;
+    text-align: center;
+    padding: 30px 50px;
+    border: none !important;
+}
+#modalConnection-content > p {
+    font-family: "Trebuchet MS";
+    font-size: 18px;
+    color: #FFF;
+    margin: 10px auto;
+}
+#modalConnection-content > a {
+    color: #FFFCC4;
+}
+#modalConnection-content > a:hover {
+    color: #009393;
+}
+#modalConnection-content > form {
+    width: 50%;
+    margin: auto auto;
+}
+#modalConnection-content > form > input {
+    margin: 20px 0;
+    height: 40px;
+    background-color: #FFF;
+}
+
+/*
+ *  CREER NOUVEAU COMPTE
+ */
+#formNouveauCompte {
+    
+}
+.main {
+    background-color: #FFFFFF;
+    border-radius:10px;
+    -webkit-box-shadow: 1px 11px 20px -1px rgba(92,87,92,0.65);
+    -moz-box-shadow: 1px 11px 20px -1px rgba(92,87,92,0.65);
+    box-shadow: 1px 11px 20px -1px rgba(92,87,92,0.65);
+    padding-bottom: 50px;
+}
+.header {
+    text-align: center;
+    color: #FFF;
+    background-color: #009393;
+    border-top-left-radius: inherit;
+    border-top-right-radius: inherit;
+}
+.header-left {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 0;
+}
+.header-right {
+    border-top-left-radius: 0;
+    border-top-right-radius: 10px;
+}
+.header > h3 {
+    padding: 7px;
+    margin: 0;
+}
+
+.contenu {
+    margin: 30px auto 0 auto;
+    width:60%;
+}
+#creerCompteButton {
+    background-color: #009393;
+    color: #FFF;
+    float: right;
+}
+#creerCompteButton:hover {
+    background-color: #00585F;
+    color: #FFF;
+}
+.alert-danger {
+    text-align: center;
+    font-size: 16px;
+    color: #cc0000 !important;
+    background-color: inherit !important;
+    padding: 5px !important;
+    border: none !important;
+}
+.alert-success, .alert-warning {
+    text-align: center;
+    font-size: 20px;
+    border: none !important;
+}
+.alert-success {color: #4cae4c !important;}
+    
+.alert-warning {color: #FF3800 !important;}
+
 .list-inline {
     margin: 0 !important;
+}
+.nouveau-compte-input::-webkit-input-placeholder {
+   font-style: italic;
+}
+.nouveau-compte-input:-moz-placeholder {
+   font-style: italic;  
+}
+.nouveau-compte-input::-moz-placeholder {
+   font-style: italic;  
+}
+.nouveau-compte-input:-ms-input-placeholder {  
+   font-style: italic; 
 }
 
 .annonce {
@@ -40,7 +201,8 @@
 }
 
 .modal-content {
-    padding: 50px;
+    border: none !important;
+    padding: 30px 50px;
 }
 
 .modal {

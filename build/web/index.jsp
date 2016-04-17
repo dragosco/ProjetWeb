@@ -19,9 +19,37 @@
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <script src="js/jquery-2.2.0.js"></script>
         <script src="js/bootstrap.min.js"></script>
+        <script src="js/jquery-scripts.js"></script>
     </head>
     <body>
         <jsp:include page='navbar.jsp'/>
+        
+        
+        
+        <div class="container">
+            <c:if test="${param.message == 'compteOK'}">
+                <div class="alert alert-success" id="compteOK" role="alert">
+                    Félicitations, votre compte a été créé avec succès <span class="glyphicon glyphicon-thumbs-up" style="width:30px;"></span> Vous pouvez vous connecter
+                </div>
+            </c:if>
+            
+            <c:if test="${param.message == 'echecDepotAnnonce'}">
+                <div class="alert alert-warning" id="echecDepotAnnonce" role="alert">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <span class="glyphicon glyphicon-info-sign" style="font-size: 48px; float:right;"></span>
+                        </div>
+                        <div class="col-md-8">
+                            <span style="float:left;">
+                                Il faut être connecté pour déposer une annonce
+                                <br>
+                                Connectez-vous ou créez un <a href="Compte">nouveau compte</a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </c:if>
+        </div>
         
         <div class="container">
             <ul class="list-group">

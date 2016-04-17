@@ -6,12 +6,11 @@
 package servlets;
 
 import gestionnaires.GestionnaireUtilisateurs;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintWriter;
 import javax.ejb.EJB;
+import javax.json.Json;
+import javax.json.JsonObject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -46,10 +45,29 @@ public class CompteServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setCharacterEncoding("UTF-8");
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("nouveauCompte.jsp") ;
-        requestDispatcher.include(request, response) ;
+        String pseudo = request.getParameter("pseudo");
+        if(pseudo != null) {
+            response.setContentType("application/json");
+            response.getWriter().write(generateJSON(pseudo).toString());
+        } else {
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("nouveauCompte.jsp") ;
+            requestDispatcher.include(request, response) ;
+        }
     }
 
+    public JsonObject generateJSON(String pseudo) {
+        JsonObject jsonData; 
+        if(gu.getUtilisateur(pseudo) == null) {
+            jsonData = Json.createObjectBuilder()
+                    .add("existe", "false")
+                    .build();
+        } else {
+            jsonData = Json.createObjectBuilder()
+                    .add("existe", "true")
+                    .build();
+        }
+        return jsonData;
+    }
     /**
      * Handles the HTTP <code>POST</code> method.
      *
@@ -64,7 +82,6 @@ public class CompteServlet extends HttpServlet {
         
         String action = request.getParameter("action");
         String message = "";
-        
         if(action != null) {
             if(action.equals("creerNouveauCompte")) {
                 Part profilePic = request.getPart("profilePic");
@@ -83,10 +100,10 @@ public class CompteServlet extends HttpServlet {
                         "user",
                         ISBA.getBytes()
                     );
-                    response.sendRedirect("Accueil");
+                    message = "compteOK";
+                    response.sendRedirect("Accueil?message=" + message);
                 } else {
-                    message = "compteKO";
-                    response.sendRedirect("Login?message=" + message);
+                    
                 }
             /*  
                 La servlet 'Compte' gère aussi le changement de photo de profil de l'utilisateur.

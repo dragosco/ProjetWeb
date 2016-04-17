@@ -9,7 +9,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-            <a class="navbar-brand" href="#"><span style="color: lightseagreen">etu</span>mercatus</a>
+            <a class="navbar-brand" href="#"><span class="logo"><span class="etu">etu</span>mercatus</span></a>
         </div>
 
         <div class="collapse navbar-collapse" id="barreDeNav">
@@ -24,19 +24,33 @@
             <ul class="nav navbar-nav navbar-right">
                 <c:if test="${sessionScope.USER == null}">
                     <li>
-                        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modalConnection">Se connecter</button>
+                        <button type="button" class="btn btn-info btn-lg navbar-btn" data-toggle="modal" data-target="#modalConnection">Se connecter</button>
                         <div class="modal fade" id="modalConnection" role="dialog">
-                          <div class="modal-dialog">
-                            <div class="modal-content">
-                                <form action="Login" method="post">
-                                    <input class="form-control" type="text" name="pseudo" placeholder="Username" required/>
-                                    <input class="form-control" type="password" name="motDePasse" placeholder="Password" required/>
-                                    <button type="submit" value="authentification" name="action">Me connecter</button>
+                            <div class="modal-dialog">
+                                <button type="button" class="close dismiss-button" data-dismiss="modal">&times;</button>  
+                                <img src="resources/blason-pa.png" id="logoPACA">
+                                <div class="modal-content" id="modalConnection-content">
+
+                                    <span class="logo"><span class="etu">etu</span>mercatus</span>
+                                    <p>Votre site d'annonces étudiantes de la région Provence Alpes Côtes d'Azur</p>
+
+                                    <form action="Login" method="post" id="loginForm">
+                                        <div class="form-group has-feedback">
+                                            <input class="form-control" id="seConnecterPseudo" type="text" name="pseudo" placeholder="Pseudo" required/>
+                                            <i class="glyphicon glyphicon-user form-control-feedback"></i>
+                                        </div>
+                                        <div class="form-group has-feedback">
+                                            <input class="form-control" id="seConnecterPass" type="password" name="motDePasse" placeholder="Mot de passe" required/>
+                                            <i class="glyphicon glyphicon-lock form-control-feedback"></i>
+                                        </div>
+                                        
+                                        <button class="btn btn-info btn-block btn-lg" id="seConnecterButton" type="submit" value="authentification" name="action">Me connecter</button>
+                                    </form>
+                                    
                                     <hr>
                                     <a href="Compte">Créer un compte</a>
-                                </form>
+                                </div>
                             </div>
-                          </div>
                         </div>
                     </li>
                 </c:if>

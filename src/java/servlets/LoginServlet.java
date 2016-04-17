@@ -11,6 +11,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import javax.ejb.EJB;
+import javax.json.Json;
+import javax.json.JsonObject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -43,8 +45,10 @@ public class LoginServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setCharacterEncoding("UTF-8");
+        
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp") ;
         requestDispatcher.include(request, response) ;
+        
     }
     
     /**
@@ -59,7 +63,6 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
-        String message = "";
         
         if (action != null) {
             
@@ -80,11 +83,10 @@ public class LoginServlet extends HttpServlet {
                     response.sendRedirect("Accueil");
                     
                 } else {
-                    message = "loginKO";
-                    response.sendRedirect("Compte?message=" + message);
+                    response.sendRedirect("Compte?message=loginKO");
                 }
-            } else if (action.equals("motDePassOublie")) {
                 
+            } else if (action.equals("motDePassOublie")) {
             }
         }
     }

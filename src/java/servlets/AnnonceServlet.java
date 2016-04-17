@@ -57,23 +57,29 @@ public class AnnonceServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setCharacterEncoding("UTF-8");
-        String forwardTo = "";
+        HttpSession session = request.getSession();
         
-        Collection<Categorie> categories = gc.getCategories();
-        request.setAttribute("categories", categories);
-        
-        if(request.getParameter("id") != null) {
-            String id = request.getParameter("id");
-            Annonce annonce = ga.getAnnonce(Integer.parseInt(id));
-            request.setAttribute("annonce", annonce);
-            forwardTo = "detailsAnnonce.jsp?id=" + id;
+        if (session.getAttribute("USER") != null) { //si on est connecté
+            String forwardTo = "";
+            Collection<Categorie> categories = gc.getCategories();
+            request.setAttribute("categories", categories);
+
+            if(request.getParameter("id") != null) {
+                String id = request.getParameter("id");
+                Annonce annonce = ga.getAnnonce(Integer.parseInt(id));
+                request.setAttribute("annonce", annonce);
+                forwardTo = "detailsAnnonce.jsp?id=" + id;
+
+            } else {
+                forwardTo = "depotAnnonce.jsp";
+            }
             
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher(forwardTo);
+            requestDispatcher.include(request, response);
         } else {
-            forwardTo = "depotAnnonce.jsp";
+            response.sendRedirect("Accueil?message=echecDepotAnnonce");
         }
         
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher(forwardTo);
-        requestDispatcher.include(request, response);
     }
 
     /**

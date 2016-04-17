@@ -19,18 +19,41 @@
         <script src="js/jquery-2.2.0.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/main.js"></script>
+        <script src="js/jquery-scripts.js"></script>
     </head>
     <body>
         <jsp:include page='navbar.jsp'/>
         
-        <c:if test="${param.user == sessionScope.USER}">
-            <c:if test="${param.action == null}"><jsp:include page="profilEdit.jsp" /></c:if>
-            <c:if test="${param.action == 'afficheAnnonces'}"><jsp:include page="sesAnnoncesEdit.jsp" /></c:if>
-        </c:if>
-        
-        <c:if test="${param.user != sessionScope.USER}">
-            <jsp:include page="profilView.jsp" />
-        </c:if>
+        <div class="container">
+            <div class="main">
+                <c:if test="${param.user == sessionScope.USER}">
+
+                        <c:if test="${param.action == null}">
+                            <div class="header">
+                                <h3>Votre profil</h3>
+                            </div>
+                            <div class="contenu">
+                                <jsp:include page="profilEdit.jsp" />
+                            </div>
+                        </c:if>
+
+                        <c:if test="${param.action == 'afficheAnnonces'}">
+                            <div class="header">
+                                <h3>Vos annonces</h3>
+                            </div>
+                            <div class="contenu">
+                                <jsp:include page="sesAnnoncesEdit.jsp" />
+                            </div>
+                        </c:if>
+
+
+                </c:if>
+
+                <c:if test="${param.user != sessionScope.USER}">
+                    <jsp:include page="profilView.jsp" />
+                </c:if>
+            </div>
+        </div>
     </body>
 </html>
 
