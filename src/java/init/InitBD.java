@@ -41,7 +41,7 @@ public class InitBD {
     public void init() {
         
         
-        File file = new File("/home/thais/NetBeansProjects/ProjetWeb/web/resources/blason-pa.png");
+        File file = new File("C:\\Users\\cojoc\\Documents\\NetBeansProjects\\ProjetWeb\\web\\resources\\blason-pa.png");
         FileInputStream fileInputStream = null;
         
         byte[] bFile = new byte[(int) file.length()];
@@ -55,7 +55,7 @@ public class InitBD {
             Logger.getLogger(InitBD.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        File file2 = new File("/home/thais/NetBeansProjects/ProjetWeb/web/resources/dragos.jpg");
+        File file2 = new File("C:\\Users\\cojoc\\Documents\\NetBeansProjects\\ProjetWeb\\web\\resources\\dragos.jpg");
         FileInputStream fileInputStream2 = null;
         
         byte[] bFile2 = new byte[(int) file2.length()];
@@ -69,7 +69,7 @@ public class InitBD {
             Logger.getLogger(InitBD.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        File file3 = new File("/home/thais/NetBeansProjects/ProjetWeb/web/resources/thais.jpg");
+        File file3 = new File("C:\\Users\\cojoc\\Documents\\NetBeansProjects\\ProjetWeb\\web\\resources\\thais.jpg");
         FileInputStream fileInputStream3 = null;
         
         byte[] bFile3 = new byte[(int) file3.length()];

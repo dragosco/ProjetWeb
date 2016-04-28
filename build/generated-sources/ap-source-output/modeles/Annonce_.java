@@ -9,7 +9,7 @@ import modeles.Categorie;
 import modeles.Photo;
 import modeles.Utilisateur;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2016-04-16T01:20:21")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2016-04-28T14:21:57")
 @StaticMetamodel(Annonce.class)
 public class Annonce_ { 
 

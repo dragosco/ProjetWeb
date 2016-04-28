@@ -16,9 +16,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/jasny-bootstrap.min.css">
         <script src="js/jquery-2.2.0.js"></script>
         <script src="js/bootstrap.min.js"></script>
-        <script src="js/main.js"></script>
         <script src="js/jquery-scripts.js"></script>
     </head>
     <body>
@@ -32,16 +32,19 @@
                             <div class="header">
                                 <h3>Votre profil</h3>
                             </div>
-                            <div class="contenu">
-                                <jsp:include page="profilEdit.jsp" />
-                            </div>
+                            <jsp:include page="profilEdit.jsp" />
                         </c:if>
 
                         <c:if test="${param.action == 'afficheAnnonces'}">
                             <div class="header">
                                 <h3>Vos annonces</h3>
                             </div>
-                            <div class="contenu">
+                            <div class="contenu contenu-full">
+                                <div style="padding: 10px; font-size: 18px; color: #00585F; text-align: left;">
+                                    <span class="glyphicon glyphicon-info-sign"></span>
+                                    Utiliser les pictogrammes en haut à droite pour visualiser, éditer ou supprimer une annonce.
+                                </div>
+                                
                                 <jsp:include page="sesAnnoncesEdit.jsp" />
                             </div>
                         </c:if>
@@ -50,10 +53,15 @@
                 </c:if>
 
                 <c:if test="${param.user != sessionScope.USER}">
+                    <div class="header">
+                        <h3>Profil</h3>
+                    </div>
                     <jsp:include page="profilView.jsp" />
                 </c:if>
             </div>
         </div>
+        
+        <jsp:include page='footer.jsp'/>
     </body>
 </html>
 

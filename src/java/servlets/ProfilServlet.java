@@ -6,6 +6,7 @@
 package servlets;
 
 import gestionnaires.GestionnaireAnnonces;
+import gestionnaires.GestionnaireEcoles;
 import gestionnaires.GestionnaireUtilisateurs;
 import java.io.IOException;
 import java.util.Collection;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import modeles.Annonce;
+import modeles.Ecole;
 import modeles.Utilisateur;
 
 /**
@@ -30,7 +32,8 @@ public class ProfilServlet extends HttpServlet {
     private GestionnaireUtilisateurs gu;
     @EJB
     private GestionnaireAnnonces ga;
-    
+    @EJB
+    private GestionnaireEcoles ge;
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -47,6 +50,9 @@ public class ProfilServlet extends HttpServlet {
         String pseudo = request.getParameter("user");
         String forwardTo = "";
         
+        Collection<Ecole> allEcoles = ge.getEcoles();
+        request.setAttribute("allEcoles", allEcoles);
+            
         if (pseudo != null) {
             Utilisateur user = gu.getUtilisateur(pseudo);
             Collection<Annonce> sesAnnonces = ga.getAnnoncesDe(user);

@@ -1,3 +1,21 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+body {
+    margin: 0 0 300px 0 !important; /* bottom = footer height */
+}
+footer {
+    width: 100%;
+    height: 150px;
+    background-color: #444; 
+    color: #adadad;
+    text-align: center;
+    padding: 30px; 
+    position: absolute;
+    bottom: 0;
+}
+
 .logo {
     font-family: "Trebuchet MS";
     color: #FFFCC4 !important;
@@ -24,6 +42,7 @@
     color: #FF3800 !important;
 }
 
+
 /*
  *  BOUTTON de CONNEXION
  */
@@ -44,6 +63,9 @@
 .modal-dialog {
     text-align: center;
 }
+.modal-content {
+    position: static !important;
+}
 .dismiss-button {
     font-size: 30px !important;
 }
@@ -53,7 +75,7 @@
     margin: 0 auto -33px auto;
 }
 #modalConnection-content {
-    position: static;
+    
     background-image: url(../resources/background_modal.png);
     background-position:right top;
     background-size: cover;
@@ -86,9 +108,6 @@
 /*
  *  CREER NOUVEAU COMPTE
  */
-#formNouveauCompte {
-    
-}
 .main {
     background-color: #FFFFFF;
     border-radius:10px;
@@ -116,10 +135,12 @@
     padding: 7px;
     margin: 0;
 }
-
 .contenu {
     margin: 30px auto 0 auto;
     width:60%;
+}
+.contenu-full {
+    width:100%;
 }
 #creerCompteButton {
     background-color: #009393;
@@ -129,6 +150,9 @@
 #creerCompteButton:hover {
     background-color: #00585F;
     color: #FFF;
+}
+.alert {
+    margin-bottom: 0;
 }
 .alert-danger {
     text-align: center;
@@ -163,6 +187,118 @@
    font-style: italic; 
 }
 
+/*
+    ADMINISTRATION
+*/
+.table {
+  border-collapse: separate;
+  border-spacing: 0 5px;
+}
+.table tr:first-child {
+    background-color: #00585F;
+    color: #FFF;
+}
+
+.table tr:first-child td:first-child {
+    border-top-left-radius: 5px;
+}
+.table tr:first-child td:last-child {
+    border-top-right-radius: 5px;
+}
+.table tr:last-child td:first-child {
+    border-bottom-left-radius: 5px;
+}
+.table tr:last-child td:last-child {
+    border-bottom-right-radius: 5px;
+}
+.table td {
+    border: none !important;
+}
+.table tr {
+    background-color: #FFFCC4;
+}
+
+/*
+    PROFIL
+*/
+.photoEtudiant-profil {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 200px;
+    width: 200px;
+}
+#photoEdit {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 200px;
+    width: 200px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 100%;
+    line-height: 200px;
+    text-align: center;
+    opacity: 0;
+}
+#photoEdit:hover {
+    opacity: 1;
+}
+#cameraIcon {
+    font-size: 50px;
+    line-height: 200px;
+}
+#previewNouvPhotoProfil {
+    width: 50%;
+}
+h2 {
+    color: #FF3800 !important;
+}
+.text-aside {
+    line-height: inherit; 
+    vertical-align: middle; 
+    font-size: 18px; 
+    color: #00585F;
+}
+.flex {
+    display: flex;
+    padding: 0 50px 0 50px;
+}
+.contenu-profil {
+    position: relative;
+    height: auto;
+}
+.table-details-user, .table-details-annonce {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+}
+
+.table-details-user tr td {
+    background-color: #FFFCC4;
+    color: #00585F;
+    font-size: 18px;
+    padding: 15px;
+}
+
+.table-details-annonce tr td {
+    background-color: #FFFCC4;
+    color: #00585F;
+    font-size: 15px;
+    padding: 10px;
+}
+.table-details-annonce td:first-child{
+    background-color: #009393;
+    color: #FFF;
+}
+/*
+    PAGE D'ACCUEIL
+*/
 .annonce {
     height: 120px; 
     border: 1px solid activeborder;
@@ -187,17 +323,54 @@
     width: 300px;
 }
 
-.link-like-button {
-     background:none!important;
-     color: #c9302c;
-     font-size: 20px !important;
-     border:none !important; 
-     padding:0!important;
-     font: inherit;
-     cursor: pointer;
+.link:hover {
+    text-decoration: none;
 }
-.link-like-button:hover {
+.outil-link {
+    font-size: 25px;
+    cursor: pointer;
+}
+.on-element {
+    z-index: 10;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.too-long-text {
+    display:inline-block;
+    width: 250px;
+    white-space: nowrap;
+    overflow:hidden !important;
+    text-overflow: ellipsis;
+}
+.suppr {
+    color: #c9302c;
+}
+.suppr:hover {
     color: red;
+}
+.edit {
+    color: #00585F;
+}
+.edit:hover {
+    color: #009393;
+}
+.view {
+    color: #4cae4c;
+}
+.view:hover {
+    color: #255625;
+}
+.paca {
+    color: #FFF;
+}
+.paca:hover {
+    color: #FF3800;
+    text-decoration: none;
+}
+.imageWrapper {
+    float:left;
+    position:relative;
 }
 
 .modal-content {
@@ -206,9 +379,36 @@
 }
 
 .modal {
-    margin-top: 200px;
+    margin-top: 10%;
 }
 
+.input-group {
+    margin-bottom: 15px;
+}
+
+.list-carree-item {
+    border-radius: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+.list-carree-item:hover {
+    background-color: #FFFCC4;
+}
+.list-item-header {
+    background-color: #FF3800;
+    color: #FFF;
+    padding: 5px 20px;
+    font-size: 18px;
+    
+}
+.list-item-contenu {
+    color: #00585F;
+    font-size: 17px;
+    padding: 5px 20px;
+}
+.photo-annonce-wrapper {
+    text-align: center;
+}
 #dropAreaAnnonce {
     height: 100px;
     border: 2px #adadad dashed; 

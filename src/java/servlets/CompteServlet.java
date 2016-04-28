@@ -5,9 +5,11 @@
  */
 package servlets;
 
+import gestionnaires.GestionnaireEcoles;
 import gestionnaires.GestionnaireUtilisateurs;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collection;
 import javax.ejb.EJB;
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -20,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
+import modeles.Ecole;
 import outils.InputStreamToByteArray;
 
 /**
@@ -31,7 +34,8 @@ import outils.InputStreamToByteArray;
 public class CompteServlet extends HttpServlet {
     @EJB
     private GestionnaireUtilisateurs gu;
-
+    @EJB
+    private GestionnaireEcoles ge;
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -50,6 +54,9 @@ public class CompteServlet extends HttpServlet {
             response.setContentType("application/json");
             response.getWriter().write(generateJSON(pseudo).toString());
         } else {
+            Collection<Ecole> allEcoles = ge.getEcoles();
+            request.setAttribute("allEcoles", allEcoles);
+            
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("nouveauCompte.jsp") ;
             requestDispatcher.include(request, response) ;
         }

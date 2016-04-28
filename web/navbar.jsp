@@ -17,7 +17,7 @@
                 <li><a href="Accueil">Accueil</a></li>
                 <li><a href="Annonce">Déposer une annonce</a></li>
                 <c:if test="${sessionScope.PRIVILEGE == 'admin'}">
-                    <li><a href="Admin">ADMINISTRATION</a></li>
+                    <li><a href="Admin">Administration</a></li>
                 </c:if>
             </ul>
 
@@ -27,7 +27,7 @@
                         <button type="button" class="btn btn-info btn-lg navbar-btn" data-toggle="modal" data-target="#modalConnection">Se connecter</button>
                         <div class="modal fade" id="modalConnection" role="dialog">
                             <div class="modal-dialog">
-                                <button type="button" class="close dismiss-button" data-dismiss="modal">&times;</button>  
+                                <button type="button" class="close dismiss-button" data-dismiss="modal" style="margin-right: -25px;"><span class="glyphicon glyphicon-remove-circle"></span></button>  
                                 <img src="resources/blason-pa.png" id="logoPACA">
                                 <div class="modal-content" id="modalConnection-content">
 

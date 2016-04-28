@@ -1,20 +1,6 @@
 //COMPTE : preview photo de profil
-function previewPhotoProfil(photo) {
 
-        if (photo.files && photo.files[0]) {
-            var reader = new FileReader();
-            
-            reader.onload = function (e) {
-                $('#previewPhotoProfil').attr('src', e.target.result);
-            };
-            
-            reader.readAsDataURL(photo.files[0]);
-        }
-    };
 
-$("#inputPhotoProfil").change(function(){
-    previewPhotoProfil(this);
-});
 
 
 //DEPOT ANNONCE : preview images annonces + drag and drop

@@ -4,64 +4,101 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-2">
-                <h2>Profil</h2>
-                <br>
-                <c:choose>
-                    <c:when test="${profil.photo != null}">
-                        <img src="Image/auteur/${profil.id}" class="img-rounded photoEtudiant">
-                    </c:when>
-                    <c:otherwise>
-                        <img src="resources/default_profile.jpg" class="img-rounded photoEtudiant">
-                    </c:otherwise>
-                </c:choose>
-        </div>
+
+<div class="row flex">
+    <div class="contenu contenu-profil col-md-5">
+        <c:choose>
+            <c:when test="${profil.photo != null}">
+                <img class="img-circle photoEtudiant-profil"src="Image/auteur/${profil.id}">
+            </c:when>
+            <c:otherwise>
+                <img class="img-circle photoEtudiant-profil" src="resources/default_profile.jpg">
+            </c:otherwise>
+        </c:choose>
+    </div>
+
+    <div class="contenu contenu-profil col-md-7">
         
-        <div class="col-md-10">
-            <div class="row">
-                <h2>${profil.pseudo}</h2>
-                <br>
-                <span>Nom : </span>${profil.nom}
-                <br>
-                <span>Prenom : </span>${profil.prenom}
-                <br>
-                <span>Mail : </span>${profil.mail}
-                <br>
-                <span>Tel : </span>${profil.tel}
-                <br>
-            </div>
-        </div>
+            <h2>${profil.pseudo} <span class="text-aside">(${profil.prenom} ${profil.nom})</span></h2>
+            <hr>
+            <table class="table-details-user">
+                <tr>
+                    <td><span class="glyphicon glyphicon-education"></span></td>
+                    <td>${profil.ecole.nom}</td>
+                </tr>
+                <tr>
+                    <td><span class="glyphicon glyphicon-earphone"></span></td>
+                    <td>${profil.tel}</td>
+                </tr>
+                <tr>
+                    <td><span class="glyphicon glyphicon-envelope"></span></td>
+                    <td>${profil.mail}</td>
+                </tr>
+            </table>
+            
     </div>
 </div>
-            
-<div class="container">
-    <h4> Les dernières annonces publiées par <span style="color: #398439;">${param.user}</span></h4>
+
+<div class="row flex">
     
-    <ul class="list-group">
-        <c:forEach var="a" items="${sesAnnonces}">
-            <li class="list-group-item">
-                <div class="annonce" style="position: relative;">
-                    <div class="couleurAnnonce col-md-1"></div>
-                    <div class="infoEtudiant col-md-3">
-                        <p>${a.auteur.prenom} ${a.auteur.nom}</p>
-                        <p>${a.auteur.ecole}</p>
+    <div class="col-md-12">
+        <span style="padding: 10px; font-size: 18px; color: #00585F; text-align: left;">Les annonces de ${profil.prenom}</span>
+    <hr>
+        <ul class="list-group">
+            <c:forEach var="a" items="${requestScope.sesAnnonces}">
+                <c:forEach var="p" items="${a.photos}">
+                    <c:set var="totalPhotos" value="${totalPhotos+1}"/>
+                </c:forEach>
+                <li class="list-group-item list-carree-item" style="margin-top: 20px;">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="photo-annonce-wrapper">
+                                <img src="Image/produit/${a.photos[0].id}" style="max-height: 150px; width: auto">
+                            <br>
+                            <a href="#" type="submit" data-toggle="modal" data-target="#modalAnncPhotos${a.id}">${totalPhotos}</a> photo(s) chargée(s)
+                            <div class="modal fade" id="modalAnncPhotos${a.id}" role="dialog">
+                                <div class="modal-dialog">
+                                    <button type="button" class="close dismiss-button" data-dismiss="modal" style="margin-top:-30px;margin-right: -30px;"><span class="glyphicon glyphicon-remove-circle"></span></button>
+                                    <div class="modal-content" style="padding: 0; background-color: transparent; box-shadow: none;">
+                                        <c:forEach var="p" items="${a.photos}">
+                                            <div class="imageWrapper" style="width: 100%;">
+                                                <img src="Image/produit/${p.id}" style="width:100%;">
+                                            </div>
+                                        </c:forEach>
+                                  </div>
+                                </div>
+                            </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-10">
+                            <div class="row list-item-header">
+                                ${a.titre}
+                            </div>
+                            <div class="row list-item-contenu">
+                                <span style="font-style: italic; color: grey;"><fmt:formatDate type="date" value="${a.dateDepot}" /> à <fmt:formatDate type="time" value="${a.dateDepot}" timeStyle="short" /></span>
+                            </div>
+                            <div class="row list-item-contenu">
+                                <span>Catégorie : ${a.categorie.nom}</span>
+                                <span style="float:right; font-size: 18px; color: #FF3800; font-weight: bold;">${a.prix} €</span>
+                            </div>
+                            <div class="row list-item-contenu">
+                                <span class="too-long-text" data-toggle="tooltip" data-placement="top" title="${a.description}">Description : ${a.description}</span>
+                            </div>
+                            <div class="row list-item-contenu">
+                                <c:if test="${not empty a.dateFin}">
+                                    Valable jusqu'au <fmt:formatDate type="date" value="${a.dateFin}" />
+                                </c:if>
+                                <c:if test="${empty a.dateFin}">
+                                    <i>Sans date de valabilité</i>
+                                </c:if>
+
+                            </div>
+                        </div>
                     </div>
-                    <div class="infoProduit col-md-4">
-                        <p>${a.titre}</p>
-                        <p>${a.categorie}</p>
-                        <p>Date ajout : <fmt:formatDate type="both" value="${a.dateDepot}" /></p>
-                        <p>Date fin : <fmt:formatDate type="date" value="${a.dateFin}" /></p>
-                    </div>
-                    <div class="prixProduit col-md-2">
-                        <p>${a.prix} €</p>
-                    </div>
-                    <div class="photosProduit col-md-2">
-                        <img src="Image/produit/${a.photos[0].id}" class="img-rounded photoProduit"/>
-                    </div>
-                </div>
-            </li>
-        </c:forEach>
-    </ul>
+                </li>
+                <c:set var="totalPhotos" value="0"/>
+            </c:forEach>
+        </ul>
+    </div>
 </div>

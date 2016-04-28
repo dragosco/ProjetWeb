@@ -47,7 +47,7 @@
                                 <jsp:include page="formNouveauCompte.jsp" />
                             </div>
                         </div>
-                        <div class=" col-md-5" style="padding-left: 0;">
+                        <div class="col-md-5" style="padding-left: 0;">
                             <div class="header header-right">
                                 <h3> Se connecter</h3>
                             </div>
@@ -73,6 +73,7 @@
                 </c:if>
             </div> <!-- main --> 
         </div> <!-- nouveau-compte -->
-        <script src="js/main.js"></script>
+        
+        <jsp:include page='footer.jsp'/>
     </body>
 </html>

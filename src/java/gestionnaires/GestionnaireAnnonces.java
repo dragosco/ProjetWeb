@@ -166,9 +166,8 @@ public class GestionnaireAnnonces {
     }
     
     public void supprimerAnnonce(int id) {
-        Query q = em.createQuery("delete from Annonce a where a.id = :id");
-        q.setParameter("id", id);
-        q.executeUpdate();
+        Annonce a = em.find(Annonce.class, id);
+        em.remove(a);
     }
     
     public void ajouterPhoto(int idAnnonce, byte[] photo) {

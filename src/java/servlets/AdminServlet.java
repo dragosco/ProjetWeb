@@ -7,6 +7,7 @@ package servlets;
 
 import gestionnaires.GestionnaireAnnonces;
 import gestionnaires.GestionnaireCategories;
+import gestionnaires.GestionnaireEcoles;
 import gestionnaires.GestionnairePhotos;
 import gestionnaires.GestionnaireUtilisateurs;
 import java.io.IOException;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import modeles.Categorie;
+import modeles.Ecole;
 import modeles.Photo;
 import modeles.Utilisateur;
 
@@ -37,6 +39,8 @@ public class AdminServlet extends HttpServlet {
     private GestionnaireUtilisateurs gu;
     @EJB
     private GestionnairePhotos gp;
+    @EJB
+    private GestionnaireEcoles ge;
     
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -64,6 +68,9 @@ public class AdminServlet extends HttpServlet {
             
             Collection<Photo> allPhotos = gp.getPhotos();
             request.setAttribute("allPhotos", allPhotos);
+            
+            Collection<Ecole> allEcoles = ge.getEcoles();
+            request.setAttribute("allEcoles", allEcoles);
             
             String action = request.getParameter("action");
             if(action != null) {
@@ -120,9 +127,6 @@ public class AdminServlet extends HttpServlet {
                     //L'admin peut supprimer n'importe quelle annonce. Un user ne peut supprimer que les siens.
                     if (u.getPrivilege().equals("admin") || ga.getAnnonce(id).getAuteur().equals(u)){
                         ga.supprimerAnnonce(id);
-                        response.sendRedirect("Profil?user=" + user + "&action=afficheAnnonces");
-                    } else {
-                        //ne rien faire
                     }
                     redirection = "Accueil";
                     break;

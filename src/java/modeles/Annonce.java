@@ -39,7 +39,7 @@ public class Annonce implements Serializable {
     
     @OneToMany(cascade={CascadeType.ALL},
             fetch=FetchType.EAGER,
-            mappedBy="annonce")
+            mappedBy="annonce", orphanRemoval = true)
     private Collection<Photo> photos;
     
     @Temporal(TemporalType.DATE)
@@ -49,7 +49,7 @@ public class Annonce implements Serializable {
     
     @ManyToOne
     private Utilisateur auteur;
-
+    
     public Annonce() {
     }
 
@@ -139,7 +139,7 @@ public class Annonce implements Serializable {
     public void addPhoto(Photo photo) {
         photos.add(photo);
     }
-
+    
     @Override
     public int hashCode() {
         int hash = 0;

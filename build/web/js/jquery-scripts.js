@@ -1,10 +1,9 @@
 $(document).ready(function(){
     //COMPTE : créer un nouveau compte
     //requête ajax afin de vérifier l'existence du pseudo
-    $("#compteKO").hide(); //le message d'erreur est caché
     
-    $('#inputPseudo').keyup(function() { //si le message d'erreur s'affiche, il se cache quand on retape le pseudo
-        $('#compteKO').hide();
+    $("#inputPseudo").keyup(function() { //si le message d'erreur s'affiche, il se cache quand on retape le pseudo
+        $('#compteKO').empty();
     });
     
     $("#inputPseudo").focusout(function () {
@@ -15,12 +14,12 @@ $(document).ready(function(){
             success: function (data) {
                 console.log(data.existe);
                 if(data.existe === "true") {
-                    $("#compteKO").show();
+                    $("#compteKO").html('<span class="glyphicon glyphicon-ban-circle"></span> Le pseudo que vous avez choisi existe déjà !');
                     $("#creerCompteButton").prop('disabled', true);
                 } else {
+                    $("#compteKO").empty();
                     $("#creerCompteButton").prop('disabled', false);
                 }
-                
             }
         });
     });
@@ -29,71 +28,59 @@ $(document).ready(function(){
     $('#verifMotDePasse, #motDePasse').keyup(function() {
         if($('#motDePasse').val() === $('#verifMotDePasse').val()){
             $('#creerCompteButton').prop('disabled', false);
-            $("#echecMDP").html("");
+            $("#echecMDP").empty();
         } else {
             $('#creerCompteButton').prop('disabled', true);
             $("#echecMDP").html("Les mots de passe ne correspondent pas !");
         }
     });
     
-    //si la case de Termes et Condition n'est pas cochée, le bouton de submit est 'disabled'
-    $("#checkConditions").prop("checked", false);
-    $("#creerCompteButton").prop('disabled', true);
-    //si l'état 
-    $("#checkConditions").change(function () {
+    //le bouton 
+    $("#checkConditions").click(function () {
         if (this.checked) {
-            $("#conditionsKO").html("");
+            $("#conditionsKO").empty();
         } else {
             $("#conditionsKO").html("Attention ! Si vous n'acceptez les Termes et Conditions d'utilisation, vous ne pouvez pas créer un compte.");
         }
-        
     });
     
-    $("#acceptConditionBoutton").click(function () {
-        $("#checkConditions").prop("checked", true);
+    $("#acceptConditionButton").click(function () {
         $("#modalTermesConditions").modal("toggle");
-        $('#creerCompteButton').prop('disabled', false);
+        $("#checkConditions").prop("checked", true);
+        $("#conditionsKO").empty();
     });
     
-    $("#doesntAcceptConditionBoutton").click(function () {
+    $("#doesntAcceptConditionButton").click(function () {
         $("#modalTermesConditions").modal("toggle");
         $("#checkConditions").prop("checked", false);
-        $('#creerCompteButton').prop('disabled', true);
+        $("#conditionsKO").html("Attention ! Si vous n'acceptez les Termes et Conditions d'utilisation, vous ne pouvez pas créer un compte.");
     });
+    
 //PROFIL : enable popover
-    $('[data-toggle="popover"]').popover();
+    $("[data-toggle='popover']").popover();
     
-    //ADMIN : cacher les 3 conteneurs et les faire toggle on click
-    var gu = $('#gestionUtilisateursContainer');
-    var gp = $('#gestionPhotosContainer');
-    var gc = $('#gestionCategoriesContainer');
-    
-    gp.hide();
-    gc.hide();
+    function previewPhotoProfil(photo, output) {
 
-    $('#gestionUtilisateursButton').click(function(e) {
-            $('#gestionUtilisateursContainer').slideToggle('slow');
-            e.preventDefault();
-            gp.hide('slow');
-            gc.hide('slow');
-        });
-                
-
-    $('#gestionPhotosButton').click(function(e) {
-            $('#gestionPhotosContainer').slideToggle('slow');
-            e.preventDefault();
-            gu.hide('slow');
-            gc.hide('slow');
-        });
-        
-    $('#gestionCategoriesButton').click(function(e) {
-            $('#gestionCategoriesContainer').slideToggle('slow');
-            e.preventDefault();
-            gu.hide('slow');
-            gp.hide('slow');
-        });
+        if (photo.files && photo.files[0]) {
+            var reader = new FileReader();
+            
+            reader.onload = function (e) {
+                $(output).attr('src', e.target.result);
+            };
+            
+            reader.readAsDataURL(photo.files[0]);
+        }
+    };
+    $("#inputNouvPhotoProfil").change(function(){
+        previewPhotoProfil(this, '#previewNouvPhotoProfil');
+    });
+    $("#inputPhotoProfil").change(function(){
+        previewPhotoProfil(this, '#previewPhotoProfil');
+    });
     
-    
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
 });
 
 

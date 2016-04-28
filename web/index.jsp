@@ -59,7 +59,7 @@
                 <div class="alert alert-warning" id="echecDepotAnnonce" role="alert">
                     <div class="row">
                         <div class="col-md-4">
-                            <span class="glyphicon glyphicon-info-sign" style="font-size: 48px; float:right;"></span>
+                            <span class="glyphicon glyphicon-exclamation-sign" style="font-size: 48px; float:right;"></span>
                         </div>
                         <div class="col-md-8">
                             <span style="float:left;">
@@ -111,7 +111,7 @@
                     <li class="list-group-item">
                         <div class="annonce row" style="position: relative;">
                             <c:if test="${sessionScope.PRIVILEGE == 'admin'}">
-                                <button class="link-like-button" type="submit" data-toggle="modal" data-target="#modalSupprAnnc${a.id}" style="float:right;"><span class="glyphicon glyphicon-remove"></span></button>
+                                <a class="outil-link suppr on-element" type="submit" data-toggle="modal" data-target="#modalSupprAnnc${a.id}"><span class="glyphicon glyphicon-remove"></span></a>
                                 <div class="modal fade" id="modalSupprAnnc${a.id}" role="dialog">
                                   <div class="modal-dialog">
                                     <div class="modal-content">
@@ -158,5 +158,7 @@
                 </c:forEach>
             </ul>
         </div>
+        
+        <jsp:include page='footer.jsp'/>
     </body>
 </html>
