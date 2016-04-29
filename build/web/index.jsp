@@ -4,11 +4,12 @@
     Authors     : Thais, Dragos
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="ISO-8859-15"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <html>
     <head>
@@ -35,11 +36,11 @@
                 max: 500,
                 values: [0, 500],
                 slide: function(event, ui) {
-                  $("#amount").val(ui.values[0] + "â‚¬" + " - " + ui.values[1] + "â‚¬");
+                  $("#amount").val(ui.values[0] + "¤" + " - " + ui.values[1] + "¤");
                 }
               });
-              $("#amount").val($("#slider-range").slider("values", 0) + "â‚¬" +
-                " - " + $("#slider-range").slider("values", 1) + "â‚¬" );
+              $("#amount").val($("#slider-range").slider("values", 0) + "¤" +
+                " - " + $("#slider-range").slider("values", 1) + "¤" );
             });
         </script>
     </head>
@@ -51,7 +52,7 @@
         <div class="container">
             <c:if test="${param.message == 'compteOK'}">
                 <div class="alert alert-success" id="compteOK" role="alert">
-                    FÃ©licitations, votre compte a Ã©tÃ© crÃ©Ã© avec succÃ¨s <span class="glyphicon glyphicon-thumbs-up" style="width:30px;"></span> Vous pouvez vous connecter
+                    Félicitations, votre compte a été créé avec succès <span class="glyphicon glyphicon-thumbs-up" style="width:30px;"></span> Vous pouvez vous connecter
                 </div>
             </c:if>
             
@@ -63,9 +64,9 @@
                         </div>
                         <div class="col-md-8">
                             <span style="float:left;">
-                                Il faut Ãªtre connectÃ© pour dÃ©poser une annonce
+                                Il faut être connecté pour déposer une annonce
                                 <br>
-                                Connectez-vous ou crÃ©ez un <a href="Compte">nouveau compte</a>
+                                Connectez-vous ou créez un <a href="Compte">nouveau compte</a>
                             </span>
                         </div>
                     </div>
@@ -77,8 +78,8 @@
             <form action="Accueil" method="get">
                 <div class="row">
                     <div class="col-md-6">
-                        Mots clÃ©s : <input class="form-control" type="text" name="motscles" />
-                        CatÃ©gorie : <select class="form-control" type="text" name="categorie">
+                        Mots clés : <input class="form-control" type="text" name="motscles" />
+                        Catégorie : <select class="form-control" type="text" name="categorie">
                                         <option value="" selected>Toutes</option>
                                         <c:forEach var="c" items="${categories}">
                                             <option value="${c.nom}">${c.nom}</option>
@@ -148,10 +149,23 @@
                                 <p>Date fin : <fmt:formatDate type="date" value="${a.dateFin}" /></p>
                             </div>
                             <div class="prixProduit col-md-2">
-                                <p>${a.prix} â‚¬</p>
+                                <p>${a.prix} ¤</p>
                             </div>
                             <div class="photosProduit col-md-2">
-                                <p><img src="Image/produit/${a.photos[0].id}" class="img-rounded photoProduit"/></p>
+                                <c:choose>
+                                    <c:when test="${fn:length(a.photos) > 0}">
+                                        <p><img src="Image/produit/${a.photos[0].id}" class="img-rounded photoProduit"/></p>
+                                        <span class="iconPhoto">
+                                            <img src="resources/camera.png" class="icon"/>
+                                            <span class="nombrePhotos">
+                                                ${fn:length(a.photos)}
+                                            </span>
+                                        </span>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <p><img src="resources/no_foto.jpg" class="img-rounded photoProduit"></p>
+                                    </c:otherwise>
+                                </c:choose>                                    
                             </div>
                         </div>
                     </li>

@@ -43,6 +43,8 @@ public class GestionnairePhotos {
     
     public void supprimerPhoto(int id) {
         Photo p = em.find(Photo.class, id);
+        Annonce a = p.getAnnonce();
+        a.getPhotos().remove(p);
         em.remove(p);
     }
     

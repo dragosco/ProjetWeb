@@ -43,6 +43,7 @@ public class GestionnaireAnnonces {
         Annonce a = new Annonce(titre, categ, prix, description, dateFin, user);
         a.setDateDepot(new Date());
         for(byte[] photo : photos) {
+            System.out.print("entrou add photo");
             if (photo != null) {
                 Photo p = new Photo(photo);
                 p.setAnnonce(a);
@@ -62,12 +63,14 @@ public class GestionnaireAnnonces {
         System.out.println("categ " + categ);
         Annonce a = new Annonce(titre, categ, prix, description, dateFin, user);
         a.setDateDepot(new Date());
-        for(byte[] photo : photos) {
-            if (photo != null) {
-                Photo p = new Photo(photo);
-                p.setAnnonce(a);
-                em.persist(p);
-                a.addPhoto(p);
+        if(photos != null) {
+            for(byte[] photo : photos) {
+                if (photo != null) {
+                    Photo p = new Photo(photo);
+                    p.setAnnonce(a);
+                    em.persist(p);
+                    a.addPhoto(p);
+                }
             }
         }
         em.persist(a);
@@ -78,7 +81,7 @@ public class GestionnaireAnnonces {
 
     public Collection<Annonce> getAnnonces() {
         // Exécution d'une requête équivalente à un select *
-        Query q = em.createQuery("select a from Annonce a");
+        Query q = em.createQuery("select a from Annonce a order by a.dateDepot");
         return q.getResultList();
     }
 
@@ -87,7 +90,7 @@ public class GestionnaireAnnonces {
         System.out.println("categorie " + categorie);
         
         String query = "select a from Annonce a "
-            + "where (:categorie = '' or a.categorie.nom = :categorie) "
+            + "where ((:categorie = '' or a.categorie.nom = :categorie) "
             + "and (:ecole = '' or a.auteur.ecole.nom = :ecole) ";
         
         // filtre par nom de l'etudiant
@@ -144,7 +147,9 @@ public class GestionnaireAnnonces {
         }
         
         query += "and (:prixMin = '' or a.prix >= CAST(:prixMin as DECIMAL(9,2))) ";
-        query += "and (:prixMax = '' or a.prix <= CAST(:prixMax as DECIMAL(9,2))) ";
+        query += "and (:prixMax = '' or a.prix <= CAST(:prixMax as DECIMAL(9,2)))) ";
+        
+        query += "order by a.dateDepot";
 
         //System.out.println("query : " + query);
         

@@ -9,6 +9,7 @@
     "http://www.w3.org/TR/html4/loose.dtd">
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <html>
     <head>
@@ -151,7 +152,20 @@
                                 <p>${a.prix} ¤</p>
                             </div>
                             <div class="photosProduit col-md-2">
-                                <p><img src="Image/produit/${a.photos[0].id}" class="img-rounded photoProduit"/></p>
+                                <c:choose>
+                                    <c:when test="${fn:length(a.photos) > 0}">
+                                        <p><img src="Image/produit/${a.photos[0].id}" class="img-rounded photoProduit"/></p>
+                                        <span class="iconPhoto">
+                                            <img src="resources/camera.png" class="icon"/>
+                                            <span class="nombrePhotos">
+                                                ${fn:length(a.photos)}
+                                            </span>
+                                        </span>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <p><img src="resources/no_foto.jpg" class="img-rounded photoProduit"></p>
+                                    </c:otherwise>
+                                </c:choose>                                    
                             </div>
                         </div>
                     </li>

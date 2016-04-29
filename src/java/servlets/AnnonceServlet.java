@@ -121,7 +121,7 @@ public class AnnonceServlet extends HttpServlet {
                     request.getParameter("description"),
                     dateFin,
                     user,
-                    images
+                    !images.isEmpty() ? images : null
                 );
                 response.sendRedirect("Accueil");
                 } catch (ParseException e) {
