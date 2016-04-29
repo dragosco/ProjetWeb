@@ -30,14 +30,14 @@
                         <input class="form-control" type="text" name="titre" placeholder="Titre" required />
                         <select class="form-control" type="text" name="categorie" placeholder="Catégorie" required>
                             <c:forEach var="c" items="${requestScope.categories}">
-                                <option>${c.nom}</option>
+                                <option value="${c.id}">${c.nom}</option>
                             </c:forEach>
                         </select>
                         <input class="form-control" type="number" step="0.1" name="prix" min=0 placeholder="Prix" required />
                         <input class="form-control" type="file" name="files[]" placeholder="Image" id="files" multiple />
                         <div id="dropAreaAnnonce">Drop files here</div>
                         <input class="form-control" type="date" name="dateFin" placeholder="Date d'exp" required/>
-                        <textarea class="form-control" name="description">Décrivez le produit</textarea>
+                        <textarea class="form-control" name="description" placeholder="Décrivez le produit"></textarea>
                         <button type="submit" value="creerAnnonce" name="action">Ajouter annonce</button>
                     </form>
                 </div>

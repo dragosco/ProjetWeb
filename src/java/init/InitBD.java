@@ -107,9 +107,9 @@ public class InitBD {
 
         //String titre, String categorie, double prix, String description, Date dateFin, String auteur, byte[] photo
         
-        ga.creerAnnonce("Smartphone samsung", "Multimédia", 200, "description", null, "adminThais", photos);
+        ga.creerAnnonce("Smartphone samsung S5", "Multimédia", 200, "description 200", null, "adminThais", photos);
         ga.creerAnnonce("titre2", "Immobilier", 10, "description2", null, "adminDragos", photos);
         ga.creerAnnonce("titretitretitretitretitre", "Loisirs", 10, "descriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescription", null, "adminThais", photos);       
-        ga.creerAnnonce("titre5", "Loisirs", 10, "desc", null, "duj", photos);       
+        ga.creerAnnonce("titre5", "Vêtements", 10, "desc", null, "duj", photos);       
     }
 }

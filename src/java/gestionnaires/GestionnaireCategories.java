@@ -57,6 +57,15 @@ public class GestionnaireCategories {
             return null;
         }
     }
+    public Categorie getCategorie(int id) {
+        try{
+            Query q = em.createQuery("select c from Categorie c where c.id = :id");
+            q.setParameter("id", id);
+            return (Categorie) q.getSingleResult();
+        } catch(NoResultException e) {
+            return null;
+        }
+    }
     public void supprimerCategorie(int id) {
         Categorie c = em.find(Categorie.class, id);
         em.remove(c);

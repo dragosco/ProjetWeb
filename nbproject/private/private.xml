@@ -3,22 +3,19 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Dragos/Documents/NetBeansProjects/ProjetWeb/src/java/gestionnaires/GestionnaireUtilisateurs.java</file>
-            <file>file:/C:/Users/Dragos/Documents/NetBeansProjects/ProjetWeb/src/java/servlets/ProfilServlet.java</file>
-            <file>file:/C:/Users/Dragos/Documents/NetBeansProjects/ProjetWeb/web/depotAnnonce.jsp</file>
-            <file>file:/C:/Users/Dragos/Documents/NetBeansProjects/ProjetWeb/web/js/main.js</file>
-            <file>file:/C:/Users/Dragos/Documents/NetBeansProjects/ProjetWeb/src/java/gestionnaires/GestionnairePhotos.java</file>
-            <file>file:/C:/Users/Dragos/Documents/NetBeansProjects/ProjetWeb/web/index.jsp</file>
-            <file>file:/C:/Users/Dragos/Documents/NetBeansProjects/ProjetWeb/web/css/style.css</file>
-            <file>file:/C:/Users/Dragos/Documents/NetBeansProjects/ProjetWeb/web/admin.jsp</file>
-            <file>file:/C:/Users/Dragos/Documents/NetBeansProjects/ProjetWeb/src/java/servlets/CompteServlet.java</file>
-            <file>file:/C:/Users/Dragos/Documents/NetBeansProjects/ProjetWeb/src/java/servlets/AnnonceServlet.java</file>
-            <file>file:/C:/Users/Dragos/Documents/NetBeansProjects/ProjetWeb/src/java/servlets/LoginServlet.java</file>
-            <file>file:/C:/Users/Dragos/Documents/NetBeansProjects/ProjetWeb/src/java/gestionnaires/GestionnaireAnnonces.java</file>
-            <file>file:/C:/Users/Dragos/Documents/NetBeansProjects/ProjetWeb/src/java/gestionnaires/GestionnaireCategories.java</file>
-            <file>file:/C:/Users/Dragos/Documents/NetBeansProjects/ProjetWeb/web/nouveauCompte.jsp</file>
-            <file>file:/C:/Users/Dragos/Documents/NetBeansProjects/ProjetWeb/src/java/servlets/AccueilServlet.java</file>
-            <file>file:/C:/Users/Dragos/Documents/NetBeansProjects/ProjetWeb/src/java/servlets/AdminServlet.java</file>
+            <file>file:/home/thais/NetBeansProjects/ProjetWeb/web/css/style.css</file>
+            <file>file:/home/thais/NetBeansProjects/ProjetWeb/web/depotAnnonce.jsp</file>
+            <file>file:/home/thais/NetBeansProjects/ProjetWeb/src/java/init/InitBD.java</file>
+            <file>file:/home/thais/NetBeansProjects/ProjetWeb/src/java/gestionnaires/GestionnaireCategories.java</file>
+            <file>file:/home/thais/NetBeansProjects/ProjetWeb/src/java/servlets/AnnonceServlet.java</file>
+            <file>file:/home/thais/NetBeansProjects/ProjetWeb/src/java/gestionnaires/GestionnaireAnnonces.java</file>
+            <file>file:/home/thais/NetBeansProjects/ProjetWeb/web/profil.jsp</file>
+            <file>file:/home/thais/NetBeansProjects/ProjetWeb/web/js/main.js</file>
+            <file>file:/home/thais/NetBeansProjects/ProjetWeb/web/index.jsp</file>
+            <file>file:/home/thais/NetBeansProjects/ProjetWeb/src/java/gestionnaires/GestionnaireEcoles.java</file>
+            <file>file:/home/thais/NetBeansProjects/ProjetWeb/web/profilEdit.jsp</file>
+            <file>file:/home/thais/NetBeansProjects/ProjetWeb/src/java/servlets/AccueilServlet.java</file>
+            <file>file:/home/thais/NetBeansProjects/ProjetWeb/web/detailsAnnonce.jsp</file>
         </group>
     </open-files>
 </project-private>

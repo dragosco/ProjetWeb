@@ -35,9 +35,31 @@ public class GestionnaireAnnonces {
     private EntityManager em;
     
 
+    public Annonce creerAnnonce(String titre, int categorie, double prix, String description, Date dateFin, String auteur, Collection<byte[]> photos) {
+        Utilisateur user = gu.getUtilisateur(auteur);
+        System.out.println("categorie : " + categorie);
+        Categorie categ = gc.getCategorie(categorie);
+        System.out.println("categ " + categ);
+        Annonce a = new Annonce(titre, categ, prix, description, dateFin, user);
+        a.setDateDepot(new Date());
+        for(byte[] photo : photos) {
+            if (photo != null) {
+                Photo p = new Photo(photo);
+                p.setAnnonce(a);
+                em.persist(p);
+                a.addPhoto(p);
+            }
+        }
+        em.persist(a);
+        return a;
+       
+    }
+    
     public Annonce creerAnnonce(String titre, String categorie, double prix, String description, Date dateFin, String auteur, Collection<byte[]> photos) {
         Utilisateur user = gu.getUtilisateur(auteur);
+        System.out.println("categorie : " + categorie);
         Categorie categ = gc.getCategorie(categorie);
+        System.out.println("categ " + categ);
         Annonce a = new Annonce(titre, categ, prix, description, dateFin, user);
         a.setDateDepot(new Date());
         for(byte[] photo : photos) {
@@ -61,7 +83,9 @@ public class GestionnaireAnnonces {
     }
 
     public Collection<Annonce> getAnnonces(String motscles, String categorie, String ecole, String etudiant, String prix, String annonceType) {
-        // debut de la contruction de la requete        
+        // debut de la contruction de la requete 
+        System.out.println("categorie " + categorie);
+        
         String query = "select a from Annonce a "
             + "where (:categorie = '' or a.categorie.nom = :categorie) "
             + "and (:ecole = '' or a.auteur.ecole.nom = :ecole) ";
@@ -72,11 +96,11 @@ public class GestionnaireAnnonces {
         if(!etudiant.isEmpty()) {        
             nomsAuteur = etudiant.trim().split(" +");
             if(nomsAuteur.length > 0) {
-                query += "and (:" + nomsAuteur[0] + " = ''";
+                query += "and (:nomsAuteur0 = ''";
                 System.out.println("etudiant : " + nomsAuteur[0]);
 
                 for (int i = 0; i < nomsAuteur.length; i++) {
-                    query += " or UPPER(a.auteur.nom) like UPPER(:" + nomsAuteur[i] + ") or UPPER(a.auteur.prenom) like UPPER(:" + nomsAuteur[i] + ")";
+                    query += " or UPPER(a.auteur.nom) like UPPER(:nomsAuteur" + i + ") or UPPER(a.auteur.prenom) like UPPER(:nomsAuteur" + i + ")";
                 }
 
                 query += ") ";
@@ -89,10 +113,10 @@ public class GestionnaireAnnonces {
         if(!motscles.isEmpty()) {        
             motsClesParts = motscles.trim().split(" +");
             if(motsClesParts.length > 0) {
-                query += "and (:" + motsClesParts[0] + " = ''";
+                query += "and (:motsClesParts0 = ''";
 
                 for (int i = 0; i < motsClesParts.length; i++) {
-                    query += " or UPPER(a.titre) like UPPER(:" + motsClesParts[i] + ") or UPPER(a.description) like UPPER(:" + motsClesParts[i] + ")";
+                    query += " or UPPER(a.titre) like UPPER(:motsClesParts" + i + ") or UPPER(a.description) like UPPER(:motsClesParts" + i + ")";
                 }
 
                 query += ") ";
@@ -132,13 +156,13 @@ public class GestionnaireAnnonces {
         
         if(!etudiant.isEmpty()) {        
             for (int i = 0; i < nomsAuteur.length; i++) {
-                q.setParameter(nomsAuteur[i], '%' + nomsAuteur[i] + '%');
+                q.setParameter("nomsAuteur" + i, '%' + nomsAuteur[i] + '%');
             }
         }
         
         if(!motscles.isEmpty()) {        
             for (int i = 0; i < motsClesParts.length; i++) {
-                q.setParameter(motsClesParts[i], '%' + motsClesParts[i] + '%');
+                q.setParameter("motsClesParts" + i, '%' + motsClesParts[i] + '%');
             }
         }
         
