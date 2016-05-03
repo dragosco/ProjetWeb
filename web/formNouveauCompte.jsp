@@ -8,13 +8,21 @@
     "http://www.w3.org/TR/html4/loose.dtd">
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
+
 <form id="formNouveauCompte" action="Compte" method="post" enctype="multipart/form-data">
     <div class="row">
         <div class="col-md-4">
-            <img class="img-thumbnail" id="previewPhotoProfil" src="resources/default_profile.jpg" alt="Ta photo de profil"/>
+            <div class="preview-container">
+                <img src="resources/default_profile.jpg" class="img-thumbnail previewPhotoProfil" id="target" alt="Votre photo de profil ici" style="width: 100%; height: auto;"/>
+            </div>
             <div class="fileinput fileinput-new" data-provides="fileinput" style="width:100%;">
                 <span class="btn btn-info btn-file" style="width: 100%;"><span class="fileinput-new">Charger une image...</span><span class="fileinput-exists">Change</span>
                     <input id="inputPhotoProfil" type="file" name="profilePic" accept="image/*" />
+                    <input type="hidden" id="x" name="x" />
+                    <input type="hidden" id="y" name="y" />
+                    <input type="hidden" id="w" name="w" />
+                    <input type="hidden" id="h" name="h" />
+                    <input type="hidden" id="ratiodivider" name="ratiodivider" />
                 </span>
             </div>
         </div>

@@ -60,10 +60,10 @@ public class ProfilServlet extends HttpServlet {
             request.setAttribute("sesAnnonces", sesAnnonces);
             forwardTo = "profil.jsp?user=" + pseudo;
             
-            String action = request.getParameter("action");
-            if(action != null) {
-                if (action.equals("afficheAnnonces")) {
-                    forwardTo += "&action=afficheAnnonces";
+            String voir = request.getParameter("voir");
+            if(voir != null) {
+                if (voir.equals("annonces")) {
+                    forwardTo += "&voir=annonces";
                 }
             }
         }
@@ -88,25 +88,49 @@ public class ProfilServlet extends HttpServlet {
         String action = request.getParameter("action");
         HttpSession session = request.getSession();
         String user = (String) session.getAttribute("USER");
+        String redirection = "";
         
         if (action != null) {
-            if (action.equals("changeMotDePasse")) {
-                gu.changeMotDePasse(user, request.getParameter("motDePasse"));
-            } else if (action.equals("changeNom")) {
-                gu.changeNom(user, request.getParameter("nom"));
-            } else if (action.equals("changePrenom")) {
-                gu.changePrenom(user, request.getParameter("prenom"));
-            } else if (action.equals("changeEcole")) {
-                gu.changeEcole(user, request.getParameter("ecole"));
-            } else if (action.equals("changeMail")) {
-                gu.changeMail(user, request.getParameter("mail"));
-            } else if (action.equals("changeTel")) {
-                gu.changeTel(user, request.getParameter("tel"));
+            switch(action) {
+                case "changeMotDePasse" : 
+                    gu.changeMotDePasse(user, request.getParameter("motDePasse"));
+                    session.setAttribute("PROFIL", gu.getUtilisateur(user));
+                    response.sendRedirect("Profil?user=" + user);
+                    break;
+                case "changeNom" : 
+                    gu.changeNom(user, request.getParameter("nom"));
+                    session.setAttribute("PROFIL", gu.getUtilisateur(user));
+                    response.sendRedirect("Profil?user=" + user);
+                    break;
+                case "changePrenom" :
+                    gu.changePrenom(user, request.getParameter("prenom"));
+                    session.setAttribute("PROFIL", gu.getUtilisateur(user));
+                    response.sendRedirect("Profil?user=" + user);
+                    break;
+                case "changeEcole" :
+                    gu.changeEcole(user, request.getParameter("ecole"));
+                    session.setAttribute("PROFIL", gu.getUtilisateur(user));
+                    response.sendRedirect("Profil?user=" + user);
+                    break;
+                case "changeMail" :
+                    gu.changeMail(user, request.getParameter("mail"));
+                    session.setAttribute("PROFIL", gu.getUtilisateur(user));
+                    response.sendRedirect("Profil?user=" + user);
+                    break;
+                case "changeTel" :
+                    gu.changeTel(user, request.getParameter("tel"));
+                    session.setAttribute("PROFIL", gu.getUtilisateur(user));
+                    response.sendRedirect("Profil?user=" + user);
+                    break;
+                case "supprimerCompte" :
+                    gu.supprimerUtilisateur(Integer.parseInt(request.getParameter("id")));
+                    response.sendRedirect("Logout");
+                    break;
+                case "supprimerAnnonce" :
+                    ga.supprimerAnnonce(Integer.parseInt(request.getParameter("id")));
+                    response.sendRedirect("Profil?user=" + user + "&voir=annonces");
+                    break;
             }
-            Utilisateur profilActu = gu.getUtilisateur(user);
-            session.setAttribute("PROFIL", profilActu);
-            response.sendRedirect("Profil?user=" + user);
-            
         }
     }
 

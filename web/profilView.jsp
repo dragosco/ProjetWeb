@@ -5,41 +5,54 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 
-<div class="row flex">
+<div class="row">
     <div class="contenu contenu-profil col-md-5">
-        <c:choose>
-            <c:when test="${profil.photo != null}">
-                <img class="img-circle photoEtudiant-profil"src="Image/auteur/${profil.id}">
-            </c:when>
-            <c:otherwise>
-                <img class="img-circle photoEtudiant-profil" src="resources/default_profile.jpg">
-            </c:otherwise>
-        </c:choose>
+        <div class="photo-profil-wrapper">
+            <c:choose>
+                <c:when test="${profil.photo != null}">
+                    <img class="img-circle photoEtudiant-profil"src="Image/auteur/${profil.id}">
+                </c:when>
+                <c:otherwise>
+                    <img class="img-circle photoEtudiant-profil" src="resources/default_profile.jpg">
+                </c:otherwise>
+            </c:choose>
+        </div>
     </div>
 
     <div class="contenu contenu-profil col-md-7">
         
             <h2>${profil.pseudo} <span class="text-aside">(${profil.prenom} ${profil.nom})</span></h2>
             <hr>
-            <table class="table-details-user">
-                <tr>
-                    <td><span class="glyphicon glyphicon-education"></span></td>
-                    <td>${profil.ecole.nom}</td>
-                </tr>
-                <tr>
-                    <td><span class="glyphicon glyphicon-earphone"></span></td>
-                    <td>${profil.tel}</td>
-                </tr>
-                <tr>
-                    <td><span class="glyphicon glyphicon-envelope"></span></td>
-                    <td>${profil.mail}</td>
-                </tr>
-            </table>
+            <div class="row details-profils">
+                <div class="col-md-2">
+                    <span class="glyphicon glyphicon-education"></span>
+                </div>
+                <div class="col-md-10">
+                    ${profil.ecole.nom}
+                </div>
+            </div>
+            <div class="row details-profils">
+                <div class="col-md-2">
+                    <span class="glyphicon glyphicon-earphone"></span>
+                </div>
+                <div class="col-md-10">
+                    ${profil.tel}
+                </div>
+            </div>
+            <div class="row details-profils">
+                <div class="col-md-2">
+                    <span class="glyphicon glyphicon-envelope"></span>
+                </div>
+                <div class="col-md-10">
+                    ${profil.mail}
+                </div>
+                
+            </div>
             
     </div>
 </div>
 
-<div class="row flex">
+<div class="row">
     
     <div class="col-md-12">
         <span style="padding: 10px; font-size: 18px; color: #00585F; text-align: left;">Les annonces de ${profil.prenom}</span>
@@ -83,7 +96,7 @@
                                 <span style="float:right; font-size: 18px; color: #FF3800; font-weight: bold;">${a.prix} €</span>
                             </div>
                             <div class="row list-item-contenu">
-                                <span class="too-long-text" data-toggle="tooltip" data-placement="top" title="${a.description}">Description : ${a.description}</span>
+                                Description : ${a.description}
                             </div>
                             <div class="row list-item-contenu">
                                 <c:if test="${not empty a.dateFin}">

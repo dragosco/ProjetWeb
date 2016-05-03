@@ -49,6 +49,7 @@ public class GestionnaireAnnonces {
             }
         }
         em.persist(a);
+        gu.ajouterAnnonce(user.getId(),a);
         return a;
        
     }

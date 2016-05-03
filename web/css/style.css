@@ -221,6 +221,10 @@ footer {
 /*
     PROFIL
 */
+.photo-profil-wrapper {
+    padding: 190px;
+    margin: auto auto;
+}
 .photoEtudiant-profil {
     position: absolute;
     margin: auto;
@@ -272,7 +276,17 @@ h2 {
 .contenu-profil {
     position: relative;
     height: auto;
+    padding-right: 100px !important;
 }
+.details-profils {
+    background-color: #FFFCC4;
+    color: #00585F;
+    font-size: 17px;
+    padding: 15px;
+    margin: 10px;
+}
+
+
 .table-details-user, .table-details-annonce {
     width: 100%;
     border-collapse: separate;
@@ -415,4 +429,21 @@ h2 {
     padding: 30px; 
     margin: 10px 0; 
     text-align: center;
+}
+
+@media screen and (max-device-width : 485px)
+{
+    .details-profils {
+        font-size: 12px;
+    }
+    
+}
+@media screen and (max-device-width : 985px)
+{
+    .photo-profil-wrapper {
+        padding: 100px;
+    }
+    .contenu-profil {
+        padding: 0 !important;
+    }
 }

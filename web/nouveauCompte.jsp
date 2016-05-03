@@ -17,10 +17,13 @@
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="css/jasny-bootstrap.min.css">
+        <link rel="stylesheet" href="css/jquery.Jcrop.css" type="text/css" />
         <script src="js/jquery-2.2.0.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/jasny-bootstrap.min.js"></script>
+        <script src="js/jquery.Jcrop.js"></script>
         <script src="js/jquery-scripts.js"></script>
+                
         
     </head>
     <body>

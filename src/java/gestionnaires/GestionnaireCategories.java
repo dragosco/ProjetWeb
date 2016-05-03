@@ -58,10 +58,10 @@ public class GestionnaireCategories {
         }
     }
     public void supprimerCategorie(int id) {
-        Query q = em.createQuery("delete from Categorie c where c.id = :id");
-        q.setParameter("id", id);
-        q.executeUpdate();
+        Categorie c = em.find(Categorie.class, id);
+        em.remove(c);
     }
+    
     public void persist(Object object) {
         em.persist(object);
     }

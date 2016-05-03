@@ -12,7 +12,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import modeles.Annonce;
 import modeles.Ecole;
+import modeles.Photo;
 import modeles.Utilisateur;
 
 /**
@@ -36,8 +38,20 @@ public class GestionnaireUtilisateurs {
         return u;
     }
     
+    public void creerUtilisateursDeTest() {
+        for (int i = 0; i < 100; i++) {
+            creerUtilisateur("nom" + i, "prenom" + i, "pseudo" + i, "motdepasse" + i, "Unice", "nom" + i + "@mail.com", "000", "user", null);
+        }
+    }
     public Collection<Utilisateur> getUtilisateurs() {
         Query q = em.createQuery("select u from Utilisateur u");
+        return q.getResultList();
+    }
+    
+    public Collection<Utilisateur> getUtilisateurs(int start, int nParPage) {
+        Query q = em.createQuery("select u from Utilisateur u");
+        q.setFirstResult(start);
+        q.setMaxResults(nParPage);
         return q.getResultList();
     }
     
@@ -138,10 +152,9 @@ public class GestionnaireUtilisateurs {
         q.executeUpdate();
     }
     
-    public void supprimerUtilisateur(String pseudo) {
-        Query q = em.createQuery("delete from Utilisateur u where u.pseudo = :pseudo");
-        q.setParameter("pseudo", pseudo);
-        q.executeUpdate();
+    public void supprimerUtilisateur(int id) {
+        Utilisateur u = em.find(Utilisateur.class, id);
+        em.remove(u);
     }
     
     public Collection<Utilisateur> filtre(String pseudo, String nom, String ecole) {
@@ -193,6 +206,14 @@ public class GestionnaireUtilisateurs {
         return OK;
     }
 
+    public void ajouterAnnonce(int idUser, Annonce annonce) {
+        if(annonce != null) {
+            Utilisateur u = em.find(Utilisateur.class, idUser);
+            annonce.setAuteur(u);
+            em.persist(annonce);
+            u.addAnnonce(annonce);
+        }
+    }
     public void persist(Object object) {
         em.persist(object);
     }

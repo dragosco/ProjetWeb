@@ -17,8 +17,11 @@
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="css/jasny-bootstrap.min.css">
+        <link rel="stylesheet" href="css/jquery.Jcrop.css" type="text/css" />
         <script src="js/jquery-2.2.0.js"></script>
         <script src="js/bootstrap.min.js"></script>
+        <script src="js/jasny-bootstrap.min.js"></script>
+        <script src="js/jquery.Jcrop.js"></script>
         <script src="js/jquery-scripts.js"></script>
     </head>
     <body>
@@ -28,14 +31,14 @@
             <div class="main">
                 <c:if test="${param.user == sessionScope.USER}">
 
-                        <c:if test="${param.action == null}">
+                        <c:if test="${param.voir == null}">
                             <div class="header">
                                 <h3>Votre profil</h3>
                             </div>
                             <jsp:include page="profilEdit.jsp" />
                         </c:if>
 
-                        <c:if test="${param.action == 'afficheAnnonces'}">
+                        <c:if test="${param.voir == 'annonces'}">
                             <div class="header">
                                 <h3>Vos annonces</h3>
                             </div>

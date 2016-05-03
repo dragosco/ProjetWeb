@@ -112,7 +112,6 @@ public class AnnonceServlet extends HttpServlet {
             Utilisateur u = (Utilisateur) session.getAttribute("PROFIL");
             
             if (action.equals("creerAnnonce")) {
-                
                 try {
                 Date dateFin = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("dateFin"));
                 ga.creerAnnonce(
@@ -128,7 +127,7 @@ public class AnnonceServlet extends HttpServlet {
                 } catch (ParseException e) {
                     
                 }
-            }
+            } 
         }
     }
 

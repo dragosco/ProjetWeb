@@ -103,7 +103,7 @@ public class InitBD {
         gu.creerUtilisateur("Longbottom", "Neville", "bottom", "bottom", "Unice", "lbtm@gmail.com", "06*******", "user", null);
         gu.creerUtilisateur("Dupont", "Nathalie", "dun", "dun", "Skema", "dun@gmail.com", "06*******", "user", null);
         gu.creerUtilisateur("Dupont", "Jean", "duj", "duj", "Skema", "duj@gmail.com", "06*******", "user", null);
-
+        gu.creerUtilisateursDeTest();
 
         //String titre, String categorie, double prix, String description, Date dateFin, String auteur, byte[] photo
         

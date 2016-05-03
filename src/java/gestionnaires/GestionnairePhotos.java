@@ -10,6 +10,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import modeles.Annonce;
 import modeles.Photo;
 
 /**
@@ -27,16 +28,22 @@ public class GestionnairePhotos {
         return q.getResultList();
     }
     
+    public Collection<Photo> getPhotos(int start, int nParPage) {
+        Query q = em.createQuery("select p from Photo p");
+        q.setFirstResult(start);
+        q.setMaxResults(nParPage);
+        return q.getResultList();
+    }
+    
     public Photo getPhoto(int idPhoto) {
         Query q = em.createQuery("select p from Photo p where p.id = :id");
         q.setParameter("id", idPhoto);
         return (Photo) q.getSingleResult();
     }
     
-    public void supprimerPhoto(int idPhoto) {
-        Query q = em.createQuery("delete from Photo p where p.id = :id");
-        q.setParameter("id", idPhoto);
-        q.executeUpdate();
+    public void supprimerPhoto(int id) {
+        Photo p = em.find(Photo.class, id);
+        em.remove(p);
     }
     
     

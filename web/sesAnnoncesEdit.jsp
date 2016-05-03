@@ -13,10 +13,36 @@
             <a class="outil-link view" href="Annonce?id=${a.id}" data-toggle="tooltip" data-placement="top" title="Visualiser l'annonce"><span class="glyphicon glyphicon-eye-open"></span></a>
             <span data-toggle="modal" data-target="#modalEditAnnc${a.id}">
                 <a class="outil-link edit" type="submit" data-toggle="tooltip" data-placement="top" title="Editer l'annonce"><span class="glyphicon glyphicon-pencil"></span></a>
-            </span>
+                </span>
+                <div class="modal fade" id="modalEditAnnc${a.id}" role="dialog">
+                    <div class="modal-dialog">
+                        <button type="button" class="close dismiss-button" data-dismiss="modal" style="margin-top:-30px;margin-right: -30px;"><span class="glyphicon glyphicon-remove-circle"></span></button>
+                        <div class="modal-content">
+                            <h4 style="color: #00585F;">Effectuer des changements sur l'annonce</h4>
+                            <form action="Profil" method="post">
+                                <input type="hidden" name="id" value="${a.id}"/>
+                                <button class="btn btn-success" type="submit" name="action" value="editAnnonce">Valider</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             <span data-toggle="modal" data-target="#modalSupprAnnc${a.id}">
                 <a class="outil-link suppr" type="submit" data-toggle="tooltip" data-placement="top" title="Supprimer l'annonce"><span class="glyphicon glyphicon-remove"></span></a>
-            </span>
+                </span>
+                <div class="modal fade" id="modalSupprAnnc${a.id}" role="dialog">
+                    <div class="modal-dialog">
+                        <button type="button" class="close dismiss-button" data-dismiss="modal" style="margin-top:-30px;margin-right: -30px;"><span class="glyphicon glyphicon-remove-circle"></span></button>
+                        <div class="modal-content">
+                            <h4 style="color: #00585F;">Etes-vous sûr de vouloir supprimer cette annonce ?</h4>
+                            <form action="Profil" method="post">
+                                <input type="hidden" name="id" value="${a.id}"/>
+                                <button class="btn btn-danger right" type="submit" name="action" value="supprimerAnnonce">OUI</button>
+                                <button class="btn btn-success left" type="button" data-dismiss="modal">NON</button>
+                                
+                            </form>
+                        </div>
+                    </div>
+                </div>
         </div>
         <li class="list-group-item list-carree-item">
             <div class="row">
@@ -52,7 +78,7 @@
                         <span style="float:right; font-size: 18px; color: #FF3800; font-weight: bold;">${a.prix} €</span>
                     </div>
                     <div class="row list-item-contenu">
-                        <span class="too-long-text" data-toggle="tooltip" data-placement="top" title="${a.description}">Description : ${a.description}</span>
+                        Description : ${a.description}
                     </div>
                     <div class="row list-item-contenu">
                         <c:if test="${not empty a.dateFin}">

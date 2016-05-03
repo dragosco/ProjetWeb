@@ -62,7 +62,7 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a href="Profil?user=${sessionScope.USER}">Mon profil</a></li>
-                            <li><a href="Profil?user=${sessionScope.USER}&action=afficheAnnonces">Mes annonces</a></li>
+                            <li><a href="Profil?user=${sessionScope.USER}&voir=annonces">Mes annonces</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="Logout">Se déconnecter</a></li>
                         </ul>

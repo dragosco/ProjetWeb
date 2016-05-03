@@ -153,6 +153,9 @@ public class Utilisateur implements Serializable {
         this.privilege = privilege;
     }
 
+    public void addAnnonce(Annonce annonce) {
+        annonces.add(annonce);
+    }
     
     @Override
     public int hashCode() {

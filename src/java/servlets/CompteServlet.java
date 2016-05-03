@@ -7,10 +7,13 @@ package servlets;
 
 import gestionnaires.GestionnaireEcoles;
 import gestionnaires.GestionnaireUtilisateurs;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
 import javax.ejb.EJB;
+import javax.imageio.ImageIO;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.servlet.RequestDispatcher;
@@ -23,7 +26,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import modeles.Ecole;
-import outils.InputStreamToByteArray;
 
 /**
  *
@@ -91,10 +93,37 @@ public class CompteServlet extends HttpServlet {
         String message = "";
         if(action != null) {
             if(action.equals("creerNouveauCompte")) {
+                //On récupère la part correspondant à la photo
                 Part profilePic = request.getPart("profilePic");
+                //On la transforme en InputStream
                 InputStream contenuImage = profilePic.getInputStream();
-                InputStreamToByteArray ISBA = new InputStreamToByteArray(contenuImage);
-        
+                //On transforme le flux d'octets en BufferedImage
+                BufferedImage imgOrig = ImageIO.read(contenuImage);
+                
+                //Le preview de l'image a un Width égale à 'ratioDivider'
+                //On divise le Width de l'image originale par ce 'ratioDivider' afin d'obtenir le ratio
+                double ratioDivider = Double.parseDouble(request.getParameter("ratiodivider"));
+                double imgWidth = imgOrig.getWidth();
+                double ratio = Math.floor(imgWidth/ratioDivider);
+                
+                int x = (int) (ratio * Double.parseDouble(request.getParameter("x")));
+                int y = (int) (ratio * Double.parseDouble(request.getParameter("y")));
+                int width;
+                if (imgOrig.getWidth() > x + (int) (ratio * Double.parseDouble(request.getParameter("w")))) {
+                    width = (int) (ratio * Double.parseDouble(request.getParameter("w")));
+                } else {
+                    width = imgOrig.getWidth() - x;
+                }
+                int height;
+                if (imgOrig.getHeight() > y + (int) (ratio * Double.parseDouble(request.getParameter("h")))) {
+                    height = (int) (ratio * Double.parseDouble(request.getParameter("h")));
+                } else {
+                    height = imgOrig.getHeight() - y;
+                }
+                
+                //On découpe l'image en fonction des coordonnées grâce à la requête et en multipliant par le ratio
+                BufferedImage imgCropped = imgOrig.getSubimage(x, y, width, height);
+                
                 if(gu.getUtilisateur(request.getParameter("pseudo")) == null) {
                     gu.creerUtilisateur(
                         request.getParameter("nom"), 
@@ -105,7 +134,7 @@ public class CompteServlet extends HttpServlet {
                         request.getParameter("mail"), 
                         request.getParameter("tel"),
                         "user",
-                        ISBA.getBytes()
+                        BufferedImageToByteArray(imgCropped)
                     );
                     message = "compteOK";
                     response.sendRedirect("Accueil?message=" + message);
@@ -122,8 +151,29 @@ public class CompteServlet extends HttpServlet {
                 String user = (String) session.getAttribute("USER");
                 Part nouvProfilePic = request.getPart("nouvProfilePic");
                 InputStream nouvContenuImage = nouvProfilePic.getInputStream();
-                InputStreamToByteArray nouvISBA = new InputStreamToByteArray(nouvContenuImage);
-                gu.changePhoto(user, nouvISBA.getBytes());
+                BufferedImage imgOrig = ImageIO.read(nouvContenuImage);
+                double ratioDivider = Double.parseDouble(request.getParameter("ratiodivider"));
+                double imgWidth = imgOrig.getWidth();
+                double ratio = imgWidth/ratioDivider;
+                
+                int x = (int) (ratio * Double.parseDouble(request.getParameter("x")));
+                int y = (int) (ratio * Double.parseDouble(request.getParameter("y")));
+                int width;
+                if (imgOrig.getWidth() > x + (int) (ratio * Double.parseDouble(request.getParameter("w")))) {
+                    width = (int) (ratio * Double.parseDouble(request.getParameter("w")));
+                } else {
+                    width = imgOrig.getWidth() - x;
+                }
+                int height;
+                if (imgOrig.getHeight() > y + (int) (ratio * Double.parseDouble(request.getParameter("h")))) {
+                    height = (int) (ratio * Double.parseDouble(request.getParameter("h")));
+                } else {
+                    height = imgOrig.getHeight() - y;
+                }
+                
+                BufferedImage imgCropped = imgOrig.getSubimage(x, y, width, height);
+                
+                gu.changePhoto(user, BufferedImageToByteArray(imgCropped));
                 response.sendRedirect("Profil?user=" + user);
             }
         }
@@ -140,4 +190,12 @@ public class CompteServlet extends HttpServlet {
         return "Short description";
     }
 
+    public byte[] BufferedImageToByteArray(BufferedImage bi) throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ImageIO.write( bi, "jpg", baos );
+        baos.flush();
+        byte[] imageInBytes = baos.toByteArray();
+        baos.close();
+        return imageInBytes;
+    }
 }

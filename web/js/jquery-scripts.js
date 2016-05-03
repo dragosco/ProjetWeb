@@ -56,31 +56,66 @@ $(document).ready(function(){
         $("#conditionsKO").html("Attention ! Si vous n'acceptez les Termes et Conditions d'utilisation, vous ne pouvez pas créer un compte.");
     });
     
-//PROFIL : enable popover
-    $("[data-toggle='popover']").popover();
-    
-    function previewPhotoProfil(photo, output) {
-
-        if (photo.files && photo.files[0]) {
+    //lire la photo de l'input file
+    function readURL(input) {
+        if (input.files && input.files[0]) {
             var reader = new FileReader();
             
             reader.onload = function (e) {
-                $(output).attr('src', e.target.result);
+                
+                $('#target').attr('src', e.target.result);
+                //on découpe
+                $('.previewPhotoProfil').Jcrop({
+      
+                  onSelect: updateCoords,
+                    
+                        bgOpacity:   .4,
+                        setSelect:   [ 150, 150, 50, 50 ],
+                        aspectRatio: 16 / 16
+                });
+                
             };
             
-            reader.readAsDataURL(photo.files[0]);
+            reader.readAsDataURL(input.files[0]);
         }
-    };
-    $("#inputNouvPhotoProfil").change(function(){
-        previewPhotoProfil(this, '#previewNouvPhotoProfil');
-    });
+    }
+    
     $("#inputPhotoProfil").change(function(){
-        previewPhotoProfil(this, '#previewPhotoProfil');
+        $(".preview-container img").remove();
+        $(".preview-container").html('<img class="previewPhotoProfil" id="target" alt="Votre photo de profil ici" style="width: 100%; height: auto;"/>');
+        readURL(this);
+        
+    });
+    //les coordonnées du découpe servent à découper la photo lors du chargement sur la servlet
+    function updateCoords(c)
+    {
+        $('#x').val(c.x);
+        $('#y').val(c.y);
+        $('#w').val(c.w);
+        $('#h').val(c.h);
+    };
+
+    //etant donné que le preview de la photo n'a pas la même taille que la photo originale
+    //lorsqu'on récupère les coordonnées de découpage il faut multiplier ces coordonnées par un ratio
+    //le ratio est determiné en divisant la taille originale par la valeur du 'ratiodivider' ci-bas
+    $("#ratiodivider").val($("#target").width());
+    
+//PROFIL : enable popover
+    $("[data-toggle='popover']").popover();
+    
+    $('body').on('click', function (e) {
+        $('[data-toggle="popover"]').each(function () {
+            //the 'is' for buttons that trigger popups
+            //the 'has' for icons within a button that triggers a popup
+            if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+                $(this).popover('hide');
+            }
+        });
     });
     
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
-    })
+    $(document).on("click", ".popover .close" , function(){
+        $(this).parents(".popover").popover('hide');
+    });
 });
 
 
