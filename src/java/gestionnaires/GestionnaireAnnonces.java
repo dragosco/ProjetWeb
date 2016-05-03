@@ -35,12 +35,12 @@ public class GestionnaireAnnonces {
     private EntityManager em;
     
 
-    public Annonce creerAnnonce(String titre, int categorie, double prix, String description, Date dateFin, String auteur, Collection<byte[]> photos) {
+    public Annonce creerAnnonce(String titre, int type, int categorie, double prix, String description, Date dateFin, String auteur, Collection<byte[]> photos) {
         Utilisateur user = gu.getUtilisateur(auteur);
         System.out.println("categorie : " + categorie);
         Categorie categ = gc.getCategorie(categorie);
         System.out.println("categ " + categ);
-        Annonce a = new Annonce(titre, categ, prix, description, dateFin, user);
+        Annonce a = new Annonce(titre, type, categ, prix, description, dateFin, user);
         a.setDateDepot(new Date());
         for(byte[] photo : photos) {
             System.out.print("entrou add photo");
@@ -56,12 +56,12 @@ public class GestionnaireAnnonces {
        
     }
     
-    public Annonce creerAnnonce(String titre, String categorie, double prix, String description, Date dateFin, String auteur, Collection<byte[]> photos) {
+    public Annonce creerAnnonce(String titre, int type, String categorie, double prix, String description, Date dateFin, String auteur, Collection<byte[]> photos) {
         Utilisateur user = gu.getUtilisateur(auteur);
         System.out.println("categorie : " + categorie);
         Categorie categ = gc.getCategorie(categorie);
         System.out.println("categ " + categ);
-        Annonce a = new Annonce(titre, categ, prix, description, dateFin, user);
+        Annonce a = new Annonce(titre, type, categ, prix, description, dateFin, user);
         a.setDateDepot(new Date());
         if(photos != null) {
             for(byte[] photo : photos) {

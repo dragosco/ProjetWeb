@@ -15,11 +15,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.shape.Path;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
-import modeles.Photo;
 
 /**
  *
@@ -39,11 +39,10 @@ public class InitBD {
     
     @PostConstruct
     public void init() {
+        System.out.println(new File(".").getAbsolutePath());
         
-        
-        File file = new File("/home/thais/NetBeansProjects/ProjetWeb/web/resources/blason-pa.png");
+        File file = new File("C:\\Users\\cojoc\\Documents\\NetBeansProjects\\ProjetWeb\\web\\resources\\blason-pa.png");
         FileInputStream fileInputStream = null;
-        
         byte[] bFile = new byte[(int) file.length()];
         
         try {
@@ -55,7 +54,7 @@ public class InitBD {
             Logger.getLogger(InitBD.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        File file2 = new File("/home/thais/NetBeansProjects/ProjetWeb/web/resources/dragos.jpg");
+        File file2 = new File("C:\\Users\\cojoc\\Documents\\NetBeansProjects\\ProjetWeb\\web\\resources\\dragos.jpg");
         FileInputStream fileInputStream2 = null;
         
         byte[] bFile2 = new byte[(int) file2.length()];
@@ -69,7 +68,7 @@ public class InitBD {
             Logger.getLogger(InitBD.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        File file3 = new File("/home/thais/NetBeansProjects/ProjetWeb/web/resources/thais.jpg");
+        File file3 = new File("C:\\Users\\cojoc\\Documents\\NetBeansProjects\\ProjetWeb\\web\\resources\\thais.jpg");
         FileInputStream fileInputStream3 = null;
         
         byte[] bFile3 = new byte[(int) file3.length()];
@@ -107,9 +106,9 @@ public class InitBD {
 
         //String titre, String categorie, double prix, String description, Date dateFin, String auteur, byte[] photo
         
-        ga.creerAnnonce("Smartphone samsung S5", "Multimédia", 200, "description 200", null, "adminThais", photos);
-        ga.creerAnnonce("titre2", "Immobilier", 10, "description2", null, "adminDragos", photos);
-        ga.creerAnnonce("titretitretitretitretitre", "Loisirs", 10, "descriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescription", null, "adminThais", photos);       
-        ga.creerAnnonce("titre5", "Vêtements", 10, "desc", null, "duj", null);       
+        ga.creerAnnonce("Smartphone samsung S5", 1, "Multimédia", 200, "description 200", null, "adminThais", photos);
+        ga.creerAnnonce("titre2", 0, "Immobilier", 10, "description2", null, "adminDragos", photos);
+        ga.creerAnnonce("titretitretitretitretitre", 1, "Loisirs", 10, "descriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescription", null, "adminThais", photos);       
+        ga.creerAnnonce("titre5", 1, "Vêtements", 10, "desc", null, "duj", null);       
     }
 }

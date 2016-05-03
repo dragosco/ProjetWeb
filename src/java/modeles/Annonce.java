@@ -31,6 +31,7 @@ public class Annonce implements Serializable {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
     
+    private int type;
     private String titre;
     @ManyToOne
     private Categorie categorie;
@@ -53,8 +54,9 @@ public class Annonce implements Serializable {
     public Annonce() {
     }
 
-    public Annonce(String titre, Categorie categorie, double prix, String description, Date dateFin, Utilisateur auteur) {
+    public Annonce(String titre, int type, Categorie categorie, double prix, String description, Date dateFin, Utilisateur auteur) {
         this.titre = titre;
+        this.type = type;
         this.categorie = categorie;
         this.prix = prix;
         this.description = description;
@@ -69,6 +71,14 @@ public class Annonce implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
     
     public String getTitre() {

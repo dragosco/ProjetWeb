@@ -73,103 +73,214 @@
         </div>
         
         <div class="container">
-            <form action="Accueil" method="get">
-                <div class="row">
-                    <div class="col-md-6">
-                        Mots clés : <input class="form-control" type="text" name="motscles" />
-                        Catégorie : <select class="form-control" type="text" name="categorie">
-                                        <option value="" selected>Toutes</option>
-                                        <c:forEach var="c" items="${categories}">
-                                            <option value="${c.nom}">${c.nom}</option>
-                                        </c:forEach>
-                                    </select>
-                        Prix :  <input type="text" id="amount" name="prix" readonly style="border:0; color:#f6931f; font-weight:bold;">
-                                <div id="slider-range"></div>
-                    </div>
-                    <div class="col-md-6">
-                        Ecole : <select class="form-control" type="text" name="ecole">
-                                    <option value="" selected>Toutes</option>
-                                    <c:forEach var="e" items="${ecoles}">
-                                        <option value="${e.nom}">${e.nom}</option>
-                                    </c:forEach>
-                                </select>
-                        Etudiant :  <input class="form-control" type="text" name="etudiant" />
-                        <input type="radio" name="annonceType" id="rtous" value="0" checked /> <label for="rtous"> Tous</label>
-                        <input type="radio" name="annonceType" id="rvente" value="1" /> <label for="rvente"> Vente</label>
-                        <input type="radio" name="annonceType" id="rrecherche" value="2" /> <label for="rrecherche"> Recherche</label>
-                    </div>  
-                </div>
-                <br>
-                <button class="btn btn-success" type="submit" value="filtrerAnnonces" name="action" style="float:right;">Chercher</button>
-            </form>
-        </div>
-        <br>
-        <div class="container">
-            <ul class="list-group">
-                <c:forEach var="a" items="${annonces}">
-                    <li class="list-group-item">
-                        <div class="annonce row" style="position: relative;">
-                            <c:if test="${sessionScope.PRIVILEGE == 'admin'}">
-                                <a class="outil-link suppr on-element" type="submit" data-toggle="modal" data-target="#modalSupprAnnc${a.id}"><span class="glyphicon glyphicon-remove"></span></a>
-                                <div class="modal fade" id="modalSupprAnnc${a.id}" role="dialog">
-                                  <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        Etes-vous certain de vouloir supprimer cette annonce ?
-                                        <form action="Admin" method="post">
-                                            <input type="hidden" value="${a.id}" name="id" />
-                                            <button type="submit" value="supprimerAnnonce" name="action">Confirmer</button>
-                                            <hr>
-                                            <a href="Accueil">Annuler</a>
-                                        </form>
-                                    </div>
-                                  </div>
-                                </div>
-                            </c:if>
-                            <div class="couleurAnnonce col-md-1"></div>
-                            <div class="infoEtudiant col-md-3">
-                                <a href="Profil?user=${a.auteur.pseudo}">
-                                    <c:choose>
-                                        <c:when test="${a.auteur.photo != null}">
-                                            <img src="Image/auteur/${a.auteur.id}" class="img-rounded photoEtudiant">
-                                        </c:when>
-                                        <c:otherwise>
-                                            <img src="resources/default_profile.jpg" class="img-rounded photoEtudiant">
-                                        </c:otherwise>
-                                    </c:choose>
-                                </a>
-                                <p>${a.auteur.prenom} ${a.auteur.nom}</p>
-                                <p>${a.auteur.ecole.nom}</p>
-                            </div>
-                            <div class="infoProduit col-md-4">
-                                <a href="Annonce?id=${a.id}"><p>${a.titre}</p></a>
-                                <p>${a.categorie.nom}</p>
-                                <p>Date ajout : <fmt:formatDate type="both" value="${a.dateDepot}" /></p>
-                                <p>Date fin : <fmt:formatDate type="date" value="${a.dateFin}" /></p>
-                            </div>
-                            <div class="prixProduit col-md-2">
-                                <p>${a.prix} ¤</p>
-                            </div>
-                            <div class="photosProduit col-md-2">
-                                <c:choose>
-                                    <c:when test="${fn:length(a.photos) > 0}">
-                                        <p><img src="Image/produit/${a.photos[0].id}" class="img-rounded photoProduit"/></p>
-                                        <span class="iconPhoto">
-                                            <img src="resources/camera.png" class="icon"/>
-                                            <span class="nombrePhotos">
-                                                ${fn:length(a.photos)}
-                                            </span>
-                                        </span>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <p><img src="resources/no_foto.jpg" class="img-rounded photoProduit"></p>
-                                    </c:otherwise>
-                                </c:choose>                                    
-                            </div>
-                        </div>
-                    </li>
-                </c:forEach>
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#ventesContainer">Ventes</a></li>
+                <li><a data-toggle="tab" href="#recherchesContainer">Recherches</a></li>
             </ul>
+            
+            <div class="tab-content">
+                <!-- VENTES -->
+                <div class="tab-pane fade in active" id="ventesContainer">
+                    <div class="container">
+                        <form action="Accueil" method="get">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    Mots clés : <input class="form-control" type="text" name="motscles" />
+                                    Catégorie : <select class="form-control" type="text" name="categorie">
+                                                    <option value="" selected>Toutes</option>
+                                                    <c:forEach var="c" items="${categories}">
+                                                        <option value="${c.nom}">${c.nom}</option>
+                                                    </c:forEach>
+                                                </select>
+                                    Prix :  <input type="text" id="amount" name="prix" readonly style="border:0; color:#f6931f; font-weight:bold;">
+                                            <div id="slider-range"></div>
+                                </div>
+                                <div class="col-md-6">
+                                    Ecole : <select class="form-control" type="text" name="ecole">
+                                                <option value="" selected>Toutes</option>
+                                                <c:forEach var="e" items="${ecoles}">
+                                                    <option value="${e.nom}">${e.nom}</option>
+                                                </c:forEach>
+                                            </select>
+                                    Etudiant :  <input class="form-control" type="text" name="etudiant" />
+                                    <input type="hidden" name="typ" value="1" /> <!-- 1 correspond aux ventes -->
+                                </div>  
+                            </div>
+                            <br>
+                            <button class="btn btn-success" type="submit" value="filtrerAnnonces" name="action" style="float:right;">Chercher</button>
+                        </form>
+                    </div>
+                    <br>
+                    <div class="container">
+                        <ul class="list-group">
+                            <c:forEach var="a" items="${annonces}">
+                                <li class="list-group-item">
+                                    <div class="annonce row" style="position: relative;">
+                                        <c:if test="${sessionScope.PRIVILEGE == 'admin'}">
+                                            <a class="outil-link suppr on-element" type="submit" data-toggle="modal" data-target="#modalSupprAnnc${a.id}"><span class="glyphicon glyphicon-remove"></span></a>
+                                            <div class="modal fade" id="modalSupprAnnc${a.id}" role="dialog">
+                                              <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    Etes-vous certain de vouloir supprimer cette annonce ?
+                                                    <form action="Admin" method="post">
+                                                        <input type="hidden" value="${a.id}" name="id" />
+                                                        <button type="submit" value="supprimerAnnonce" name="action">Confirmer</button>
+                                                        <hr>
+                                                        <a href="Accueil">Annuler</a>
+                                                    </form>
+                                                </div>
+                                              </div>
+                                            </div>
+                                        </c:if>
+                                        <div class="couleurAnnonce col-md-1"></div>
+                                        <div class="infoEtudiant col-md-3">
+                                            <a href="Profil?user=${a.auteur.pseudo}">
+                                                <c:choose>
+                                                    <c:when test="${a.auteur.photo != null}">
+                                                        <img src="Image/auteur/${a.auteur.id}" class="img-rounded photoEtudiant">
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <img src="resources/default_profile.jpg" class="img-rounded photoEtudiant">
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </a>
+                                            <p>${a.auteur.prenom} ${a.auteur.nom}</p>
+                                            <p>${a.auteur.ecole.nom}</p>
+                                        </div>
+                                        <div class="infoProduit col-md-4">
+                                            <a href="Annonce?id=${a.id}"><p>${a.titre}</p></a>
+                                            <p>${a.categorie.nom}</p>
+                                            <p>Date ajout : <fmt:formatDate type="both" value="${a.dateDepot}" /></p>
+                                            <p>Date fin : <fmt:formatDate type="date" value="${a.dateFin}" /></p>
+                                        </div>
+                                        <div class="prixProduit col-md-2">
+                                            <p>${a.prix} ¤</p>
+                                        </div>
+                                        <div class="photosProduit col-md-2">
+                                            <c:choose>
+                                                <c:when test="${fn:length(a.photos) > 0}">
+                                                    <p><img src="Image/produit/${a.photos[0].id}" class="img-rounded photoProduit"/></p>
+                                                    <span class="iconPhoto">
+                                                        <img src="resources/camera.png" class="icon"/>
+                                                        <span class="nombrePhotos">
+                                                            ${fn:length(a.photos)}
+                                                        </span>
+                                                    </span>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <p><img src="resources/no_foto.jpg" class="img-rounded photoProduit"></p>
+                                                </c:otherwise>
+                                            </c:choose>                                    
+                                        </div>
+                                    </div>
+                                </li>
+                            </c:forEach>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- RECHECHES -->
+                <div class="tab-pane fade in" id="recherchesContainer">
+                    <div class="container">
+                        <form action="Accueil" method="get">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    Mots clés : <input class="form-control" type="text" name="motscles" />
+                                    Catégorie : <select class="form-control" type="text" name="categorie">
+                                                    <option value="" selected>Toutes</option>
+                                                    <c:forEach var="c" items="${categories}">
+                                                        <option value="${c.nom}">${c.nom}</option>
+                                                    </c:forEach>
+                                                </select>
+                                    Prix :  <input type="text" id="amount" name="prix" readonly style="border:0; color:#f6931f; font-weight:bold;">
+                                            <div id="slider-range"></div>
+                                </div>
+                                <div class="col-md-6">
+                                    Ecole : <select class="form-control" type="text" name="ecole">
+                                                <option value="" selected>Toutes</option>
+                                                <c:forEach var="e" items="${ecoles}">
+                                                    <option value="${e.nom}">${e.nom}</option>
+                                                </c:forEach>
+                                            </select>
+                                    Etudiant :  <input class="form-control" type="text" name="etudiant" />
+                                    <input type="hidden" name="typ" value="1" /> <!-- 1 correspond aux ventes -->
+                                </div>  
+                            </div>
+                            <br>
+                            <button class="btn btn-success" type="submit" value="filtrerAnnonces" name="action" style="float:right;">Chercher</button>
+                        </form>
+                    </div>
+                    <br>
+                    <div class="container">
+                        <ul class="list-group">
+                            <c:forEach var="a" items="${annonces}">
+                                <li class="list-group-item">
+                                    <div class="annonce row" style="position: relative;">
+                                        <c:if test="${sessionScope.PRIVILEGE == 'admin'}">
+                                            <a class="outil-link suppr on-element" type="submit" data-toggle="modal" data-target="#modalSupprAnnc${a.id}"><span class="glyphicon glyphicon-remove"></span></a>
+                                            <div class="modal fade" id="modalSupprAnnc${a.id}" role="dialog">
+                                              <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    Etes-vous certain de vouloir supprimer cette annonce ?
+                                                    <form action="Admin" method="post">
+                                                        <input type="hidden" value="${a.id}" name="id" />
+                                                        <button type="submit" value="supprimerAnnonce" name="action">Confirmer</button>
+                                                        <hr>
+                                                        <a href="Accueil">Annuler</a>
+                                                    </form>
+                                                </div>
+                                              </div>
+                                            </div>
+                                        </c:if>
+                                        <div class="couleurAnnonce col-md-1"></div>
+                                        <div class="infoEtudiant col-md-3">
+                                            <a href="Profil?user=${a.auteur.pseudo}">
+                                                <c:choose>
+                                                    <c:when test="${a.auteur.photo != null}">
+                                                        <img src="Image/auteur/${a.auteur.id}" class="img-rounded photoEtudiant">
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <img src="resources/default_profile.jpg" class="img-rounded photoEtudiant">
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </a>
+                                            <p>${a.auteur.prenom} ${a.auteur.nom}</p>
+                                            <p>${a.auteur.ecole.nom}</p>
+                                        </div>
+                                        <div class="infoProduit col-md-4">
+                                            <a href="Annonce?id=${a.id}"><p>${a.titre}</p></a>
+                                            <p>${a.categorie.nom}</p>
+                                            <p>Date ajout : <fmt:formatDate type="both" value="${a.dateDepot}" /></p>
+                                            <p>Date fin : <fmt:formatDate type="date" value="${a.dateFin}" /></p>
+                                        </div>
+                                        <div class="prixProduit col-md-2">
+                                            <p>${a.prix} ¤</p>
+                                        </div>
+                                        <div class="photosProduit col-md-2">
+                                            <c:choose>
+                                                <c:when test="${fn:length(a.photos) > 0}">
+                                                    <p><img src="Image/produit/${a.photos[0].id}" class="img-rounded photoProduit"/></p>
+                                                    <span class="iconPhoto">
+                                                        <img src="resources/camera.png" class="icon"/>
+                                                        <span class="nombrePhotos">
+                                                            ${fn:length(a.photos)}
+                                                        </span>
+                                                    </span>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <p><img src="resources/no_foto.jpg" class="img-rounded photoProduit"></p>
+                                                </c:otherwise>
+                                            </c:choose>                                    
+                                        </div>
+                                    </div>
+                                </li>
+                            </c:forEach>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
+        
         
         <jsp:include page='footer.jsp'/>
     </body>
