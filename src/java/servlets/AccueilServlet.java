@@ -47,7 +47,7 @@ public class AccueilServlet extends HttpServlet {
         HttpSession session = request.getSession();
         Utilisateur u = (Utilisateur) session.getAttribute("PROFIL");
         
-        Collection<Annonce> annonces;
+        Collection<Annonce> annonces = null;
         
         Collection<Categorie> categories = gc.getCategories();
         request.setAttribute("categories", categories);
@@ -65,8 +65,6 @@ public class AccueilServlet extends HttpServlet {
                             request.getParameter("etudiant"),
                             request.getParameter("prix"),
                             request.getParameter("annonceType"));
-
-                request.setAttribute("annonces", annonces);
             } else if (action.equals("supprimerAnnonce")) {
                 int id = Integer.parseInt(request.getParameter("id"));
                 //L'admin peut supprimer n'importe quelle annonce. Un user ne peut supprimer que les siens.
@@ -77,12 +75,18 @@ public class AccueilServlet extends HttpServlet {
                 }
                 
                 annonces = ga.getAnnonces();
-                request.setAttribute("annonces", annonces);
             } 
         } else {
             annonces = ga.getAnnonces();
-            request.setAttribute("annonces", annonces);
         }
+        
+        request.setAttribute("annonces", annonces);
+        
+        Double minPrix = ga.getMinPrix();
+        Double maxPrix = ga.getMaxPrix();
+        
+        request.setAttribute("minPrix", minPrix);
+        request.setAttribute("maxPrix", maxPrix);
         
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
         requestDispatcher.forward(request, response);

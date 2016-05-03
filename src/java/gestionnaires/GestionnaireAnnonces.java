@@ -81,17 +81,15 @@ public class GestionnaireAnnonces {
 
     public Collection<Annonce> getAnnonces() {
         // Exécution d'une requête équivalente à un select *
-        Query q = em.createQuery("select a from Annonce a order by a.dateDepot");
+        Query q = em.createQuery("select a from Annonce a order by a.dateDepot desc");
         return q.getResultList();
     }
 
     public Collection<Annonce> getAnnonces(String motscles, String categorie, String ecole, String etudiant, String prix, String annonceType) {
-        // debut de la contruction de la requete 
-        System.out.println("categorie " + categorie);
-        
+        // debut de la contruction de la requete         
         String query = "select a from Annonce a "
-            + "where ((:categorie = '' or a.categorie.nom = :categorie) "
-            + "and (:ecole = '' or a.auteur.ecole.nom = :ecole) ";
+            + "where (((:categorie = '') or (a.categorie.nom = :categorie)) "
+            + "and ((:ecole = '') or (a.auteur.ecole.nom = :ecole)) ";
         
         // filtre par nom de l'etudiant
         String[] nomsAuteur = null;
@@ -99,11 +97,11 @@ public class GestionnaireAnnonces {
         if(!etudiant.isEmpty()) {        
             nomsAuteur = etudiant.trim().split(" +");
             if(nomsAuteur.length > 0) {
-                query += "and (:nomsAuteur0 = ''";
-                System.out.println("etudiant : " + nomsAuteur[0]);
+                query += "and ((:nomsAuteur0 = '')";
+                System.out.println("(etudiant : " + nomsAuteur[0] + ")");
 
                 for (int i = 0; i < nomsAuteur.length; i++) {
-                    query += " or UPPER(a.auteur.nom) like UPPER(:nomsAuteur" + i + ") or UPPER(a.auteur.prenom) like UPPER(:nomsAuteur" + i + ")";
+                    query += " or (UPPER(a.auteur.nom) like UPPER(:nomsAuteur" + i + ")) or (UPPER(a.auteur.prenom) like UPPER(:nomsAuteur" + i + "))";
                 }
 
                 query += ") ";
@@ -116,10 +114,10 @@ public class GestionnaireAnnonces {
         if(!motscles.isEmpty()) {        
             motsClesParts = motscles.trim().split(" +");
             if(motsClesParts.length > 0) {
-                query += "and (:motsClesParts0 = ''";
+                query += "and ((:motsClesParts0 = '')";
 
                 for (int i = 0; i < motsClesParts.length; i++) {
-                    query += " or UPPER(a.titre) like UPPER(:motsClesParts" + i + ") or UPPER(a.description) like UPPER(:motsClesParts" + i + ")";
+                    query += " or (UPPER(a.titre) like UPPER(:motsClesParts" + i + ")) or (UPPER(a.description) like UPPER(:motsClesParts" + i + "))";
                 }
 
                 query += ") ";
@@ -146,12 +144,12 @@ public class GestionnaireAnnonces {
             }
         }
         
-        query += "and (:prixMin = '' or a.prix >= CAST(:prixMin as DECIMAL(9,2))) ";
-        query += "and (:prixMax = '' or a.prix <= CAST(:prixMax as DECIMAL(9,2)))) ";
+        query += "and ((:prixMin = '') or (a.prix >= CAST(:prixMin as DECIMAL(9,2)))) ";
+        query += "and ((:prixMax = '') or (a.prix <= CAST(:prixMax as DECIMAL(9,2))))) ";
         
-        query += "order by a.dateDepot";
+        query += "order by a.dateDepot desc";
 
-        //System.out.println("query : " + query);
+        System.out.println("query : " + query);
         
         // fin de la contruction de la requete
         // debut du setParameter
@@ -193,6 +191,16 @@ public class GestionnaireAnnonces {
         } catch(NoResultException e) {
             return null;
         }
+    }
+    
+    public Double getMinPrix() {
+        Double minPrix = (Double) em.createNativeQuery("select min(a.prix) from Annonce a").getSingleResult();
+        return minPrix;
+    }
+    
+    public Double getMaxPrix() {
+        Double maxPrix = (Double) em.createNativeQuery("select max(a.prix) from Annonce a").getSingleResult();
+        return maxPrix;
     }
     
     public void supprimerAnnonce(int id) {

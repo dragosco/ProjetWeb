@@ -32,9 +32,9 @@
             $(function() {
               $("#slider-range").slider({
                 range: true,
-                min: 0,
-                max: 500,
-                values: [0, 500],
+                min: ${minPrix},
+                max: ${maxPrix},
+                values: [${minPrix}, ${maxPrix}],
                 slide: function(event, ui) {
                   $("#amount").val(ui.values[0] + "¤" + " - " + ui.values[1] + "¤");
                 }
@@ -46,8 +46,6 @@
     </head>
     <body>
         <jsp:include page='navbar.jsp'/>
-        
-        
         
         <div class="container">
             <c:if test="${param.message == 'compteOK'}">
