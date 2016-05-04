@@ -122,12 +122,12 @@ public class AdminServlet extends HttpServlet {
             jsonArrayBuilder.add(
                     Json.createObjectBuilder()
                             .add("id", u.getId())
-                            .add("nom", u.getNom())
-                            .add("prenom", u.getPrenom())
+                            .add("nom", u.getNom() != null ? u.getNom() : "")
+                            .add("prenom", u.getPrenom() != null ? u.getPrenom() : "")
                             .add("pseudo", u.getPseudo())
                             .add("ecole", u.getEcole().getNom())
-                            .add("tel", u.getTel())
-                            .add("mail", u.getMail())
+                            .add("tel", u.getTel() != null ? u.getTel() : "")
+                            .add("mail", u.getMail() != null ? u.getMail() : "")
                             .add("privilege", u.getPrivilege())
                             .add("photo", (u.getPhoto() != null))
             );
