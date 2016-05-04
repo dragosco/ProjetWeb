@@ -14,7 +14,7 @@ $(document).ready(function() {
                 var nbPages = Math.floor(total / nombreParPage) + 1; 
                 
                 //nettoyage de la table (sauf la première ligne correspondant aux titres
-                $('#listeVentes li').remove();
+                $('#listeVentes a').remove();
                 //
                 
                 
@@ -49,163 +49,84 @@ $(document).ready(function() {
                 for (i = 1; i < _len; i++) {
                     //debugger
                     item = data[i];
+                    //alert(item);
                     var photo = "resources/default_profile.jpg";
 //                    if(item.photo !== false) {
 //                        photo = "Image/auteur/" + item.id;
 //                    }
-                    $('#listeVentes')
-                        .append(                        
-                            "<li class='list-group-item'>" + 
-                                "<div class='annonce row' style='position: relative;'>" +
-                                    //"<c:if test="${sessionScope.PRIVILEGE == 'admin'}">" + 
-                                        "<a class='outil-link suppr on-element' type='submit' data-toggle='modal' data-target='#modalSupprAnnc" + item.id + "'><span class='glyphicon glyphicon-remove'></span></a>" +
-                                        "<div class='modal fade' id='modalSupprAnnc" + item.id + "' role='dialog'>" +
-                                          "<div class='modal-dialog'>" +
-                                            "<div class='modal-content'>" +
-                                                "Etes-vous certain de vouloir supprimer cette annonce ?" +
-                                                "<form action='Admin' method='post'>" +
-                                                    "<input type='hidden' value=" + item.id + " name='id' />" +
-                                                    "<button type='submit' value='supprimerAnnonce' name='action'>Confirmer</button>" +
-                                                    "<hr>" +
-                                                    "<a href='Accueil'>Annuler</a>" +
-                                                "</form>" +
-                                            "</div>" + 
-                                          "</div>" + 
-                                        "</div>" + 
-                                    //</c:if>
-                                    "<div class='couleurAnnonce col-md-1'></div>" +
-                                    "<div class='infoEtudiant col-md-3'>" +
-                                        "<a href='Profil?user=adminThais'>" +
-//                                            <c:choose>
-//                                                <c:when test="${a.auteur.photo != null}">
-//                                                    <img src="Image/auteur/${a.auteur.id}" class="img-rounded photoEtudiant">
-//                                                </c:when>
-//                                                <c:otherwise>
-                                                    "<img src=" + photo + " class='img-rounded photoEtudiant'>" + 
-//                                                </c:otherwise>
-//                                            </c:choose>
-                                        "</a>" +
-//                                        "<p>" + item.auteur.prenom ${a.auteur.nom} + "</p>"+
-//                                        <p>${a.auteur.ecole.nom}</p>
-                                    "</div>" + 
-                                    "<div class='infoProduit col-md-4'>" +
-//                                        <a href="Annonce?id=${a.id}"><p>${a.titre}</p></a>
-//                                        <p>${a.categorie.nom}</p>
-//                                        <p>Date ajout : <fmt:formatDate type="both" value="${a.dateDepot}" /></p>
-//                                        <p>Date fin : <fmt:formatDate type="date" value="${a.dateFin}" /></p>
-                                    "</div>" + 
-                                    "<div class='prixProduit col-md-2'>" +
-                                        "<p>" + item.prix +"\u20AC</p>" +
-                                    "</div>" + 
-                                    "<div class='photosProduit col-md-2'>" +
-//                                        <c:choose>
-//                                            <c:when test="${fn:length(a.photos) > 0}">
-////                                                "<p><img src='Image/produit/+${a.photos[0].id}" class="img-rounded photoProduit"/></p>
-//                                                <span class="iconPhoto">
-//                                                    <img src="resources/camera.png" class="icon"/>
-//                                                    <span class="nombrePhotos">
-//                                                        ${fn:length(a.photos)}
-//                                                    </span>
-//                                                </span>
-//                                            </c:when>
-//                                            <c:otherwise>
-//                                                <p><img src="resources/no_foto.jpg" class="img-rounded photoProduit"></p>
-//                                            </c:otherwise>
-//                                        </c:choose>                                    
-                                    "</div>" + 
+
+                    var vente = "<a href='Annonce?id=" + item.id + "' class='list-group-item list-arrondie-item'>" +
+                                "<div class='row'>" +
+                                    "<div class='col-md-2'>" + 
+                                            "<div class='photo-annonce-wrapper'>"; 
+                                    
+                    if(item.qdtPhotos > 0) {
+                        vente += "<img src='Image/produit/" + item.idPhoto + "' class='photo-annonce' />";
+                    } else {
+                        vente += "<img src='resources/no-image.png' class='photo-annonce-null' />";
+                    }               
+
+                    vente += "<br>" + 
+                                    "<div class='iconPhoto'>" + 
+                                        "<img src='resources/camera.png' class='icon'/>" +
+                                        "<span class='nombrePhotos'>" +
+                                            + item.qdtPhotos +
+                                        "</span>" + 
+                                    "</div>" +
+                                "</div>" +
+                        "</div>" +
+                        "<div class='col-md-10'>" +
+                            "<div class='row list-item-contenu'>" +
+                                "<div class='col-md-7'>" +
+                                    "<span class='titre-annonce'>" + item.titre + "</span>" +
+                                "</div>" +
+                                "<div class='col-md-5'>" + 
+                                    "<b>" + item.categorie + "</b>" + 
                                 "</div>" + 
-                            "</li>");
+                            "</div>" +
+                            "<div class='row list-item-contenu'>" +
+                                "<div class='col-md-7'>" +
+                                    "<span class='date'>Publiée par " + item.pseudo + " le " + item.dateDepotDate + " à " + item.dateDepotHeure + "</span>" +
+                                            "</div>" +
+                                            "<div class='col-md-5'>" +
+                                                "<span class='date'>"; // + 
+                                       
+                    if(item.dateFin !== '') {
+                        vente += "Valable jusqu'au " + item.dateFin + " />";
+                    } else {
+                        vente += "Sans date de validité";
+                    }            
+                    
+                    vente += "</span>" +
+                                    "</div>" +
+                                "</div>" +
 
+                                "<div class='row list-item-contenu'>" + 
+                                    "<div class='col-md-7 too-long-text'>" +
+                                        item.description +
+                                    "</div>" +
+                                    "<div class='col-md-5'>" +
+                                        "<span style='color: #FF3800; font-size: 20px; '>" + item.prix + " €</span>" +
+                                    "</div>" +
+                                "</div>" +
+                            "</div>";
+                    
+                    if(item.photoAuteur) {
+                        vente += "<img src='Image/auteur/" + item.idAuteur + "' class='photo-profil-annonce'>";
+                    } else {
+                        vente += "<img src='resources/default_profile.jpg' class='photo-profil-annonce'>";
+                    }
+//                                    
+                    vente += "</div>" + "</a>";  
 
-//                            "<li>" + 'test' +
-//                            "</li>");
-                
-                    //alert("m_positionName is "+ post. m_positionName);
+                    $('#listeVentes').append(vente);
+                    //$('#listeVentes').append("vente");
                 }
-                
-//                data.forEach(function (item) {
-////                    if(index === 0) {
-////                        alert("total");
-////                        $("#totalVentes").val(item.total);
-////                        alert(item.total);
-////                    } else {
-//                    var photo = "resources/default_profile.jpg";
-////                    if(item.photo !== false) {
-////                        photo = "Image/auteur/" + item.id;
-////                    }
-//                    $('#listeVentes')
-//                        .append(                        
-//                            "<li class='list-group-item'>" + 
-//                                "<div class='annonce row' style='position: relative;'>" +
-//                                    //"<c:if test="${sessionScope.PRIVILEGE == 'admin'}">" + 
-//                                        "<a class='outil-link suppr on-element' type='submit' data-toggle='modal' data-target='#modalSupprAnnc${a.id}'><span class='glyphicon glyphicon-remove'></span></a>" +
-//                                        "<div class='modal fade' id='modalSupprAnnc${a.id}' role='dialog'>" +
-//                                          "<div class='modal-dialog'>" +
-//                                            "<div class='modal-content'>" +
-//                                                "Etes-vous certain de vouloir supprimer cette annonce ?" +
-//                                                "<form action='Admin' method='post'>" +
-//                                                    "<input type='hidden' value=" + item.id + " name='id' />" +
-//                                                    "<button type='submit' value='supprimerAnnonce' name='action'>Confirmer</button>" +
-//                                                    "<hr>" +
-//                                                    "<a href='Accueil'>Annuler</a>" +
-//                                                "</form>" +
-//                                            "</div>" + 
-//                                          "</div>" + 
-//                                        "</div>" + 
-//                                    //</c:if>
-//                                    "<div class='couleurAnnonce col-md-1'></div>" +
-//                                    "<div class='infoEtudiant col-md-3'>" +
-//                                        "<a href='Profil?user=adminThais'>" +
-////                                            <c:choose>
-////                                                <c:when test="${a.auteur.photo != null}">
-////                                                    <img src="Image/auteur/${a.auteur.id}" class="img-rounded photoEtudiant">
-////                                                </c:when>
-////                                                <c:otherwise>
-//                                                    "<img src=" + photo + " class='img-rounded photoEtudiant'>" + 
-////                                                </c:otherwise>
-////                                            </c:choose>
-//                                        "</a>" +
-////                                        "<p>" + item.auteur.prenom ${a.auteur.nom} + "</p>"+
-////                                        <p>${a.auteur.ecole.nom}</p>
-//                                    "</div>" + 
-//                                    "<div class='infoProduit col-md-4'>" +
-////                                        <a href="Annonce?id=${a.id}"><p>${a.titre}</p></a>
-////                                        <p>${a.categorie.nom}</p>
-////                                        <p>Date ajout : <fmt:formatDate type="both" value="${a.dateDepot}" /></p>
-////                                        <p>Date fin : <fmt:formatDate type="date" value="${a.dateFin}" /></p>
-//                                    "</div>" + 
-//                                    "<div class='prixProduit col-md-2'>" +
-//                                        "<p>" + item.prix +"\u20AC</p>" +
-//                                    "</div>" + 
-//                                    "<div class='photosProduit col-md-2'>" +
-////                                        <c:choose>
-////                                            <c:when test="${fn:length(a.photos) > 0}">
-//////                                                "<p><img src='Image/produit/+${a.photos[0].id}" class="img-rounded photoProduit"/></p>
-////                                                <span class="iconPhoto">
-////                                                    <img src="resources/camera.png" class="icon"/>
-////                                                    <span class="nombrePhotos">
-////                                                        ${fn:length(a.photos)}
-////                                                    </span>
-////                                                </span>
-////                                            </c:when>
-////                                            <c:otherwise>
-////                                                <p><img src="resources/no_foto.jpg" class="img-rounded photoProduit"></p>
-////                                            </c:otherwise>
-////                                        </c:choose>                                    
-//                                    "</div>" + 
-//                                "</div>" + 
-//                            "</li>");
-//
-//
-////                            "<li>" + 'test' +
-////                            "</li>");
-//                });
-//                    index = index + 1;
-//                });
             },
             error : function(data,status,er) {
                 alert("error: "+data+" status: "+status+" er:"+er);
             }
+            //}
         });
     };
 

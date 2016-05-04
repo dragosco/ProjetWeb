@@ -4,7 +4,7 @@
     Authors     : Thais, Dragos
 --%>
 
-<%@page contentType="text/html" pageEncoding="ISO-8859-15"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -13,8 +13,8 @@
 
 <html>
     <head>
-        <!--<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">-->
-        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-15">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-15">-->
         <title>etumercatus</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="css/style.css">
@@ -37,11 +37,11 @@
                 max: ${maxPrix},
                 values: [${minPrix}, ${maxPrix}],
                 slide: function(event, ui) {
-                  $("#amount").val(ui.values[0] + "¤" + " - " + ui.values[1] + "¤");
+                  $("#amount").val(ui.values[0] + "€" + " - " + ui.values[1] + "€");
                 }
               });
-              $("#amount").val($("#slider-range").slider("values", 0) + "¤" +
-                " - " + $("#slider-range").slider("values", 1) + "¤" );
+              $("#amount").val($("#slider-range").slider("values", 0) + "€" +
+                " - " + $("#slider-range").slider("values", 1) + "€" );
             });
         </script>
         <script src="js/accueil.js"></script>
@@ -83,234 +83,62 @@
             <div class="tab-content">
                 <!-- VENTES -->
                 <div class="tab-pane fade in active" id="ventesContainer">
-  <div class="row">
-                    <div class="container">
-                        <form action="Accueil" method="get">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    Mots clés : <input class="form-control" type="text" id="motscles" name="motscles" />
-                                    Catégorie : <select class="form-control" type="text" id="categorie" name="categorie">
+                    <div class="row">
+                        <div class="container">
+                            <form action="Accueil" method="get">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        Mots clés : <input class="form-control" type="text" id="motscles" name="motscles" />
+                                        Catégorie : <select class="form-control" type="text" id="categorie" name="categorie">
+                                                        <option value="" selected>Toutes</option>
+                                                        <c:forEach var="c" items="${categories}">
+                                                            <option value="${c.nom}">${c.nom}</option>
+                                                        </c:forEach>
+                                                    </select>
+                                        Prix :  <input type="text" id="amount" name="prix" readonly style="border:0; color:#f6931f; font-weight:bold;">
+                                                <div id="slider-range"></div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        Ecole : <select class="form-control" type="text" id="ecole" name="ecole">
                                                     <option value="" selected>Toutes</option>
-                                                    <c:forEach var="c" items="${categories}">
-                                                        <option value="${c.nom}">${c.nom}</option>
+                                                    <c:forEach var="e" items="${ecoles}">
+                                                        <option value="${e.nom}">${e.nom}</option>
                                                     </c:forEach>
                                                 </select>
-                                    Prix :  <input type="text" id="amount" name="prix" readonly style="border:0; color:#f6931f; font-weight:bold;">
-                                            <div id="slider-range"></div>
+                                        Etudiant :  <input class="form-control" type="text" id="etudiant" name="etudiant" />
+    <!--                                    <input type="hidden" name="typ" value="1" />  1 correspond aux ventes -->
+                                    </div>  
                                 </div>
-                                <div class="col-md-6">
-                                    Ecole : <select class="form-control" type="text" id="ecole" name="ecole">
-                                                <option value="" selected>Toutes</option>
-                                                <c:forEach var="e" items="${ecoles}">
-                                                    <option value="${e.nom}">${e.nom}</option>
-                                                </c:forEach>
-                                            </select>
-                                    Etudiant :  <input class="form-control" type="text" id="etudiant" name="etudiant" />
-<!--                                    <input type="hidden" name="typ" value="1" />  1 correspond aux ventes -->
-                                </div>  
-                            </div>
-                            <br>
-                            <button class="btn btn-success" type="button" value="filtrerVentes" id="recherche" name="action" style="float:right;">Chercher</button>
-                        </form>
+                                <br>
+                                <button class="btn btn-success" type="button" value="filtrerVentes" id="recherche" name="action" style="float:right;">Chercher</button>
+                            </form>
+                        </div>
                     </div>
-                </div>
                     <br>
                     <div class="row">
-                    <div class="container" style="padding-right: 50px;">
-                        <input type="hidden" id="totalVentes" value="0" />
-                        <ul class="list-group" id="listeVentes">
-                        <c:forEach var="a" items="${annonces}">
-                            <a href="Annonce?id=${a.id}"class="list-group-item list-arrondie-item">
-                                <div class="row" >
-                                    <div class="col-md-2">
-                                            <div class="photo-annonce-wrapper">
-                                                <c:choose>
-                                                    <c:when test="${fn:length(a.photos) > 0}">
-                                                        <img src="Image/produit/${a.photos[0].id}" class="photo-annonce" />
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <img src="resources/no-image.png" class="photo-annonce-null" />
-                                                    </c:otherwise>
-                                                </c:choose>
-                                                <br>
-                                                <div class="iconPhoto">
-                                                    <img src="resources/camera.png" class="icon"/>
-                                                    <span class="nombrePhotos">
-                                                        ${fn:length(a.photos)}
-                                                    </span>
-                                                </div>
-                                            </div>
-                                    </div>
-                                    <div class="col-md-10">
-
-                                        <div class="row list-item-contenu">
-                                            <div class="col-md-7">
-                                                <span class="titre-annonce">${a.titre}</span>
-                                            </div>
-                                            <div class="col-md-5">
-                                                <b>${a.categorie.nom}</b>
-                                            </div>
-                                        </div>
-
-                                        <div class="row list-item-contenu">
-                                            <div class="col-md-7">
-                                                <span class="date">Publi�e par ${a.auteur.pseudo} le <fmt:formatDate type="date" value="${a.dateDepot}" /> � <fmt:formatDate type="time" value="${a.dateDepot}" timeStyle="short" /></span>
-                                            </div>
-                                            <div class="col-md-5">
-                                                <span class="date">
-                                                    <c:if test="${not empty a.dateFin}">
-                                                        Valable jusqu'au <fmt:formatDate type="date" value="${a.dateFin}" />
-                                                    </c:if>
-                                                    <c:if test="${empty a.dateFin}">
-                                                        Sans date de validit�
-                                                    </c:if> 
-                                                </span>
-
-                                            </div>
-                                        </div>
-
-                                        <div class="row list-item-contenu">
-                                            <div class="col-md-7 too-long-text">
-                                                ${a.description}
-                                            </div>
-                                            <div class="col-md-5">
-                                                <span style="color: #FF3800; font-size: 20px; ">${a.prix} �</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <c:choose>
-                                        <c:when test="${a.auteur.photo != null}">
-                                            <img src="Image/auteur/${a.auteur.id}" class="photo-profil-annonce">
-                                        </c:when>
-                                        <c:otherwise>
-                                            <img src="resources/default_profile.jpg" class="photo-profil-annonce">
-                                        </c:otherwise>
-                                    </c:choose>
-                                </div>
-                            </a>
+                        <div class="container" style="padding-right: 50px;">
+                            <input type="hidden" id="totalVentes" value="0" />
+                            <ul class="list-group" id="listeVentes">
                             
-                        </c:forEach>
-                        </ul>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-            </div>
 <!--                    <button class="btn btn-success" type="button" id="previewButton" name="action" style="float:left;"/>Preview</button>
                     <button class="btn btn-success" type="button" id="nextButton" name="action" style="float:right;"/>Next</button>-->
-                    <div class="container">
-                        <div class="btn-group inline">
-                            <button class="btn btn-info" id="startButton"><span class="glyphicon glyphicon-triangle-left"></span><span class="glyphicon glyphicon-triangle-left"></span></button>
-                            <button class="btn btn-info" id="previewButton"><span class="glyphicon glyphicon-triangle-left"></span></button>
-                        </div>
-                        <span class="inline" id="quellePage">String to display after buttons on same line</span> 
-                        <div class="btn-group inline">
-                            <button class="btn btn-info" id="nextButton"><span class="glyphicon glyphicon-triangle-right"></span></button>
-                            <button class="btn btn-info" id="endButton"><span class="glyphicon glyphicon-triangle-right"></span><span class="glyphicon glyphicon-triangle-right"></span></button>
-                        </div>
+                <div class="container">
+                    <div class="btn-group inline">
+                        <button class="btn btn-info" id="startButton"><span class="glyphicon glyphicon-triangle-left"></span><span class="glyphicon glyphicon-triangle-left"></span></button>
+                        <button class="btn btn-info" id="previewButton"><span class="glyphicon glyphicon-triangle-left"></span></button>
+                    </div>
+                    <span class="inline" id="quellePage">String to display after buttons on same line</span> 
+                    <div class="btn-group inline">
+                        <button class="btn btn-info" id="nextButton"><span class="glyphicon glyphicon-triangle-right"></span></button>
+                        <button class="btn btn-info" id="endButton"><span class="glyphicon glyphicon-triangle-right"></span><span class="glyphicon glyphicon-triangle-right"></span></button>
                     </div>
                 </div>
-                
-                <!-- RECHECHES -->
-<!--                <div class="tab-pane fade in" id="recherchesContainer">
-                    <div class="container">
-                        <form action="Accueil" method="get">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    Mots clés : <input class="form-control" type="text" name="motscles" />
-                                    Catégorie : <select class="form-control" type="text" name="categorie">
-                                                    <option value="" selected>Toutes</option>
-                                                    <c:forEach var="c" items="${categories}">
-                                                        <option value="${c.nom}">${c.nom}</option>
-                                                    </c:forEach>
-                                                </select>
-                                    Prix :  <input type="text" id="amount" name="prix" readonly style="border:0; color:#f6931f; font-weight:bold;">
-                                            <div id="slider-range"></div>
-                                </div>
-                                <div class="col-md-6">
-                                    Ecole : <select class="form-control" type="text" name="ecole">
-                                                <option value="" selected>Toutes</option>
-                                                <c:forEach var="e" items="${ecoles}">
-                                                    <option value="${e.nom}">${e.nom}</option>
-                                                </c:forEach>
-                                            </select>
-                                    Etudiant :  <input class="form-control" type="text" name="etudiant" />
-                                    <input type="hidden" name="typ" value="1" />  1 correspond aux ventes 
-                                </div>  
-                            </div>
-                            <br>
-                            <button class="btn btn-success" type="submit" value="filtrerAnnonces" name="action" style="float:right;">Chercher</button>
-                        </form>
-                    </div>
-                    <br>
-                    <div class="container">
-                        <ul class="list-group">
-                            <c:forEach var="a" items="${annonces}">
-                                <li class="list-group-item">
-                                    <div class="annonce row" style="position: relative;">
-                                        <c:if test="${sessionScope.PRIVILEGE == 'admin'}">
-                                            <a class="outil-link suppr on-element" type="submit" data-toggle="modal" data-target="#modalSupprAnnc${a.id}"><span class="glyphicon glyphicon-remove"></span></a>
-                                            <div class="modal fade" id="modalSupprAnnc${a.id}" role="dialog">
-                                              <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    Etes-vous certain de vouloir supprimer cette annonce ?
-                                                    <form action="Admin" method="post">
-                                                        <input type="hidden" value="${a.id}" name="id" />
-                                                        <button type="submit" value="supprimerAnnonce" name="action">Confirmer</button>
-                                                        <hr>
-                                                        <a href="Accueil">Annuler</a>
-                                                    </form>
-                                                </div>
-                                              </div>
-                                            </div>
-                                        </c:if>
-                                        <div class="couleurAnnonce col-md-1"></div>
-                                        <div class="infoEtudiant col-md-3">
-                                            <a href="Profil?user=${a.auteur.pseudo}">
-                                                <c:choose>
-                                                    <c:when test="${a.auteur.photo != null}">
-                                                        <img src="Image/auteur/${a.auteur.id}" class="img-rounded photoEtudiant">
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <img src="resources/default_profile.jpg" class="img-rounded photoEtudiant">
-                                                    </c:otherwise>
-                                                </c:choose>
-                                            </a>
-                                            <p>${a.auteur.prenom} ${a.auteur.nom}</p>
-                                            <p>${a.auteur.ecole.nom}</p>
-                                        </div>
-                                        <div class="infoProduit col-md-4">
-                                            <a href="Annonce?id=${a.id}"><p>${a.titre}</p></a>
-                                            <p>${a.categorie.nom}</p>
-                                            <p>Date ajout : <fmt:formatDate type="both" value="${a.dateDepot}" /></p>
-                                            <p>Date fin : <fmt:formatDate type="date" value="${a.dateFin}" /></p>
-                                        </div>
-                                        <div class="prixProduit col-md-2">
-                                            <p>${a.prix} ¤</p>
-                                        </div>
-                                        <div class="photosProduit col-md-2">
-                                            <c:choose>
-                                                <c:when test="${fn:length(a.photos) > 0}">
-                                                    <p><img src="Image/produit/${a.photos[0].id}" class="img-rounded photoProduit"/></p>
-                                                    <span class="iconPhoto">
-                                                        <img src="resources/camera.png" class="icon"/>
-                                                        <span class="nombrePhotos">
-                                                            ${fn:length(a.photos)}
-                                                        </span>
-                                                    </span>
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <p><img src="resources/no_foto.jpg" class="img-rounded photoProduit"></p>
-                                                </c:otherwise>
-                                            </c:choose>                                    
-                                        </div>
-                                    </div>
-                                </li>
-                            </c:forEach>
-                        </ul>
-                    </div>
-                </div>-->
             </div>
-        </div>
-        
+        </div>       
         
         <jsp:include page='footer.jsp'/>
     </body>

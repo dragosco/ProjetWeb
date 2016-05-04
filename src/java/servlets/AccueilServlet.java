@@ -1,4 +1,5 @@
 package servlets;
+import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
 import gestionnaires.GestionnaireAnnonces;
 import gestionnaires.GestionnaireCategories;
 import gestionnaires.GestionnaireEcoles;
@@ -6,6 +7,7 @@ import gestionnaires.GestionnaireUtilisateurs;
 import java.util.Collection;
 import javax.ejb.EJB;
 import java.io.IOException;
+import java.util.Calendar;
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
@@ -19,6 +21,7 @@ import javax.servlet.http.HttpSession;
 import modeles.Annonce;
 import modeles.Categorie;
 import modeles.Ecole;
+import modeles.Photo;
 import modeles.Utilisateur;
 
 /**
@@ -157,6 +160,13 @@ public class AccueilServlet extends HttpServlet {
         jsonArrayBuilder.add(Json.createObjectBuilder().add("total", total));
         
         for(Annonce a: annonces) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(a.getDateDepot());
+            int date = cal.get(Calendar.DATE);
+            int mois = cal.get(Calendar.MONTH);
+            int heure = cal.get(Calendar.HOUR);
+            int min = cal.get(Calendar.MINUTE);
+            
             jsonArrayBuilder.add(
                     Json.createObjectBuilder()
                             .add("id", a.getId())
@@ -165,9 +175,16 @@ public class AccueilServlet extends HttpServlet {
                             .add("categorie", a.getCategorie().getNom())
                             .add("prix", a.getPrix())
                             .add("description", a.getDescription())
+                            .add("pseudo", a.getAuteur().getPseudo())
                             //.add("photos", a.getPhotos())
-                            //.add("dateDepot", a.getDateDepot())
-                            //.add("dateFin", a.getDateFin())
+                            .add("dateDepot", a.getDateDepot().toString())
+                            .add("idPhoto", (a.getPhotos() != null && !a.getPhotos().isEmpty()) ? ((Photo)a.getPhotos().toArray()[0]).getId() : 0) //a.getPhotos().toArray()[0].getId())
+                            .add("qdtPhotos", a.getPhotos().size())
+                            .add("photoAuteur", a.getAuteur().getPhoto() != null ? "photo" : "")
+                            .add("idAuteur", a.getAuteur().getId())
+                            .add("dateFin", a.getDateFin() != null ? a.getDateFin().toString() : "")
+                            .add("dateDepotDate", date + "/" + mois)
+                            .add("dateDepotHeure", heure + "h" + min)
                             //.add("auteur", a.getAuteur())
             );
         }

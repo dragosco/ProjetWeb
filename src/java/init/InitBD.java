@@ -107,19 +107,19 @@ public class InitBD {
         gu.creerUtilisateursDeTest();
 
         //String titre, String categorie, double prix, String description, Date dateFin, String auteur, byte[] photo
-        File photo1 = new File("C:\\Users\\cojoc\\Documents\\NetBeansProjects\\ProjetWeb\\web\\resources\\samsung-galaxy-s7-photo1.jpg");
-        File photo2 = new File("C:\\Users\\cojoc\\Documents\\NetBeansProjects\\ProjetWeb\\web\\resources\\samsung-galaxy-s7-photo2.jpg");
+        File photo1 = new File("/home/thais/NetBeansProjects/ProjetWeb/web/resources/samsung-galaxy-s7-photo1.jpg");
+        File photo2 = new File("/home/thais/NetBeansProjects/ProjetWeb/web/resources/samsung-galaxy-s7-photo2.jpg");
         Collection<byte[]> photosSamsung = new ArrayList<byte[]>();
         
-        File photo3 = new File("C:\\Users\\cojoc\\Documents\\NetBeansProjects\\ProjetWeb\\web\\resources\\appart-photo1.jpg");
-        File photo4 = new File("C:\\Users\\cojoc\\Documents\\NetBeansProjects\\ProjetWeb\\web\\resources\\appart-photo2.jpg");
-        File photo5 = new File("C:\\Users\\cojoc\\Documents\\NetBeansProjects\\ProjetWeb\\web\\resources\\appart-photo3.jpg");
+        File photo3 = new File("/home/thais/NetBeansProjects/ProjetWeb/web/resources/appart-photo1.jpg");
+        File photo4 = new File("/home/thais/NetBeansProjects/ProjetWeb/web/resources/appart-photo2.jpg");
+        File photo5 = new File("/home/thais/NetBeansProjects/ProjetWeb/web/resources/appart-photo3.jpg");
         Collection<byte[]> photosAppart = new ArrayList<byte[]>();
         
-        File photo6 = new File("C:\\Users\\cojoc\\Documents\\NetBeansProjects\\ProjetWeb\\web\\resources\\macbook-photo.jpg");
+        File photo6 = new File("/home/thais/NetBeansProjects/ProjetWeb/web/resources/macbook-photo.jpg");
         Collection<byte[]> photosMacbook = new ArrayList<byte[]>();
         
-        File photo7 = new File("C:\\Users\\cojoc\\Documents\\NetBeansProjects\\ProjetWeb\\web\\resources\\costume-photo.jpg");
+        File photo7 = new File("/home/thais/NetBeansProjects/ProjetWeb/web/resources/costume-photo.jpg");
         Collection<byte[]> photosCostume = new ArrayList<byte[]>();
         try {
             
@@ -140,7 +140,7 @@ public class InitBD {
         }
         
         //ventes
-        ga.creerAnnonce("Smartphone samsung S5", 0, "Multimédia", 200, "description 200", null, "adminThais", photos);
+        ga.creerAnnonce("Smartphone samsung S5", 0, "Multimédia", 200, "description 200", null, "adminThais", photosSamsung);
         ga.creerAnnonce("titre2", 0, "Immobilier", 10, "description2", null, "adminDragos", photos);
         ga.creerAnnonce("titretitretitretitretitre", 0, "Loisirs", 10, "descriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescription", null, "adminThais", photos);       
         ga.creerAnnonce("titre5", 0, "Vêtements", 10, "desc", null, "duj", null);  
