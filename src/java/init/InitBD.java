@@ -42,8 +42,9 @@ public class InitBD {
     
     @PostConstruct
     public void init() {
+        String path = "/home/thais/NetBeansProjects/ProjetWeb/web";
         
-        File file = new File("/home/thais/NetBeansProjects/ProjetWeb/web/resources/blason-pa.png");
+        File file = new File(path + "/resources/blason-pa.png");
         FileInputStream fileInputStream = null;
         byte[] bFile = new byte[(int) file.length()];
         
@@ -56,7 +57,7 @@ public class InitBD {
             Logger.getLogger(InitBD.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        File file2 = new File("/home/thais/NetBeansProjects/ProjetWeb/web/resources/dragos.jpg");
+        File file2 = new File(path + "/resources/dragos.jpg");
         FileInputStream fileInputStream2 = null;
         
         byte[] bFile2 = new byte[(int) file2.length()];
@@ -70,7 +71,7 @@ public class InitBD {
             Logger.getLogger(InitBD.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        File file3 = new File("/home/thais/NetBeansProjects/ProjetWeb/web/resources/thais.jpg");
+        File file3 = new File(path + "/resources/thais.jpg");
         FileInputStream fileInputStream3 = null;
         
         byte[] bFile3 = new byte[(int) file3.length()];
@@ -96,6 +97,7 @@ public class InitBD {
         gc.creerCategoriesDefaut();
         ge.creerEcolesDefaut();
         
+        gu.creerUtilisateur("ADMIN", "Admin", "admin", "admin", "Unice", "admin.admin@gmail.com", "0687711971", "admin", null);
         gu.creerUtilisateur("COJOCARU", "Dragos", "adminDragos", "admin", "Unice", "cojocaru.dragos14@gmail.com", "0687711971", "admin", bFile2);
         gu.creerUtilisateur("MOTA DOS SANTOS", "Thais", "adminThais", "admin", "Unice", "thais.motasantos@gmail.com", "06*******", "admin", bFile3);
         gu.creerUtilisateur("Potter", "Harry", "hp", "hp", "Unice", "hp@gmail.com", "06*******", "user", null);
@@ -107,19 +109,19 @@ public class InitBD {
         gu.creerUtilisateursDeTest();
 
         //String titre, String categorie, double prix, String description, Date dateFin, String auteur, byte[] photo
-        File photo1 = new File("/home/thais/NetBeansProjects/ProjetWeb/web/resources/samsung-galaxy-s7-photo1.jpg");
-        File photo2 = new File("/home/thais/NetBeansProjects/ProjetWeb/web/resources/samsung-galaxy-s7-photo2.jpg");
+        File photo1 = new File(path + "/resources/samsung-galaxy-s7-photo1.jpg");
+        File photo2 = new File(path + "/resources/samsung-galaxy-s7-photo2.jpg");
         Collection<byte[]> photosSamsung = new ArrayList<byte[]>();
         
-        File photo3 = new File("/home/thais/NetBeansProjects/ProjetWeb/web/resources/appart-photo1.jpg");
-        File photo4 = new File("/home/thais/NetBeansProjects/ProjetWeb/web/resources/appart-photo2.jpg");
-        File photo5 = new File("/home/thais/NetBeansProjects/ProjetWeb/web/resources/appart-photo3.jpg");
+        File photo3 = new File(path + "/resources/appart-photo1.jpg");
+        File photo4 = new File(path + "/resources/appart-photo2.jpg");
+        File photo5 = new File(path + "/resources/appart-photo3.jpg");
         Collection<byte[]> photosAppart = new ArrayList<byte[]>();
         
-        File photo6 = new File("/home/thais/NetBeansProjects/ProjetWeb/web/resources/macbook-photo.jpg");
+        File photo6 = new File(path + "/resources/macbook-photo.jpg");
         Collection<byte[]> photosMacbook = new ArrayList<byte[]>();
         
-        File photo7 = new File("/home/thais/NetBeansProjects/ProjetWeb/web/resources/costume-photo.jpg");
+        File photo7 = new File(path + "/resources/costume-photo.jpg");
         Collection<byte[]> photosCostume = new ArrayList<byte[]>();
         try {
             
@@ -139,7 +141,7 @@ public class InitBD {
             Logger.getLogger(InitBD.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        //ventes
+        //ventes - 0
         ga.creerAnnonce("Smartphone samsung S5", 0, "Multimédia", 200, "description 200", null, "adminThais", photosSamsung);
         ga.creerAnnonce("titre2", 0, "Immobilier", 10, "description2", null, "adminDragos", photosCostume);
         ga.creerAnnonce("titretitretitretitretitre", 0, "Loisirs", 10, "descriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescription", null, "adminThais", photosAppart);       
@@ -165,7 +167,7 @@ public class InitBD {
         ga.creerAnnonce("titretitretitretitretitre", 0, "Loisirs", 10, "descriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescription", null, "adminThais", photos);       
         ga.creerAnnonce("titre5", 0, "Vêtements", 10, "desc", null, "duj", photosMacbook); 
         
-        //recherche
+        //recherche - 1
         ga.creerAnnonce("Smartphone samsung S5", 1, "Multimédia", 300, "description 200", null, "adminThais", photosSamsung);
         ga.creerAnnonce("titre2", 1, "Immobilier", 50, "description2", null, "adminDragos", photosCostume);
         ga.creerAnnonce("titretitretitretitretitre", 1, "Loisirs", 80, "descriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescription", null, "adminThais", photos);       

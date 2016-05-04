@@ -47,6 +47,7 @@ public class GestionnaireAnnonces {
         if(photos != null) {
             for(byte[] photo : photos) {
                 //System.out.print("entrou add photo");
+                //System.out.print("photo " + photo);
                 if (photo != null) {
                     Photo p = new Photo(photo);
                     p.setAnnonce(a);
@@ -87,19 +88,19 @@ public class GestionnaireAnnonces {
     private Query buildQuery(String motscles, int categorie, int ecole, String etudiant, String prix, int annonceType, String query, boolean isOrdonne) {
         
         // debut de la contruction de la requete   
-        System.out.println("(categorie : " + categorie);
+        //System.out.println("(categorie : " + categorie);
         query += "where (((:categorie = 0) or (a.categorie.id = :categorie)) "
             + "and ((:ecole = 0) or (a.auteur.ecole.id = :ecole)) "
             + "and (a.type = :annonceType) ";
         
         // filtre par nom de l'etudiant
         String[] nomsAuteur = null;
-        System.out.println("(etudiant : " + etudiant);
+        //System.out.println("(etudiant : " + etudiant);
         if(!etudiant.isEmpty()) {        
             nomsAuteur = etudiant.trim().split(" +");
             if(nomsAuteur.length > 0) {
                 query += "and ((:nomsAuteur0 = '')";
-                System.out.println("(etudiant : " + nomsAuteur[0] + ")");
+                //System.out.println("(etudiant : " + nomsAuteur[0] + ")");
 
                 for (int i = 0; i < nomsAuteur.length; i++) {
                     query += " or (UPPER(a.auteur.nom) like UPPER(:nomsAuteur" + i + ")) or (UPPER(a.auteur.prenom) like UPPER(:nomsAuteur" + i + "))";
@@ -126,7 +127,7 @@ public class GestionnaireAnnonces {
         }
 
         // filtre par prix min et max
-        System.out.println("prix : " + prix);
+        //System.out.println("prix : " + prix);
         
         String[] intervalePrix = prix.split(" - ");
         
@@ -156,7 +157,7 @@ public class GestionnaireAnnonces {
         
         //query += "order by a.dateDepot desc";
 
-        System.out.println("query : " + query);
+        //System.out.println("query : " + query);
         
         // fin de la contruction de la requete
         // debut du setParameter
@@ -164,7 +165,7 @@ public class GestionnaireAnnonces {
         q.setParameter("categorie", categorie);
         q.setParameter("ecole", ecole);
         q.setParameter("annonceType", annonceType);
-        System.out.println("annonceType " + annonceType);
+        //System.out.println("annonceType " + annonceType);
         
         if(!etudiant.isEmpty()) {        
             for (int i = 0; i < nomsAuteur.length; i++) {

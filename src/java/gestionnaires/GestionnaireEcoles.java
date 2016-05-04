@@ -33,6 +33,9 @@ public class GestionnaireEcoles {
     public void creerEcolesDefaut() {
         creerEcole("Unice");
         creerEcole("Skema");
+        creerEcole("Polytech");
+        creerEcole("Inria");
+        creerEcole("Eurecom");
     }
     
     public Collection<Ecole> getEcoles() {

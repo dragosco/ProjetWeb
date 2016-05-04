@@ -15,6 +15,7 @@ $(document).ready(function() {
                 
                 //nettoyage de la table (sauf la première ligne correspondant aux titres
                 $('#listeRecherches a').remove();
+                $('#listeRecherches h3').remove();
                 //
                 
                 

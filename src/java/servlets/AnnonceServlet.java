@@ -102,7 +102,7 @@ public class AnnonceServlet extends HttpServlet {
             if(p.getContentType() != null) {
                 InputStreamToByteArray fba = 
                         new InputStreamToByteArray(p.getInputStream());
-                images.add(fba.getBytes());
+                images.add(fba.getBytes().length > 0 ? fba.getBytes() : null);
             }
             
         }
@@ -129,8 +129,10 @@ public class AnnonceServlet extends HttpServlet {
                     request.getParameter("description"),
                     dateFin,
                     user,
-                    !images.isEmpty() ? images : null
+                    (!images.isEmpty() || (!images.isEmpty() && ((ArrayList)images).get(0) != null)) ? images : null
                 );
+                
+                //System.out.println("images " + images);
                 
                 if(Integer.parseInt(request.getParameter("type")) == 0) {
                     response.sendRedirect("Accueil");

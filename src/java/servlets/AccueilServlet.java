@@ -98,8 +98,8 @@ public class AccueilServlet extends HttpServlet {
                 annonces = ga.getAnnonces();
                 completeRequest(annonces, total, 0, request, response);
             } else {
-                System.out.println("listerVentes");
-                System.out.println("debut : " + request.getParameter("debut"));
+                //System.out.println("listerVentes");
+                //System.out.println("debut : " + request.getParameter("debut"));
                 if(!request.getParameter("debut").isEmpty()) {
                     int start = Integer.parseInt(request.getParameter("debut"));
                     int nParPage = Integer.parseInt(request.getParameter("nombreParPage"));
@@ -150,10 +150,10 @@ public class AccueilServlet extends HttpServlet {
     }
     
     public JsonArray listerVentes(String motscles, int categorie, int ecole, String etudiant, String prix, int annonceType, String debut, String nombreParPage) {
-        System.out.println("entra listerventes servlet");
+        //System.out.println("entra listerventes servlet");
         
         Collection<Annonce> annonces = ga.getAnnonces(motscles, categorie, ecole, etudiant, prix, annonceType, debut, nombreParPage);
-        System.out.println("qdt annonces : " + annonces.size());
+        //System.out.println("qdt annonces : " + annonces.size());
         long total = ga.getCountAnnonces(motscles, categorie, ecole, etudiant, prix, annonceType); 
         
         JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
@@ -190,7 +190,7 @@ public class AccueilServlet extends HttpServlet {
         }
               
         JsonArray jsonArray = jsonArrayBuilder.build();
-        System.out.println("json : " + jsonArray.toString());
+        //System.out.println("json : " + jsonArray.toString());
         
         return jsonArray;
     }
