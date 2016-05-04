@@ -24,8 +24,8 @@ import modeles.Utilisateur;
 /**
  * @authors Dragos, Thais
  */
-@WebServlet(name = "Accueil", urlPatterns = {"/Accueil"})
-public class AccueilServlet extends HttpServlet {
+@WebServlet(name = "Recherche", urlPatterns = {"/Recherche"})
+public class RechercheServlet extends HttpServlet {
     @EJB
     private GestionnaireEcoles ge;
     @EJB
@@ -62,14 +62,14 @@ public class AccueilServlet extends HttpServlet {
         String action = request.getParameter("action");
         
         if(action != null) {
-            if(action.equals("filtrerVentes")) {
+            if(action.equals("filtrerRecherches")) {
                 total = ga.getCountAnnonces(
                     request.getParameter("motscles"),
                     request.getParameter("categorie"),
                     request.getParameter("ecole"),
                     request.getParameter("etudiant"),
                     request.getParameter("prix"),
-                    0 //Integer.parseInt(request.getParameter("annonceType"))
+                    1 //Integer.parseInt(request.getParameter("annonceType"))
                 );                
                 annonces = ga.getAnnonces(
                         request.getParameter("motscles"),
@@ -77,11 +77,11 @@ public class AccueilServlet extends HttpServlet {
                         request.getParameter("ecole"),
                         request.getParameter("etudiant"),
                         request.getParameter("prix"),
-                        0, //Integer.parseInt(request.getParameter("annonceType")),
+                        1, //Integer.parseInt(request.getParameter("annonceType")),
                         request.getParameter("debut"),
                         request.getParameter("nombreParPage")
                     );
-                completeRequest(annonces, total, 0, request, response);
+                completeRequest(annonces, total, 1, request, response);
             } else if (action.equals("supprimerAnnonce")) {
                 int id = Integer.parseInt(request.getParameter("id"));
                 //L'admin peut supprimer n'importe quelle annonce. Un user ne peut supprimer que les siens.
@@ -93,25 +93,25 @@ public class AccueilServlet extends HttpServlet {
                 
                 total = ga.getCountAnnonces();
                 annonces = ga.getAnnonces();
-                completeRequest(annonces, total, 0, request, response);
+                completeRequest(annonces, total, 1, request, response);
             } else {
-                System.out.println("listerVentes");
+                System.out.println("listerRecherches");
                 System.out.println("debut : " + request.getParameter("debut"));
                 if(!request.getParameter("debut").isEmpty()) {
                     int start = Integer.parseInt(request.getParameter("debut"));
                     int nParPage = Integer.parseInt(request.getParameter("nombreParPage"));
                     if (start >= 0) {
                         response.setContentType("application/json");
-                        if(action.equals("listerVentes")) {
+                        if(action.equals("listerRecherches")) {
                             response.getWriter().write(
-                                    listerVentes
+                                    listerRecherches
                                     (
                                         request.getParameter("motscles"),
                                         request.getParameter("categorie"),
                                         request.getParameter("ecole"),
                                         request.getParameter("etudiant"),
                                         request.getParameter("prix"),
-                                        0,
+                                        1,
                                         request.getParameter("debut"),
                                         request.getParameter("nombreParPage")
                                     ).toString()
@@ -123,7 +123,7 @@ public class AccueilServlet extends HttpServlet {
         } else {
             total = ga.getCountAnnonces();
             annonces = ga.getAnnonces();
-            completeRequest(annonces, total, 0, request, response);
+            completeRequest(annonces, total, 1, request, response);
         }
         
         //System.out.println("annonces : " + annonces.size());
@@ -142,12 +142,12 @@ public class AccueilServlet extends HttpServlet {
         request.setAttribute("minPrix", minPrix);
         request.setAttribute("maxPrix", maxPrix);
         
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("recherche.jsp");
         requestDispatcher.forward(request, response);
     }
     
-    public JsonArray listerVentes(String motscles, String categorie, String ecole, String etudiant, String prix, int annonceType, String debut, String nombreParPage) {
-        System.out.println("entra listerventes servlet");
+    public JsonArray listerRecherches(String motscles, String categorie, String ecole, String etudiant, String prix, int annonceType, String debut, String nombreParPage) {
+        //System.out.println("entra listerventes servlet");
         
         Collection<Annonce> annonces = ga.getAnnonces(motscles, categorie, ecole, etudiant, prix, annonceType, debut, nombreParPage);
         System.out.println("qdt annonces : " + annonces.size());

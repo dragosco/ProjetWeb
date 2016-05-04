@@ -6,6 +6,7 @@ $(document).ready(function() {
             url: "/ProjetWeb/Admin?action=listerUtilisateurs&start=" + start +"&nParPage=" + nParPage,  
             dataType: 'json',
             success: function (data) {
+                //document.write(data);
                 var page = start/nParPage + 1;
                 var nbPages = Math.floor(total / nParPage) + 1; 
                 $("#quellePage").empty();

@@ -31,6 +31,7 @@ public class Annonce implements Serializable {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
     
+    // 0 pour ventes, 1 pour recherche
     private int type;
     private String titre;
     @ManyToOne

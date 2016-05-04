@@ -42,9 +42,8 @@ public class InitBD {
     
     @PostConstruct
     public void init() {
-        System.out.println(new File(".").getAbsolutePath());
         
-        File file = new File("C:\\Users\\cojoc\\Documents\\NetBeansProjects\\ProjetWeb\\web\\resources\\blason-pa.png");
+        File file = new File("/home/thais/NetBeansProjects/ProjetWeb/web/resources/blason-pa.png");
         FileInputStream fileInputStream = null;
         byte[] bFile = new byte[(int) file.length()];
         
@@ -57,7 +56,7 @@ public class InitBD {
             Logger.getLogger(InitBD.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        File file2 = new File("C:\\Users\\cojoc\\Documents\\NetBeansProjects\\ProjetWeb\\web\\resources\\dragos.jpg");
+        File file2 = new File("/home/thais/NetBeansProjects/ProjetWeb/web/resources/dragos.jpg");
         FileInputStream fileInputStream2 = null;
         
         byte[] bFile2 = new byte[(int) file2.length()];
@@ -71,7 +70,7 @@ public class InitBD {
             Logger.getLogger(InitBD.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        File file3 = new File("C:\\Users\\cojoc\\Documents\\NetBeansProjects\\ProjetWeb\\web\\resources\\thais.jpg");
+        File file3 = new File("/home/thais/NetBeansProjects/ProjetWeb/web/resources/thais.jpg");
         FileInputStream fileInputStream3 = null;
         
         byte[] bFile3 = new byte[(int) file3.length()];
@@ -140,10 +139,16 @@ public class InitBD {
             Logger.getLogger(InitBD.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        ga.creerAnnonce("Smartphone Samsung S7", 1, "Multimédia", 600, "Le nouveau Samsung Galaxy S7 en boîte originale", null, "adminThais", photosSamsung);
-        ga.creerAnnonce("Appartement 4 pièces, 64m², avec terasse plein sud", 0, "Immobilier", 1000, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eget diam aliquet magna molestie ullamcorper. Maecenas finibus at nunc vel pretium. Vivamus et magna non massa lobortis mollis sed ut eros.", null, "adminDragos", photosAppart);
-        ga.creerAnnonce("Macbook pro 13 pouces neuf", 1, "Multimédia", 700, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eget diam aliquet magna molestie ullamcorper.", null, "adminThais", photosMacbook);       
-        ga.creerAnnonce("Costume noir ", 1, "Vêtements", 230, "Costume noir idéal pour la Montée des Marches", new Date(2016, 05, 28, 23, 55), "duj", photosCostume);
-        ga.creerAnnonce("Smartbox lieux ensolites", 0, "Loisirs", 60, "Smartbox avec plus de 500 destinations", null, "duj", null);  
+        //ventes
+        ga.creerAnnonce("Smartphone samsung S5", 0, "Multimédia", 200, "description 200", null, "adminThais", photos);
+        ga.creerAnnonce("titre2", 0, "Immobilier", 10, "description2", null, "adminDragos", photos);
+        ga.creerAnnonce("titretitretitretitretitre", 0, "Loisirs", 10, "descriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescription", null, "adminThais", photos);       
+        ga.creerAnnonce("titre5", 0, "Vêtements", 10, "desc", null, "duj", null);  
+        
+        //recherche
+        ga.creerAnnonce("Smartphone samsung S5", 1, "Multimédia", 300, "description 200", null, "adminThais", photos);
+        ga.creerAnnonce("titre2", 1, "Immobilier", 50, "description2", null, "adminDragos", photos);
+        ga.creerAnnonce("titretitretitretitretitre", 1, "Loisirs", 80, "descriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescription", null, "adminThais", photos);       
+        ga.creerAnnonce("titre5", 1, "Vêtements", 40, "desc", null, "duj", null);
     }
 }

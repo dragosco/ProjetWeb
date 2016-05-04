@@ -7,6 +7,8 @@ package gestionnaires;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.ejb.EJB;
@@ -37,13 +39,13 @@ public class GestionnaireAnnonces {
 
     public Annonce creerAnnonce(String titre, int type, int categorie, double prix, String description, Date dateFin, String auteur, Collection<byte[]> photos) {
         Utilisateur user = gu.getUtilisateur(auteur);
-        System.out.println("categorie : " + categorie);
+        //System.out.println("categorie : " + categorie);
         Categorie categ = gc.getCategorie(categorie);
-        System.out.println("categ " + categ);
+        //System.out.println("categ " + categ);
         Annonce a = new Annonce(titre, type, categ, prix, description, dateFin, user);
         a.setDateDepot(new Date());
         for(byte[] photo : photos) {
-            System.out.print("entrou add photo");
+            //System.out.print("entrou add photo");
             if (photo != null) {
                 Photo p = new Photo(photo);
                 p.setAnnonce(a);
@@ -52,15 +54,16 @@ public class GestionnaireAnnonces {
             }
         }
         em.persist(a);
+        gu.ajouterAnnonce(user.getId(),a);
         return a;
        
     }
     
     public Annonce creerAnnonce(String titre, int type, String categorie, double prix, String description, Date dateFin, String auteur, Collection<byte[]> photos) {
         Utilisateur user = gu.getUtilisateur(auteur);
-        System.out.println("categorie : " + categorie);
+        //System.out.println("categorie : " + categorie);
         Categorie categ = gc.getCategorie(categorie);
-        System.out.println("categ " + categ);
+        //System.out.println("categ " + categ);
         Annonce a = new Annonce(titre, type, categ, prix, description, dateFin, user);
         a.setDateDepot(new Date());
         if(photos != null) {
@@ -78,22 +81,18 @@ public class GestionnaireAnnonces {
         return a;
        
     }
-
-    public Collection<Annonce> getAnnonces() {
-        // Exécution d'une requête équivalente à un select *
-        Query q = em.createQuery("select a from Annonce a order by a.dateDepot desc");
-        return q.getResultList();
-    }
-
-    public Collection<Annonce> getAnnonces(String motscles, String categorie, String ecole, String etudiant, String prix, String annonceType) {
-        // debut de la contruction de la requete         
-        String query = "select a from Annonce a "
-            + "where (((:categorie = '') or (a.categorie.nom = :categorie)) "
-            + "and ((:ecole = '') or (a.auteur.ecole.nom = :ecole)) ";
+    
+    private Query buildQuery(String motscles, String categorie, String ecole, String etudiant, String prix, int annonceType, String query, boolean isOrdonne) {
+        
+        // debut de la contruction de la requete   
+        System.out.println("(categorie : " + categorie);
+        query += "where (((:categorie = '') or (a.categorie.nom = :categorie)) "
+            + "and ((:ecole = '') or (a.auteur.ecole.nom = :ecole)) "
+            + "and (a.type = :annonceType) ";
         
         // filtre par nom de l'etudiant
         String[] nomsAuteur = null;
-                
+        System.out.println("(etudiant : " + etudiant);
         if(!etudiant.isEmpty()) {        
             nomsAuteur = etudiant.trim().split(" +");
             if(nomsAuteur.length > 0) {
@@ -125,6 +124,8 @@ public class GestionnaireAnnonces {
         }
 
         // filtre par prix min et max
+        System.out.println("prix : " + prix);
+        
         String[] intervalePrix = prix.split(" - ");
         
         Pattern pattern = Pattern.compile("[0-9]+");
@@ -136,7 +137,7 @@ public class GestionnaireAnnonces {
         }
         
         String prixMax = "";
-        if(intervalePrix.length > 0) {
+        if(intervalePrix.length > 1) {
             matcher = pattern.matcher(intervalePrix[1]);
             if (matcher.find())
             {
@@ -147,7 +148,11 @@ public class GestionnaireAnnonces {
         query += "and ((:prixMin = '') or (a.prix >= CAST(:prixMin as DECIMAL(9,2)))) ";
         query += "and ((:prixMax = '') or (a.prix <= CAST(:prixMax as DECIMAL(9,2))))) ";
         
-        query += "order by a.dateDepot desc";
+        if(isOrdonne) {
+            query += "order by a.dateDepot desc";
+        }
+        
+        //query += "order by a.dateDepot desc";
 
         System.out.println("query : " + query);
         
@@ -156,6 +161,8 @@ public class GestionnaireAnnonces {
         Query q = em.createQuery(query);
         q.setParameter("categorie", categorie);
         q.setParameter("ecole", ecole);
+        q.setParameter("annonceType", annonceType);
+        System.out.println("annonceType " + annonceType);
         
         if(!etudiant.isEmpty()) {        
             for (int i = 0; i < nomsAuteur.length; i++) {
@@ -173,6 +180,32 @@ public class GestionnaireAnnonces {
         q.setParameter("prixMax", prixMax);
         // fin du setParameter
         
+        return q;
+    }
+    
+    public long getCountAnnonces(String motscles, String categorie, String ecole, String etudiant, String prix, int annonceType) {
+        
+        String query = "select count(a) as total from Annonce a ";
+        Query q = buildQuery(motscles, categorie, ecole, etudiant, prix, annonceType, query, false);
+        return (long) q.getResultList().get(0);
+    }
+    
+    public long getCountAnnonces() {        
+        Query q = em.createQuery("select count(a) from Annonce a"); 
+        return (long) q.getResultList().get(0);
+    }
+
+    public Collection<Annonce> getAnnonces() {
+        // Exécution d'une requête équivalente à un select *
+        Query q = em.createQuery("select a from Annonce a order by a.dateDepot desc");       
+        return q.getResultList();
+    }
+
+    public Collection<Annonce> getAnnonces(String motscles, String categorie, String ecole, String etudiant, String prix, int annonceType, String debut, String nombreParPage) {
+        String query = "select a from Annonce a ";
+        Query q = buildQuery(motscles, categorie, ecole, etudiant, prix, annonceType, query, true);
+        q.setFirstResult(Integer.parseInt(debut));
+        q.setMaxResults(Integer.parseInt(nombreParPage));
         return q.getResultList();
     }
     
@@ -193,13 +226,20 @@ public class GestionnaireAnnonces {
         }
     }
     
-    public Double getMinPrix() {
-        Double minPrix = (Double) em.createNativeQuery("select min(a.prix) from Annonce a").getSingleResult();
+    public Double getMinPrix(int annonceType) {
+        Query q = em.createQuery("select min(a.prix) from Annonce a where a.type = :annonceType");
+        q.setParameter("annonceType", annonceType);
+        Double minPrix = (Double) q.getSingleResult();
         return minPrix;
     }
     
-    public Double getMaxPrix() {
-        Double maxPrix = (Double) em.createNativeQuery("select max(a.prix) from Annonce a").getSingleResult();
+    public Double getMaxPrix(int annonceType) {
+        //Double maxPrix = (Double) em.createNativeQuery("select max(a.prix) from Annonce a").getSingleResult();
+        
+        Query q = em.createQuery("select max(a.prix) from Annonce a where a.type = :annonceType");
+        q.setParameter("annonceType", annonceType);
+        Double maxPrix = (Double) q.getSingleResult();
+        
         return maxPrix;
     }
     

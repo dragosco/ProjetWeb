@@ -31,20 +31,20 @@
         <link rel="stylesheet" href="/resources/demos/style.css">
         <script>
             $(function() {
-              $("#slider-range").slider({
+              $("#slider-rangeRecherche").slider({
                 range: true,
                 min: ${minPrix},
                 max: ${maxPrix},
                 values: [${minPrix}, ${maxPrix}],
                 slide: function(event, ui) {
-                  $("#amount").val(ui.values[0] + "Â¤" + " - " + ui.values[1] + "Â¤");
+                  $("#amountRecherche").val(ui.values[0] + "¤" + " - " + ui.values[1] + "¤");
                 }
               });
-              $("#amount").val($("#slider-range").slider("values", 0) + "Â¤" +
-                " - " + $("#slider-range").slider("values", 1) + "Â¤" );
+              $("#amountRecherche").val($("#slider-rangeRecherche").slider("values", 0) + "¤" +
+                " - " + $("#slider-rangeRecherche").slider("values", 1) + "¤" );
             });
         </script>
-        <script src="js/accueil.js"></script>
+        <script src="js/recherche.js"></script>
     </head>
     <body>
         <jsp:include page='navbar.jsp'/>
@@ -52,7 +52,7 @@
         <div class="container">
             <c:if test="${param.message == 'compteOK'}">
                 <div class="alert alert-success" id="compteOK" role="alert">
-                    FÃ©licitations, votre compte a Ã©tÃ© crÃ©Ã© avec succÃ¨s <span class="glyphicon glyphicon-thumbs-up" style="width:30px;"></span> Vous pouvez vous connecter
+                    Félicitations, votre compte a été créé avec succès <span class="glyphicon glyphicon-thumbs-up" style="width:30px;"></span> Vous pouvez vous connecter
                 </div>
             </c:if>
             
@@ -64,9 +64,9 @@
                         </div>
                         <div class="col-md-8">
                             <span style="float:left;">
-                                Il faut Ãªtre connectÃ© pour dÃ©poser une annonce
+                                Il faut être connecté pour déposer une annonce
                                 <br>
-                                Connectez-vous ou crÃ©ez un <a href="Compte">nouveau compte</a>
+                                Connectez-vous ou créez un <a href="Compte">nouveau compte</a>
                             </span>
                         </div>
                     </div>
@@ -81,130 +81,55 @@
             </ul>-->
             
             <div class="tab-content">
-                <!-- VENTES -->
-                <div class="tab-pane fade in active" id="ventesContainer">
-  <div class="row">
+                <!-- RECHERCHES -->
+                <div class="tab-pane fade in active" id="recherchesContainer">
                     <div class="container">
-                        <form action="Accueil" method="get">
+                        <form action="Recherche" method="get">
                             <div class="row">
                                 <div class="col-md-6">
-                                    Mots clÃ©s : <input class="form-control" type="text" id="motscles" name="motscles" />
-                                    CatÃ©gorie : <select class="form-control" type="text" id="categorie" name="categorie">
+                                    Mots clés : <input class="form-control" type="text" id="motsclesRecherche" name="motscles" />
+                                    Catégorie : <select class="form-control" type="text" id="categorieRecherche" name="categorie">
                                                     <option value="" selected>Toutes</option>
                                                     <c:forEach var="c" items="${categories}">
                                                         <option value="${c.nom}">${c.nom}</option>
                                                     </c:forEach>
                                                 </select>
-                                    Prix :  <input type="text" id="amount" name="prix" readonly style="border:0; color:#f6931f; font-weight:bold;">
-                                            <div id="slider-range"></div>
+                                    Prix :  <input type="text" id="amountRecherche" name="prix" readonly style="border:0; color:#f6931f; font-weight:bold;">
+                                            <div id="slider-rangeRecherche"></div>
                                 </div>
                                 <div class="col-md-6">
-                                    Ecole : <select class="form-control" type="text" id="ecole" name="ecole">
+                                    Ecole : <select class="form-control" type="text" id="ecoleRecherche" name="ecole">
                                                 <option value="" selected>Toutes</option>
                                                 <c:forEach var="e" items="${ecoles}">
                                                     <option value="${e.nom}">${e.nom}</option>
                                                 </c:forEach>
                                             </select>
-                                    Etudiant :  <input class="form-control" type="text" id="etudiant" name="etudiant" />
+                                    Etudiant :  <input class="form-control" type="text" id="etudiantRecherche" name="etudiant" />
 <!--                                    <input type="hidden" name="typ" value="1" />  1 correspond aux ventes -->
                                 </div>  
                             </div>
                             <br>
-                            <button class="btn btn-success" type="button" value="filtrerVentes" id="recherche" name="action" style="float:right;">Chercher</button>
+                            <button class="btn btn-success" type="button" value="filtrerRecherches" id="rechercheRecherche" name="action" style="float:right;">Chercher</button>
                         </form>
                     </div>
-                </div>
                     <br>
-                    <div class="row">
-                    <div class="container" style="padding-right: 50px;">
-                        <input type="hidden" id="totalVentes" value="0" />
-                        <ul class="list-group" id="listeVentes">
-                        <c:forEach var="a" items="${annonces}">
-                            <a href="Annonce?id=${a.id}"class="list-group-item list-arrondie-item">
-                                <div class="row" >
-                                    <div class="col-md-2">
-                                            <div class="photo-annonce-wrapper">
-                                                <c:choose>
-                                                    <c:when test="${fn:length(a.photos) > 0}">
-                                                        <img src="Image/produit/${a.photos[0].id}" class="photo-annonce" />
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <img src="resources/no-image.png" class="photo-annonce-null" />
-                                                    </c:otherwise>
-                                                </c:choose>
-                                                <br>
-                                                <div class="iconPhoto">
-                                                    <img src="resources/camera.png" class="icon"/>
-                                                    <span class="nombrePhotos">
-                                                        ${fn:length(a.photos)}
-                                                    </span>
-                                                </div>
-                                            </div>
-                                    </div>
-                                    <div class="col-md-10">
-
-                                        <div class="row list-item-contenu">
-                                            <div class="col-md-7">
-                                                <span class="titre-annonce">${a.titre}</span>
-                                            </div>
-                                            <div class="col-md-5">
-                                                <b>${a.categorie.nom}</b>
-                                            </div>
-                                        </div>
-
-                                        <div class="row list-item-contenu">
-                                            <div class="col-md-7">
-                                                <span class="date">Publiï¿½e par ${a.auteur.pseudo} le <fmt:formatDate type="date" value="${a.dateDepot}" /> ï¿½ <fmt:formatDate type="time" value="${a.dateDepot}" timeStyle="short" /></span>
-                                            </div>
-                                            <div class="col-md-5">
-                                                <span class="date">
-                                                    <c:if test="${not empty a.dateFin}">
-                                                        Valable jusqu'au <fmt:formatDate type="date" value="${a.dateFin}" />
-                                                    </c:if>
-                                                    <c:if test="${empty a.dateFin}">
-                                                        Sans date de validitï¿½
-                                                    </c:if> 
-                                                </span>
-
-                                            </div>
-                                        </div>
-
-                                        <div class="row list-item-contenu">
-                                            <div class="col-md-7 too-long-text">
-                                                ${a.description}
-                                            </div>
-                                            <div class="col-md-5">
-                                                <span style="color: #FF3800; font-size: 20px; ">${a.prix} ï¿½</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <c:choose>
-                                        <c:when test="${a.auteur.photo != null}">
-                                            <img src="Image/auteur/${a.auteur.id}" class="photo-profil-annonce">
-                                        </c:when>
-                                        <c:otherwise>
-                                            <img src="resources/default_profile.jpg" class="photo-profil-annonce">
-                                        </c:otherwise>
-                                    </c:choose>
-                                </div>
-                            </a>
+                    <div class="container">
+                        <input type="hidden" id="totalRecherches" value="0" />
+                        <ul class="list-group" id="listeRecherches">
                             
-                        </c:forEach>
                         </ul>
                     </div>
-                </div>
-            </div>
 <!--                    <button class="btn btn-success" type="button" id="previewButton" name="action" style="float:left;"/>Preview</button>
                     <button class="btn btn-success" type="button" id="nextButton" name="action" style="float:right;"/>Next</button>-->
                     <div class="container">
                         <div class="btn-group inline">
-                            <button class="btn btn-info" id="startButton"><span class="glyphicon glyphicon-triangle-left"></span><span class="glyphicon glyphicon-triangle-left"></span></button>
-                            <button class="btn btn-info" id="previewButton"><span class="glyphicon glyphicon-triangle-left"></span></button>
+                            <button class="btn btn-info" id="startButtonRecherche"><span class="glyphicon glyphicon-triangle-left"></span><span class="glyphicon glyphicon-triangle-left"></span></button>
+                            <button class="btn btn-info" id="previewButtonRecherche"><span class="glyphicon glyphicon-triangle-left"></span></button>
                         </div>
-                        <span class="inline" id="quellePage">String to display after buttons on same line</span> 
+                        <span class="inline" id="quellePageRecherche">String to display after buttons on same line</span> 
                         <div class="btn-group inline">
-                            <button class="btn btn-info" id="nextButton"><span class="glyphicon glyphicon-triangle-right"></span></button>
-                            <button class="btn btn-info" id="endButton"><span class="glyphicon glyphicon-triangle-right"></span><span class="glyphicon glyphicon-triangle-right"></span></button>
+                            <button class="btn btn-info" id="nextButtonRecherche"><span class="glyphicon glyphicon-triangle-right"></span></button>
+                            <button class="btn btn-info" id="endButtonRecherche"><span class="glyphicon glyphicon-triangle-right"></span><span class="glyphicon glyphicon-triangle-right"></span></button>
                         </div>
                     </div>
                 </div>
@@ -215,8 +140,8 @@
                         <form action="Accueil" method="get">
                             <div class="row">
                                 <div class="col-md-6">
-                                    Mots clÃ©s : <input class="form-control" type="text" name="motscles" />
-                                    CatÃ©gorie : <select class="form-control" type="text" name="categorie">
+                                    Mots clés : <input class="form-control" type="text" name="motscles" />
+                                    Catégorie : <select class="form-control" type="text" name="categorie">
                                                     <option value="" selected>Toutes</option>
                                                     <c:forEach var="c" items="${categories}">
                                                         <option value="${c.nom}">${c.nom}</option>
@@ -284,7 +209,7 @@
                                             <p>Date fin : <fmt:formatDate type="date" value="${a.dateFin}" /></p>
                                         </div>
                                         <div class="prixProduit col-md-2">
-                                            <p>${a.prix} Â¤</p>
+                                            <p>${a.prix} ¤</p>
                                         </div>
                                         <div class="photosProduit col-md-2">
                                             <c:choose>

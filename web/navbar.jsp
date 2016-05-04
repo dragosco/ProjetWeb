@@ -13,6 +13,7 @@
         <div class="collapse navbar-collapse" id="barreDeNav">
             <ul class="nav navbar-nav">
                 <li><a href="Accueil">Accueil</a></li>
+                <li><a href="Recherche">Recherches</a></li>
                 <li><a href="Annonce">Déposer une annonce</a></li>
                 <c:if test="${sessionScope.PRIVILEGE == 'admin'}">
                     <li><a href="Admin">Administration</a></li>

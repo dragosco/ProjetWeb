@@ -115,12 +115,13 @@ public class AnnonceServlet extends HttpServlet {
                 Date dateFin;
                 try {
                     dateFin = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("dateFin"));
+		System.out.println("dateFin " + request.getParameter("dateFin"));
                 } catch (ParseException e) {
                     dateFin = null;
                 }
                 ga.creerAnnonce(
                     request.getParameter("titre"),
-                    Integer.parseInt(request.getParameter("type")),
+                    0,//Integer.parseInt(request.getParameter("type")),
                     Integer.parseInt(request.getParameter("categorie")),
                     Double.parseDouble(request.getParameter("prix")),
                     request.getParameter("description"),
