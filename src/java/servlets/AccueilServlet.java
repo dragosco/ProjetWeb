@@ -68,16 +68,16 @@ public class AccueilServlet extends HttpServlet {
             if(action.equals("filtrerVentes")) {
                 total = ga.getCountAnnonces(
                     request.getParameter("motscles"),
-                    request.getParameter("categorie"),
-                    request.getParameter("ecole"),
+                    Integer.parseInt(request.getParameter("categorie")),
+                    Integer.parseInt(request.getParameter("ecole")),
                     request.getParameter("etudiant"),
                     request.getParameter("prix"),
                     0 //Integer.parseInt(request.getParameter("annonceType"))
                 );                
                 annonces = ga.getAnnonces(
                         request.getParameter("motscles"),
-                        request.getParameter("categorie"),
-                        request.getParameter("ecole"),
+                        Integer.parseInt(request.getParameter("categorie")),
+                        Integer.parseInt(request.getParameter("ecole")),
                         request.getParameter("etudiant"),
                         request.getParameter("prix"),
                         0, //Integer.parseInt(request.getParameter("annonceType")),
@@ -110,8 +110,8 @@ public class AccueilServlet extends HttpServlet {
                                     listerVentes
                                     (
                                         request.getParameter("motscles"),
-                                        request.getParameter("categorie"),
-                                        request.getParameter("ecole"),
+                                        Integer.parseInt(request.getParameter("categorie")),
+                                        Integer.parseInt(request.getParameter("ecole")),
                                         request.getParameter("etudiant"),
                                         request.getParameter("prix"),
                                         0,
@@ -149,7 +149,7 @@ public class AccueilServlet extends HttpServlet {
         requestDispatcher.forward(request, response);
     }
     
-    public JsonArray listerVentes(String motscles, String categorie, String ecole, String etudiant, String prix, int annonceType, String debut, String nombreParPage) {
+    public JsonArray listerVentes(String motscles, int categorie, int ecole, String etudiant, String prix, int annonceType, String debut, String nombreParPage) {
         System.out.println("entra listerventes servlet");
         
         Collection<Annonce> annonces = ga.getAnnonces(motscles, categorie, ecole, etudiant, prix, annonceType, debut, nombreParPage);

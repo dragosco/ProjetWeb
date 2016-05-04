@@ -44,13 +44,15 @@ public class GestionnaireAnnonces {
         //System.out.println("categ " + categ);
         Annonce a = new Annonce(titre, type, categ, prix, description, dateFin, user);
         a.setDateDepot(new Date());
-        for(byte[] photo : photos) {
-            //System.out.print("entrou add photo");
-            if (photo != null) {
-                Photo p = new Photo(photo);
-                p.setAnnonce(a);
-                em.persist(p);
-                a.addPhoto(p);
+        if(photos != null) {
+            for(byte[] photo : photos) {
+                //System.out.print("entrou add photo");
+                if (photo != null) {
+                    Photo p = new Photo(photo);
+                    p.setAnnonce(a);
+                    em.persist(p);
+                    a.addPhoto(p);
+                }
             }
         }
         em.persist(a);
@@ -82,12 +84,12 @@ public class GestionnaireAnnonces {
        
     }
     
-    private Query buildQuery(String motscles, String categorie, String ecole, String etudiant, String prix, int annonceType, String query, boolean isOrdonne) {
+    private Query buildQuery(String motscles, int categorie, int ecole, String etudiant, String prix, int annonceType, String query, boolean isOrdonne) {
         
         // debut de la contruction de la requete   
         System.out.println("(categorie : " + categorie);
-        query += "where (((:categorie = '') or (a.categorie.nom = :categorie)) "
-            + "and ((:ecole = '') or (a.auteur.ecole.nom = :ecole)) "
+        query += "where (((:categorie = 0) or (a.categorie.id = :categorie)) "
+            + "and ((:ecole = 0) or (a.auteur.ecole.id = :ecole)) "
             + "and (a.type = :annonceType) ";
         
         // filtre par nom de l'etudiant
@@ -183,7 +185,7 @@ public class GestionnaireAnnonces {
         return q;
     }
     
-    public long getCountAnnonces(String motscles, String categorie, String ecole, String etudiant, String prix, int annonceType) {
+    public long getCountAnnonces(String motscles, int categorie, int ecole, String etudiant, String prix, int annonceType) {
         
         String query = "select count(a) as total from Annonce a ";
         Query q = buildQuery(motscles, categorie, ecole, etudiant, prix, annonceType, query, false);
@@ -201,7 +203,7 @@ public class GestionnaireAnnonces {
         return q.getResultList();
     }
 
-    public Collection<Annonce> getAnnonces(String motscles, String categorie, String ecole, String etudiant, String prix, int annonceType, String debut, String nombreParPage) {
+    public Collection<Annonce> getAnnonces(String motscles, int categorie, int ecole, String etudiant, String prix, int annonceType, String debut, String nombreParPage) {
         String query = "select a from Annonce a ";
         Query q = buildQuery(motscles, categorie, ecole, etudiant, prix, annonceType, query, true);
         q.setFirstResult(Integer.parseInt(debut));

@@ -31,11 +31,16 @@
         <link rel="stylesheet" href="/resources/demos/style.css">
         <script>
             $(function() {
+                var min = ${minPrix} - 10;
+                if(min < 0) {
+                    min = 0;
+                }
+                var max = ${maxPrix} + 10;
               $("#slider-range").slider({
                 range: true,
-                min: ${minPrix},
-                max: ${maxPrix},
-                values: [${minPrix}, ${maxPrix}],
+                min: min,
+                max: max,
+                values: [min + 10, max - 10],
                 slide: function(event, ui) {
                   $("#amount").val(ui.values[0] + "€" + " - " + ui.values[1] + "€");
                 }
@@ -90,9 +95,9 @@
                                     <div class="col-md-6">
                                         Mots clés : <input class="form-control" type="text" id="motscles" name="motscles" />
                                         Catégorie : <select class="form-control" type="text" id="categorie" name="categorie">
-                                                        <option value="" selected>Toutes</option>
+                                                        <option value="0" selected>Toutes</option>
                                                         <c:forEach var="c" items="${categories}">
-                                                            <option value="${c.nom}">${c.nom}</option>
+                                                            <option value="${c.id}">${c.nom}</option>
                                                         </c:forEach>
                                                     </select>
                                         Prix :  <input type="text" id="amount" name="prix" readonly style="border:0; color:#f6931f; font-weight:bold;">
@@ -100,9 +105,9 @@
                                     </div>
                                     <div class="col-md-6">
                                         Ecole : <select class="form-control" type="text" id="ecole" name="ecole">
-                                                    <option value="" selected>Toutes</option>
+                                                    <option value="0" selected>Toutes</option>
                                                     <c:forEach var="e" items="${ecoles}">
-                                                        <option value="${e.nom}">${e.nom}</option>
+                                                        <option value="${e.id}">${e.nom}</option>
                                                     </c:forEach>
                                                 </select>
                                         Etudiant :  <input class="form-control" type="text" id="etudiant" name="etudiant" />
@@ -131,7 +136,7 @@
                         <button class="btn btn-info" id="startButton"><span class="glyphicon glyphicon-triangle-left"></span><span class="glyphicon glyphicon-triangle-left"></span></button>
                         <button class="btn btn-info" id="previewButton"><span class="glyphicon glyphicon-triangle-left"></span></button>
                     </div>
-                    <span class="inline" id="quellePage">String to display after buttons on same line</span> 
+<!--                    <span class="inline" id="quellePage">String to display after buttons on same line</span> -->
                     <div class="btn-group inline">
                         <button class="btn btn-info" id="nextButton"><span class="glyphicon glyphicon-triangle-right"></span></button>
                         <button class="btn btn-info" id="endButton"><span class="glyphicon glyphicon-triangle-right"></span><span class="glyphicon glyphicon-triangle-right"></span></button>

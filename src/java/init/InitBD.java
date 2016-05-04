@@ -141,14 +141,42 @@ public class InitBD {
         
         //ventes
         ga.creerAnnonce("Smartphone samsung S5", 0, "Multimédia", 200, "description 200", null, "adminThais", photosSamsung);
+        ga.creerAnnonce("titre2", 0, "Immobilier", 10, "description2", null, "adminDragos", photosCostume);
+        ga.creerAnnonce("titretitretitretitretitre", 0, "Loisirs", 10, "descriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescription", null, "adminThais", photosAppart);       
+        ga.creerAnnonce("titre5", 0, "Vêtements", 10, "desc", null, "duj", photosMacbook);  
+        ga.creerAnnonce("Smartphone samsung S5", 0, "Multimédia", 200, "description 200", null, "adminThais", photosSamsung);
         ga.creerAnnonce("titre2", 0, "Immobilier", 10, "description2", null, "adminDragos", photos);
         ga.creerAnnonce("titretitretitretitretitre", 0, "Loisirs", 10, "descriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescription", null, "adminThais", photos);       
-        ga.creerAnnonce("titre5", 0, "Vêtements", 10, "desc", null, "duj", null);  
+        ga.creerAnnonce("titre5", 0, "Vêtements", 10, "desc", null, "duj", photosMacbook);  
+        ga.creerAnnonce("Smartphone samsung S5", 0, "Multimédia", 200, "description 200", null, "adminThais", photosSamsung);
+        ga.creerAnnonce("titre2", 0, "Immobilier", 10, "description2", null, "adminDragos", photosAppart);
+        ga.creerAnnonce("titretitretitretitretitre", 0, "Loisirs", 10, "descriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescription", null, "adminThais", photos);       
+        ga.creerAnnonce("titre5", 0, "Vêtements", 10, "desc", null, "duj", photosMacbook);
+        ga.creerAnnonce("Smartphone samsung S5", 0, "Multimédia", 200, "description 200", null, "adminThais", photosSamsung);
+        ga.creerAnnonce("titre2", 0, "Immobilier", 10, "description2", null, "adminDragos", photosCostume);
+        ga.creerAnnonce("titretitretitretitretitre", 0, "Loisirs", 10, "descriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescription", null, "adminThais", photosAppart);       
+        ga.creerAnnonce("titre5", 0, "Vêtements", 10, "desc", null, "duj", photosMacbook);  
+        ga.creerAnnonce("Smartphone samsung S5", 0, "Multimédia", 200, "description 200", null, "adminThais", photosSamsung);
+        ga.creerAnnonce("titre2", 0, "Immobilier", 10, "description2", null, "adminDragos", photos);
+        ga.creerAnnonce("titretitretitretitretitre", 0, "Loisirs", 10, "descriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescription", null, "adminThais", photos);       
+        ga.creerAnnonce("titre5", 0, "Vêtements", 10, "desc", null, "duj", photosMacbook);  
+        ga.creerAnnonce("Smartphone samsung S5", 0, "Multimédia", 200, "description 200", null, "adminThais", photosSamsung);
+        ga.creerAnnonce("titre2", 0, "Immobilier", 10, "description2", null, "adminDragos", photosAppart);
+        ga.creerAnnonce("titretitretitretitretitre", 0, "Loisirs", 10, "descriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescription", null, "adminThais", photos);       
+        ga.creerAnnonce("titre5", 0, "Vêtements", 10, "desc", null, "duj", photosMacbook); 
         
         //recherche
+        ga.creerAnnonce("Smartphone samsung S5", 1, "Multimédia", 300, "description 200", null, "adminThais", photosSamsung);
+        ga.creerAnnonce("titre2", 1, "Immobilier", 50, "description2", null, "adminDragos", photosCostume);
+        ga.creerAnnonce("titretitretitretitretitre", 1, "Loisirs", 80, "descriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescription", null, "adminThais", photos);       
+        ga.creerAnnonce("titre5", 1, "Vêtements", 40, "desc", null, "duj", photosAppart);
         ga.creerAnnonce("Smartphone samsung S5", 1, "Multimédia", 300, "description 200", null, "adminThais", photos);
+        ga.creerAnnonce("titre2", 1, "Immobilier", 50, "description2", null, "adminDragos", photosMacbook);
+        ga.creerAnnonce("titretitretitretitretitre", 1, "Loisirs", 80, "descriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescription", null, "adminThais", photos);       
+        ga.creerAnnonce("titre5", 1, "Vêtements", 40, "desc", null, "duj", photosAppart);
+        ga.creerAnnonce("Smartphone samsung S5", 1, "Multimédia", 300, "description 200", null, "adminThais", photosMacbook);
         ga.creerAnnonce("titre2", 1, "Immobilier", 50, "description2", null, "adminDragos", photos);
         ga.creerAnnonce("titretitretitretitretitre", 1, "Loisirs", 80, "descriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescription", null, "adminThais", photos);       
-        ga.creerAnnonce("titre5", 1, "Vêtements", 40, "desc", null, "duj", null);
+        ga.creerAnnonce("titre5", 1, "Vêtements", 40, "desc", null, "duj", photosAppart);
     }
 }

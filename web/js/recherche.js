@@ -14,7 +14,7 @@ $(document).ready(function() {
                 var nbPages = Math.floor(total / nombreParPage) + 1; 
                 
                 //nettoyage de la table (sauf la première ligne correspondant aux titres
-                $('#listeRecherches li').remove();
+                $('#listeRecherches a').remove();
                 //
                 
                 
@@ -27,16 +27,20 @@ $(document).ready(function() {
                 $("#totalRecherches").val(total = data[0].total);
                 
                 if (debut <= 0) {
+                    $("#startButtonRecherche").hide();
                     $("#previewButtonRecherche").hide();
                 } else {
+                    $("#startButtonRecherche").show();
                     $("#previewButtonRecherche").show();
                 }
                 //alert("debut " + debut + " nombreParPage " + nombreParPage + " total " + total + " data.length " + (data.length-1));
                 
                 if(debut + nombreParPage >= total) { //  || (data.length-1) <= nombreParPage
                     $("#nextButtonRecherche").hide();
+                    $("#endButtonRecherche").hide();
                 } else {
                     $("#nextButtonRecherche").show();
+                    $("#endButtonRecherche").show();
                 }
                 
 //                if(debut + nombreParPage >= total) { //  || (data.length-1) <= nombreParPage
@@ -46,75 +50,80 @@ $(document).ready(function() {
 //                }
                 //alert(JSON.stringify(data[0].total));
 
-                for (i = 1; i < _len; i++) {
-                    //debugger
-                    item = data[i];
-                    var photo = "resources/default_profile.jpg";
-//                    if(item.photo !== false) {
-//                        photo = "Image/auteur/" + item.id;
-//                    }
-                    $('#listeRecherches')
-                        .append(                        
-                            "<li class='list-group-item'>" + 
-                                "<div class='annonce row' style='position: relative;'>" +
-                                    //"<c:if test="${sessionScope.PRIVILEGE == 'admin'}">" + 
-                                        "<a class='outil-link suppr on-element' type='submit' data-toggle='modal' data-target='#modalSupprAnnc" + item.id + "'><span class='glyphicon glyphicon-remove'></span></a>" +
-                                        "<div class='modal fade' id='modalSupprAnnc" + item.id + "' role='dialog'>" +
-                                          "<div class='modal-dialog'>" +
-                                            "<div class='modal-content'>" +
-                                                "Etes-vous certain de vouloir supprimer cette annonce ?" +
-                                                "<form action='Admin' method='post'>" +
-                                                    "<input type='hidden' value=" + item.id + " name='id' />" +
-                                                    "<button type='submit' value='supprimerAnnonce' name='action'>Confirmer</button>" +
-                                                    "<hr>" +
-                                                    "<a href='Recherche'>Annuler</a>" +
-                                                "</form>" +
-                                            "</div>" + 
-                                          "</div>" + 
-                                        "</div>" + 
-                                    //</c:if>
-                                    "<div class='couleurAnnonce col-md-1'></div>" +
-                                    "<div class='infoEtudiant col-md-3'>" +
-                                        "<a href='Profil?user=adminThais'>" +
-//                                            <c:choose>
-//                                                <c:when test="${a.auteur.photo != null}">
-//                                                    <img src="Image/auteur/${a.auteur.id}" class="img-rounded photoEtudiant">
-//                                                </c:when>
-//                                                <c:otherwise>
-                                                    "<img src=" + photo + " class='img-rounded photoEtudiant'>" + 
-//                                                </c:otherwise>
-//                                            </c:choose>
-                                        "</a>" +
-//                                        "<p>" + item.auteur.prenom ${a.auteur.nom} + "</p>"+
-//                                        <p>${a.auteur.ecole.nom}</p>
+                if(_len < 2) {
+                    $('#listeRecherches').append("<h3>Aucune recherche trouvée</h3>");
+                } else {
+                    for (i = 1; i < _len; i++) {
+                        //debugger
+                        item = data[i];
+                        var photo = "resources/default_profile.jpg";
+
+                        var recherche = "<a href='Annonce?id=" + item.id + "' class='list-group-item list-arrondie-item'>" +
+                                    "<div class='row'>" +
+                                        "<div class='col-md-2'>" + 
+                                                "<div class='photo-annonce-wrapper'>"; 
+
+                        if(item.qdtPhotos > 0) {
+                            recherche += "<img src='Image/produit/" + item.idPhoto + "' class='photo-annonce' />";
+                        } else {
+                            recherche += "<img src='resources/no-image.png' class='photo-annonce-null' />";
+                        }               
+
+                        recherche += "<br>" + 
+                                        "<div class='iconPhoto'>" + 
+                                            "<img src='resources/camera.png' class='icon'/>" +
+                                            "<span class='nombrePhotos'>" +
+                                                + item.qdtPhotos +
+                                            "</span>" + 
+                                        "</div>" +
+                                    "</div>" +
+                            "</div>" +
+                            "<div class='col-md-10'>" +
+                                "<div class='row list-item-contenu'>" +
+                                    "<div class='col-md-7'>" +
+                                        "<span class='titre-annonce'>" + item.titre + "</span>" +
+                                    "</div>" +
+                                    "<div class='col-md-5'>" + 
+                                        "<b>" + item.categorie + "</b>" + 
                                     "</div>" + 
-                                    "<div class='infoProduit col-md-4'>" +
-//                                        <a href="Annonce?id=${a.id}"><p>${a.titre}</p></a>
-//                                        <p>${a.categorie.nom}</p>
-//                                        <p>Date ajout : <fmt:formatDate type="both" value="${a.dateDepot}" /></p>
-//                                        <p>Date fin : <fmt:formatDate type="date" value="${a.dateFin}" /></p>
-                                    "</div>" + 
-                                    "<div class='prixProduit col-md-2'>" +
-                                        "<p>" + item.prix +"\u20AC</p>" +
-                                    "</div>" + 
-                                    "<div class='photosProduit col-md-2'>" +
-//                                        <c:choose>
-//                                            <c:when test="${fn:length(a.photos) > 0}">
-////                                                "<p><img src='Image/produit/+${a.photos[0].id}" class="img-rounded photoProduit"/></p>
-//                                                <span class="iconPhoto">
-//                                                    <img src="resources/camera.png" class="icon"/>
-//                                                    <span class="nombrePhotos">
-//                                                        ${fn:length(a.photos)}
-//                                                    </span>
-//                                                </span>
-//                                            </c:when>
-//                                            <c:otherwise>
-//                                                <p><img src="resources/no_foto.jpg" class="img-rounded photoProduit"></p>
-//                                            </c:otherwise>
-//                                        </c:choose>                                    
-                                    "</div>" + 
-                                "</div>" + 
-                            "</li>");
+                                "</div>" +
+                                "<div class='row list-item-contenu'>" +
+                                    "<div class='col-md-7'>" +
+                                        "<span class='date'>Publiée par " + item.pseudo + " le " + item.dateDepotDate + " à " + item.dateDepotHeure + "</span>" +
+                                                "</div>" +
+                                                "<div class='col-md-5'>" +
+                                                    "<span class='date'>"; // + 
+
+                        if(item.dateFin !== '') {
+                            recherche += "Valable jusqu'au " + item.dateFin + " />";
+                        } else {
+                            recherche += "Sans date de validité";
+                        }            
+
+                        recherche += "</span>" +
+                                        "</div>" +
+                                    "</div>" +
+
+                                    "<div class='row list-item-contenu'>" + 
+                                        "<div class='col-md-7 too-long-text'>" +
+                                            item.description +
+                                        "</div>" +
+                                        "<div class='col-md-5'>" +
+                                            "<span style='color: #FF3800; font-size: 20px; '>" + item.prix + " €</span>" +
+                                        "</div>" +
+                                    "</div>" +
+                                "</div>";
+
+                        if(item.photoAuteur) {
+                            recherche += "<img src='Image/auteur/" + item.idAuteur + "' class='photo-profil-annonce'>";
+                        } else {
+                            recherche += "<img src='resources/default_profile.jpg' class='photo-profil-annonce'>";
+                        }
+    //                                    
+                        recherche += "</div>" + "</a>";  
+
+                        $('#listeRecherches').append(recherche);
+                    }
                 }
             },
             error : function(data,status,er) {
@@ -128,10 +137,10 @@ $(document).ready(function() {
         
         setValeursDefault();
         var debut = 0;
-        var nombreParPage = 2;
+        var nombreParPage = 10;
         var total = $("#totalRecherches").val();
         //alert(total);
-        listerRecherches(debut, nombreParPage, total, '', '', '', '', '');
+        listerRecherches(debut, nombreParPage, total, '', 0, 0, '', '');
         
         var motscles = $("#motsclesRecherche").val();
         var categorie = $("#categorieRecherche").val();

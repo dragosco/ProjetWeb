@@ -117,13 +117,13 @@ public class AnnonceServlet extends HttpServlet {
                 Date dateFin;
                 try {
                     dateFin = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("dateFin"));
-		System.out.println("dateFin " + request.getParameter("dateFin"));
+		//System.out.println("dateFin " + request.getParameter("dateFin"));
                 } catch (ParseException e) {
                     dateFin = null;
                 }
                 ga.creerAnnonce(
                     request.getParameter("titre"),
-                    0,//Integer.parseInt(request.getParameter("type")),
+                    Integer.parseInt(request.getParameter("type")),
                     Integer.parseInt(request.getParameter("categorie")),
                     Double.parseDouble(request.getParameter("prix")),
                     request.getParameter("description"),
@@ -131,7 +131,12 @@ public class AnnonceServlet extends HttpServlet {
                     user,
                     !images.isEmpty() ? images : null
                 );
-                response.sendRedirect("Accueil");
+                
+                if(Integer.parseInt(request.getParameter("type")) == 0) {
+                    response.sendRedirect("Accueil");
+                } else {
+                    response.sendRedirect("Recherche");
+                }
                 
             } 
         }

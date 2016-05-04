@@ -27,16 +27,20 @@ $(document).ready(function() {
                 $("#totalVentes").val(total = data[0].total);
                 
                 if (debut <= 0) {
+                    $("#startButton").hide();
                     $("#previewButton").hide();
                 } else {
+                    $("#startButton").show();
                     $("#previewButton").show();
                 }
                 //alert("debut " + debut + " nombreParPage " + nombreParPage + " total " + total + " data.length " + (data.length-1));
                 
                 if(debut + nombreParPage >= total) { //  || (data.length-1) <= nombreParPage
                     $("#nextButton").hide();
+                    $("#endButton").hide();
                 } else {
                     $("#nextButton").show();
+                    $("#endButton").show();
                 }
                 
 //                if(debut + nombreParPage >= total) { //  || (data.length-1) <= nombreParPage
@@ -45,82 +49,85 @@ $(document).ready(function() {
 //                    $("#endButton").show();
 //                }
                 //alert(JSON.stringify(data[0].total));
+                if(_len < 2) {
+                    $('#listeVentes').append("<h3>Aucune vente trouvée</h3>");
+                } else {
+                    for (i = 1; i < _len; i++) {
+                        //debugger
+                        item = data[i];
+                        //alert(item);
+                        var photo = "resources/default_profile.jpg";
+    //                    if(item.photo !== false) {
+    //                        photo = "Image/auteur/" + item.id;
+    //                    }
 
-                for (i = 1; i < _len; i++) {
-                    //debugger
-                    item = data[i];
-                    //alert(item);
-                    var photo = "resources/default_profile.jpg";
-//                    if(item.photo !== false) {
-//                        photo = "Image/auteur/" + item.id;
-//                    }
+                        var vente = "<a href='Annonce?id=" + item.id + "' class='list-group-item list-arrondie-item'>" +
+                                    "<div class='row'>" +
+                                        "<div class='col-md-2'>" + 
+                                                "<div class='photo-annonce-wrapper'>"; 
 
-                    var vente = "<a href='Annonce?id=" + item.id + "' class='list-group-item list-arrondie-item'>" +
-                                "<div class='row'>" +
-                                    "<div class='col-md-2'>" + 
-                                            "<div class='photo-annonce-wrapper'>"; 
-                                    
-                    if(item.qdtPhotos > 0) {
-                        vente += "<img src='Image/produit/" + item.idPhoto + "' class='photo-annonce' />";
-                    } else {
-                        vente += "<img src='resources/no-image.png' class='photo-annonce-null' />";
-                    }               
+                        if(item.qdtPhotos > 0) {
+                            vente += "<img src='Image/produit/" + item.idPhoto + "' class='photo-annonce' />";
+                        } else {
+                            vente += "<img src='resources/no-image.png' class='photo-annonce-null' />";
+                        }               
 
-                    vente += "<br>" + 
-                                    "<div class='iconPhoto'>" + 
-                                        "<img src='resources/camera.png' class='icon'/>" +
-                                        "<span class='nombrePhotos'>" +
-                                            + item.qdtPhotos +
-                                        "</span>" + 
+                        vente += "<br>" + 
+                                        "<div class='iconPhoto'>" + 
+                                            "<img src='resources/camera.png' class='icon'/>" +
+                                            "<span class='nombrePhotos'>" +
+                                                + item.qdtPhotos +
+                                            "</span>" + 
+                                        "</div>" +
                                     "</div>" +
-                                "</div>" +
-                        "</div>" +
-                        "<div class='col-md-10'>" +
-                            "<div class='row list-item-contenu'>" +
-                                "<div class='col-md-7'>" +
-                                    "<span class='titre-annonce'>" + item.titre + "</span>" +
-                                "</div>" +
-                                "<div class='col-md-5'>" + 
-                                    "<b>" + item.categorie + "</b>" + 
-                                "</div>" + 
                             "</div>" +
-                            "<div class='row list-item-contenu'>" +
-                                "<div class='col-md-7'>" +
-                                    "<span class='date'>Publiée par " + item.pseudo + " le " + item.dateDepotDate + " à " + item.dateDepotHeure + "</span>" +
-                                            "</div>" +
-                                            "<div class='col-md-5'>" +
-                                                "<span class='date'>"; // + 
-                                       
-                    if(item.dateFin !== '') {
-                        vente += "Valable jusqu'au " + item.dateFin + " />";
-                    } else {
-                        vente += "Sans date de validité";
-                    }            
-                    
-                    vente += "</span>" +
+                            "<div class='col-md-10'>" +
+                                "<div class='row list-item-contenu'>" +
+                                    "<div class='col-md-7'>" +
+                                        "<span class='titre-annonce'>" + item.titre + "</span>" +
                                     "</div>" +
+                                    "<div class='col-md-5'>" + 
+                                        "<b>" + item.categorie + "</b>" + 
+                                    "</div>" + 
                                 "</div>" +
+                                "<div class='row list-item-contenu'>" +
+                                    "<div class='col-md-7'>" +
+                                        "<span class='date'>Publiée par " + item.pseudo + " le " + item.dateDepotDate + " à " + item.dateDepotHeure + "</span>" +
+                                                "</div>" +
+                                                "<div class='col-md-5'>" +
+                                                    "<span class='date'>"; // + 
 
-                                "<div class='row list-item-contenu'>" + 
-                                    "<div class='col-md-7 too-long-text'>" +
-                                        item.description +
+                        if(item.dateFin !== '') {
+                            vente += "Valable jusqu'au " + item.dateFin + " />";
+                        } else {
+                            vente += "Sans date de validité";
+                        }            
+
+                        vente += "</span>" +
+                                        "</div>" +
                                     "</div>" +
-                                    "<div class='col-md-5'>" +
-                                        "<span style='color: #FF3800; font-size: 20px; '>" + item.prix + " €</span>" +
+
+                                    "<div class='row list-item-contenu'>" + 
+                                        "<div class='col-md-7 too-long-text'>" +
+                                            item.description +
+                                        "</div>" +
+                                        "<div class='col-md-5'>" +
+                                            "<span style='color: #FF3800; font-size: 20px; '>" + item.prix + " €</span>" +
+                                        "</div>" +
                                     "</div>" +
-                                "</div>" +
-                            "</div>";
-                    
-                    if(item.photoAuteur) {
-                        vente += "<img src='Image/auteur/" + item.idAuteur + "' class='photo-profil-annonce'>";
-                    } else {
-                        vente += "<img src='resources/default_profile.jpg' class='photo-profil-annonce'>";
+                                "</div>";
+
+                        if(item.photoAuteur) {
+                            vente += "<img src='Image/auteur/" + item.idAuteur + "' class='photo-profil-annonce'>";
+                        } else {
+                            vente += "<img src='resources/default_profile.jpg' class='photo-profil-annonce'>";
+                        }
+    //                                    
+                        vente += "</div>" + "</a>";  
+
+                        $('#listeVentes').append(vente);
+                        //$('#listeVentes').append("vente");
                     }
-//                                    
-                    vente += "</div>" + "</a>";  
-
-                    $('#listeVentes').append(vente);
-                    //$('#listeVentes').append("vente");
                 }
             },
             error : function(data,status,er) {
@@ -135,10 +142,10 @@ $(document).ready(function() {
         
         setValeursDefault();
         var debut = 0;
-        var nombreParPage = 2;
+        var nombreParPage = 10;
         var total = $("#totalVentes").val();
         //alert(total);
-        listerVentes(debut, nombreParPage, total, '', '', '', '', '');
+        listerVentes(debut, nombreParPage, total, '', 0, 0, '', '');
         
         var motscles = $("#motscles").val();
         var categorie = $("#categorie").val();

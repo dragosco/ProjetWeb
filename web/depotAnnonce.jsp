@@ -33,10 +33,10 @@
                     <div class="header" style="border-top-right-radius: 10px; border-top-left-radius: 10px;">
                         <div class="btn-group btn-group-justified" data-toggle="buttons">
                             <label class="btn btn-select btn-left active">
-                              <input class="annonce-radio-select" type="radio" name="type" value="1" checked> Je veux vendre
+                              <input class="annonce-radio-select" type="radio" name="type" value="0" checked> Je veux vendre
                             </label>
                             <label class="btn btn-select btn-right">
-                              <input class="annonce-radio-select" type="radio" name="type" value="0"> Je recherche
+                              <input class="annonce-radio-select" type="radio" name="type" value="1"> Je recherche
                             </label>
                           </div>
                     </div>
