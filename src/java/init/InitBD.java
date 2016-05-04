@@ -11,15 +11,18 @@ import gestionnaires.GestionnaireEcoles;
 import gestionnaires.GestionnaireUtilisateurs;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.scene.shape.Path;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import outils.InputStreamToByteArray;
 
 /**
  *
@@ -105,10 +108,42 @@ public class InitBD {
         gu.creerUtilisateursDeTest();
 
         //String titre, String categorie, double prix, String description, Date dateFin, String auteur, byte[] photo
+        File photo1 = new File("C:\\Users\\cojoc\\Documents\\NetBeansProjects\\ProjetWeb\\web\\resources\\samsung-galaxy-s7-photo1.jpg");
+        File photo2 = new File("C:\\Users\\cojoc\\Documents\\NetBeansProjects\\ProjetWeb\\web\\resources\\samsung-galaxy-s7-photo2.jpg");
+        Collection<byte[]> photosSamsung = new ArrayList<byte[]>();
         
-        ga.creerAnnonce("Smartphone samsung S5", 1, "Multimédia", 200, "description 200", null, "adminThais", photos);
-        ga.creerAnnonce("titre2", 0, "Immobilier", 10, "description2", null, "adminDragos", photos);
-        ga.creerAnnonce("titretitretitretitretitre", 1, "Loisirs", 10, "descriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescription", null, "adminThais", photos);       
-        ga.creerAnnonce("titre5", 1, "Vêtements", 10, "desc", null, "duj", null);       
+        File photo3 = new File("C:\\Users\\cojoc\\Documents\\NetBeansProjects\\ProjetWeb\\web\\resources\\appart-photo1.jpg");
+        File photo4 = new File("C:\\Users\\cojoc\\Documents\\NetBeansProjects\\ProjetWeb\\web\\resources\\appart-photo2.jpg");
+        File photo5 = new File("C:\\Users\\cojoc\\Documents\\NetBeansProjects\\ProjetWeb\\web\\resources\\appart-photo3.jpg");
+        Collection<byte[]> photosAppart = new ArrayList<byte[]>();
+        
+        File photo6 = new File("C:\\Users\\cojoc\\Documents\\NetBeansProjects\\ProjetWeb\\web\\resources\\macbook-photo.jpg");
+        Collection<byte[]> photosMacbook = new ArrayList<byte[]>();
+        
+        File photo7 = new File("C:\\Users\\cojoc\\Documents\\NetBeansProjects\\ProjetWeb\\web\\resources\\costume-photo.jpg");
+        Collection<byte[]> photosCostume = new ArrayList<byte[]>();
+        try {
+            
+            photosSamsung.add(new InputStreamToByteArray(new FileInputStream(photo1)).getBytes());
+            photosSamsung.add(new InputStreamToByteArray(new FileInputStream(photo2)).getBytes());
+            
+            photosAppart.add(new InputStreamToByteArray(new FileInputStream(photo3)).getBytes());
+            photosAppart.add(new InputStreamToByteArray(new FileInputStream(photo4)).getBytes());
+            photosAppart.add(new InputStreamToByteArray(new FileInputStream(photo5)).getBytes());
+            
+            photosMacbook.add(new InputStreamToByteArray(new FileInputStream(photo6)).getBytes());
+            
+            photosCostume.add(new InputStreamToByteArray(new FileInputStream(photo7)).getBytes());
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(InitBD.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(InitBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        ga.creerAnnonce("Smartphone Samsung S7", 1, "Multimédia", 600, "Le nouveau Samsung Galaxy S7 en boîte originale", null, "adminThais", photosSamsung);
+        ga.creerAnnonce("Appartement 4 pièces, 64m², avec terasse plein sud", 0, "Immobilier", 1000, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eget diam aliquet magna molestie ullamcorper. Maecenas finibus at nunc vel pretium. Vivamus et magna non massa lobortis mollis sed ut eros.", null, "adminDragos", photosAppart);
+        ga.creerAnnonce("Macbook pro 13 pouces neuf", 1, "Multimédia", 700, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eget diam aliquet magna molestie ullamcorper.", null, "adminThais", photosMacbook);       
+        ga.creerAnnonce("Costume noir ", 1, "Vêtements", 230, "Costume noir idéal pour la Montée des Marches", new Date(2016, 05, 28, 23, 55), "duj", photosCostume);
+        ga.creerAnnonce("Smartbox lieux ensolites", 0, "Loisirs", 60, "Smartbox avec plus de 500 destinations", null, "duj", null);  
     }
 }

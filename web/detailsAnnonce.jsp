@@ -17,10 +17,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="css/bootstrap.min.css">
-        <script src="js/jquery-2.2.2.min.js"></script>
+        <script src="js/jquery-2.2.0.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/main.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
         <style>
             .carousel-inner > .item > img,
             .carousel-inner > .item > a > img {
@@ -81,7 +80,22 @@
                         </div>
                     </section>
                     <section class="properties">
-                        
+                        <c:if test="${sessionScope.PRIVILEGE == 'admin'}">
+                            <a class="outil-link suppr outside-element" type="submit" data-toggle="modal" data-target="#modalSupprAnnc${a.id}"><span class="glyphicon glyphicon-remove"></span></a>
+                            <div class="modal fade" id="modalSupprAnnc${a.id}" role="dialog">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        Etes-vous certain de vouloir supprimer cette annonce ?
+                                        <form action="Admin" method="post">
+                                            <input type="hidden" value="${a.id}" name="id" />
+                                            <button type="submit" value="supprimerAnnonce" name="action">Confirmer</button>
+                                            <hr>
+                                            <a href="Accueil">Annuler</a>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:if>
                         <p>Mise en ligne le <fmt:formatDate value="${annonce.dateDepot}" pattern="dd MMMMM"/> à <fmt:formatDate value="${annonce.dateDepot}" pattern="HH:mm" /></p>
                         <p><a href="Profil?user=${annonce.auteur.pseudo}">${annonce.auteur.prenom} ${annonce.auteur.nom}</a></p>
                         <p>Prix : ${annonce.prix}</p>

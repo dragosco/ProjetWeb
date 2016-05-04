@@ -116,6 +116,20 @@ $(document).ready(function(){
     $(document).on("click", ".popover .close" , function(){
         $(this).parents(".popover").popover('hide');
     });
+    
+    $("#label-vente").click(function() {
+        if ($("#vente-radio-btn").prop("checked", true)) {
+            $("#label-vente").css("background-color", "red");
+        } else {
+            $("#label-vente").css("background-color", "orange");
+        }
+    });
+    
+    if ($("#recherche-radio-btn").prop("checked", true)) {
+        $("#label-recherche").css("background-color", "red");
+    } else {
+        $("#label-recherche").css("background-color", "orange");
+    }
 });
 
 

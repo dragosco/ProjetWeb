@@ -112,8 +112,12 @@ public class AnnonceServlet extends HttpServlet {
             Utilisateur u = (Utilisateur) session.getAttribute("PROFIL");
             
             if (action.equals("creerAnnonce")) {
+                Date dateFin;
                 try {
-                Date dateFin = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("dateFin"));
+                    dateFin = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("dateFin"));
+                } catch (ParseException e) {
+                    dateFin = null;
+                }
                 ga.creerAnnonce(
                     request.getParameter("titre"),
                     Integer.parseInt(request.getParameter("type")),
@@ -125,9 +129,7 @@ public class AnnonceServlet extends HttpServlet {
                     !images.isEmpty() ? images : null
                 );
                 response.sendRedirect("Accueil");
-                } catch (ParseException e) {
-                    
-                }
+                
             } 
         }
     }

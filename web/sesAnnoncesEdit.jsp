@@ -48,7 +48,7 @@
             <div class="row">
                 <div class="col-md-2">
                     <div class="photo-annonce-wrapper">
-                        <img src="Image/produit/${a.photos[0].id}" style="max-height: 150px; width: auto">
+                        <img class="photo-annonce" src="Image/produit/${a.photos[0].id}">
                     <br>
                     <a href="#" type="submit" data-toggle="modal" data-target="#modalAnncPhotos${a.id}">${totalPhotos}</a> photo(s) chargée(s)
                     <div class="modal fade" id="modalAnncPhotos${a.id}" role="dialog">

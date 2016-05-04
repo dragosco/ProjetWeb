@@ -3,7 +3,7 @@
     "http://www.w3.org/TR/html4/loose.dtd">
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <div class="row">
     <div class="contenu contenu-profil col-md-5">
@@ -59,16 +59,13 @@
     <hr>
         <ul class="list-group">
             <c:forEach var="a" items="${requestScope.sesAnnonces}">
-                <c:forEach var="p" items="${a.photos}">
-                    <c:set var="totalPhotos" value="${totalPhotos+1}"/>
-                </c:forEach>
                 <li class="list-group-item list-carree-item" style="margin-top: 20px;">
                     <div class="row">
                         <div class="col-md-2">
                             <div class="photo-annonce-wrapper">
-                                <img src="Image/produit/${a.photos[0].id}" style="max-height: 150px; width: auto">
+                                <img class="photo-annonce"  src="Image/produit/${a.photos[0].id}">
                             <br>
-                            <a href="#" type="submit" data-toggle="modal" data-target="#modalAnncPhotos${a.id}">${totalPhotos}</a> photo(s) chargée(s)
+                            <a href="#" type="submit" data-toggle="modal" data-target="#modalAnncPhotos${a.id}">${fn:length(a.photos)}</a> photo(s) chargée(s)
                             <div class="modal fade" id="modalAnncPhotos${a.id}" role="dialog">
                                 <div class="modal-dialog">
                                     <button type="button" class="close dismiss-button" data-dismiss="modal" style="margin-top:-30px;margin-right: -30px;"><span class="glyphicon glyphicon-remove-circle"></span></button>
@@ -86,7 +83,7 @@
                         </div>
                         <div class="col-md-10">
                             <div class="row list-item-header">
-                                ${a.titre}
+                                <a href="Annonce?id=${a.id}" style="color: #FFF;">${a.titre}</a>
                             </div>
                             <div class="row list-item-contenu">
                                 <span style="font-style: italic; color: grey;"><fmt:formatDate type="date" value="${a.dateDepot}" /> à <fmt:formatDate type="time" value="${a.dateDepot}" timeStyle="short" /></span>
@@ -99,13 +96,14 @@
                                 Description : ${a.description}
                             </div>
                             <div class="row list-item-contenu">
-                                <c:if test="${not empty a.dateFin}">
-                                    Valable jusqu'au <fmt:formatDate type="date" value="${a.dateFin}" />
-                                </c:if>
-                                <c:if test="${empty a.dateFin}">
-                                    <i>Sans date de valabilité</i>
-                                </c:if>
-
+                                <span class="date">
+                                    <c:if test="${not empty a.dateFin}">
+                                        Valable jusqu'au <fmt:formatDate type="date" value="${a.dateFin}" />
+                                    </c:if>
+                                    <c:if test="${empty a.dateFin}">
+                                        Sans date de valabilité
+                                    </c:if>
+                                </span>
                             </div>
                         </div>
                     </div>

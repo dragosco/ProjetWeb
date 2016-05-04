@@ -7,15 +7,25 @@ body {
 }
 footer {
     width: 100%;
-    height: 150px;
-    background-color: #444; 
-    color: #adadad;
+    height: 150px; 
+    color: #009393;
     text-align: center;
     padding: 30px; 
     position: absolute;
     bottom: 0;
 }
 
+.navbar-toggle.collapsed {
+    background-color: #FF3800 !important;
+    color: #FFFCC4 !important;
+}
+.navbar-toggle {
+    background-color: #FFFCC4 !important;
+    color: #FF3800 !important;
+    border: none !important;
+    font-family: "Trebuchet MS";
+    font-weight: bold;
+}
 .logo {
     font-family: "Trebuchet MS";
     color: #FFFCC4 !important;
@@ -41,8 +51,12 @@ footer {
 .navbar-default .navbar-nav > li > a:hover {
     color: #FF3800 !important;
 }
-
-
+.navbar-default .navbar-collapse {
+    border: none !important;
+}
+.navbar-default .navbar-nav>.open>a {
+    background-color: #00585F !important;
+}
 /*
  *  BOUTTON de CONNEXION
  */
@@ -313,21 +327,51 @@ h2 {
 /*
     PAGE D'ACCUEIL
 */
-.annonce {
-    height: 120px; 
-    border: 1px solid activeborder;
+.list-arrondie-item {
+    border-radius: 8px !important;
+    padding-bottom: 0 !important;
+    margin-bottom: 20px !important;
 }
-
-.couleurAnnonce {
-    background-color: #1b6d85;
-    height: 100%; 
+.photo-annonce {
+    width: 100%;
+    height: auto;
 }
-
-.photoEtudiant {
-    height: 80px;
+.photo-annonce-null {
     width: auto;
+    height: 120px;
 }
-
+.titre-annonce {
+    color: #FF3800;
+    font-weight: bold;
+}
+.titre-annonce:hover {
+    text-decoration: none;
+    color: #FF4F00;
+}
+.date {
+    font-style: italic;
+    color: grey;
+}
+.outside-element {
+    position: absolute;
+    right: 0;
+    margin-right: - 100px;
+}
+.photo-profil-annonce {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    margin-right: -40px;
+    border-radius: 100%;
+    -webkit-box-shadow: 2px 3px 16px -2px rgba(0,0,0,0.75);
+    -moz-box-shadow: 2px 3px 16px -2px rgba(0,0,0,0.75);
+    box-shadow: 2px 3px 16px -2px rgba(0,0,0,0.75);
+    width: 80px;
+    height: auto;
+}
+.right-col {
+    padding-top: 50px;
+}
 .photoProduit {
     height: 120px;
     width: auto;
@@ -341,7 +385,7 @@ h2 {
 }
 
 .iconPhoto {
-    position: absolute;
+    position: relative;
     right: 15px;
     bottom: 10px;
     height: 25px;
@@ -349,6 +393,8 @@ h2 {
 }
 
 .icon {
+    position: absolute;
+    top: 0;
     height: 25px;
     width: 25px;    
 }
@@ -362,8 +408,45 @@ h2 {
 }
 
 /*
-    FIN PAGE D'ACCUEIL
+    DEPOT ANNONCE
 */
+.btn-select {
+    height: 60px;
+    font-size: 17px !important;
+    background-color: #00585F;
+}
+.btn-select:hover {
+    color: #FFF !important;
+    background-color: #009393;
+}
+.btn-left {
+    border-top-left-radius: 10px !important;
+}
+.btn-right {
+    border-top-right-radius: 10px !important;
+}
+
+.btn-select.active {
+    background-color: #FF3800;
+}
+
+.blue-paca {
+    background-color: #009393 !important;
+}
+.blue-paca:hover {
+    background-color: #00585F !important;
+    cursor: pointer !important;
+}
+#dropAreaAnnonce {
+    width: 100%;
+    color: #adadad;
+    height: 100px;
+    border: 2px #adadad dashed; 
+    padding: 30px; 
+    margin: 10px 0; 
+    text-align: center;
+}
+
 
 .link:hover {
     text-decoration: none;
@@ -380,7 +463,6 @@ h2 {
 }
 .too-long-text {
     display:inline-block;
-    width: 250px;
     white-space: nowrap;
     overflow:hidden !important;
     text-overflow: ellipsis;
@@ -443,7 +525,10 @@ h2 {
     font-size: 18px;
     
 }
+
 .list-item-contenu {
+    overflow: hidden;
+    text-overflow: ellipsis;
     color: #00585F;
     font-size: 17px;
     padding: 5px 20px;
@@ -451,13 +536,7 @@ h2 {
 .photo-annonce-wrapper {
     text-align: center;
 }
-#dropAreaAnnonce {
-    height: 100px;
-    border: 2px #adadad dashed; 
-    padding: 30px; 
-    margin: 10px 0; 
-    text-align: center;
-}
+
 
 @media screen and (max-device-width : 485px)
 {
@@ -466,12 +545,35 @@ h2 {
     }
     
 }
-@media screen and (max-device-width : 985px)
+@media screen and (max-device-width : 992px)
 {
     .photo-profil-wrapper {
         padding: 100px;
     }
     .contenu-profil {
         padding: 0 !important;
+    }
+    .photo-profil-annonce {
+        position: absolute;
+        right: 0;
+        margin-right: -80px;
+        border-radius: 100%;
+        width: 80px;
+        height: auto;
+    }
+    .photo-annonce {
+        width: auto;
+        max-height: 200px;
+    }
+    .navbar-default .navbar-nav .open .dropdown-menu>li>a {
+        color: #FFF !important;
+    }
+}
+
+@media screen and (max-device-width : 411px)
+{
+    .photo-annonce {
+        width: 100%;
+        height: auto;
     }
 }

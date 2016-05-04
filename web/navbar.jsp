@@ -5,9 +5,7 @@
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#barreDeNav" aria-expanded="false">
             <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
+            MENU
           </button>
             <a class="navbar-brand" href="#"><span class="logo"><span class="etu">etu</span>mercatus</span></a>
         </div>

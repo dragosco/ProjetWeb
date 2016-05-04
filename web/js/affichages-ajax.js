@@ -32,7 +32,7 @@ $(document).ready(function() {
                     $('table#userTable tbody')
                         .append(
                             "<tr>" + 
-                                "<td><img class='img-rounded photoEtudiant' src='" + photo + "'></td>" + 
+                                "<td><img src='" + photo + "' style='height: 70px; width: auto;'></td>" + 
                                 "<td>" + item.id + "</td>" + 
                                 "<td>" + item.privilege + "</td>" +
                                 "<td><a href=Profil?user=" + item.pseudo + " >" + item.pseudo + "</a></td>" + 
