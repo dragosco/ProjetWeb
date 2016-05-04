@@ -51,9 +51,9 @@ $(document).ready(function() {
                                                     "<form action='Admin' method='post'>" +
                                                         "<select name='privilege'><option value='user'>user</option><option vlaue='admin'>admin</option></select>" +
                                                         "<input type='hidden' value='" + item.pseudo + "' name='pseudo' />" +
-                                                        "<button type='submit' value='changePrivilege' name='action'>Confirmer</button>" +
-                                                        "<hr>" +
-                                                        "<a href='Admin'>Annuler</a>" +
+                                                        "<br>" +
+                                                        "<button class='btn btn-success right' type='submit' name='action' value='changePrivilege'>OUI</button>" +
+                                                        "<button class='btn btn-danger left' type='button' data-dismiss='modal'>NON</button>" +
                                                     "</form>" +
                                                 "</div>" +
                                               "</div>" +
@@ -66,9 +66,9 @@ $(document).ready(function() {
                                                         "Etes-vous certain de vouloir supprimer l'utilisateur " + item.pseudo + " ?" +
                                                         "<form action='Admin' method='post'>" +
                                                             "<input type='hidden' value='" + item.id + "' name='id' />" +
-                                                            "<button type='submit' value='supprimerUtilisateur' name='action'>Confirmer</button>" +
-                                                            "<hr>" +
-                                                            "<a href='Admin'>Annuler</a>" +
+                                                            "<br>" +
+                                                            "<button class='btn btn-danger right' type='submit' name='action' value='supprimerUtilisateur'>OUI</button>" +
+                                                            "<button class='btn btn-success left' type='button' data-dismiss='modal'>NON</button>" +
                                                         "</form>" +
                                                     "</div>" +
                                                 "</div>" +
@@ -155,9 +155,9 @@ $(document).ready(function() {
                                         "<img src='Image/produit/" + item.id + "' style='width:200px; height: auto;'>" +
                                         "<form action='Admin' method='post'>" +
                                             "<input type='hidden' value='" + item.id + "' name='id' />" +
-                                            "<button type='submit' value='supprimerPhoto' name='action'>Confirmer</button>" +
-                                            "<hr>" +
-                                            "<a href='Admin'>Annuler</a>" +
+                                            "<br>" +
+                                            "<button class='btn btn-danger right' type='submit' name='action' value='supprimerPhoto'>OUI</button>" +
+                                            "<button class='btn btn-success left' type='button' data-dismiss='modal'>NON</button>" +
                                         "</form>" +
                                     "</div>" +
                                   "</div>" +
@@ -239,9 +239,9 @@ $(document).ready(function() {
                                     "<img src='Image/auteur/" + item.id + "' style='width:200px; height: auto;'>" +
                                     "<form action='Admin' method='post'>" +
                                         "<input type='hidden' value='" + item.id + "' name='id' />" +
-                                        "<button type='submit' value='supprimerPhoto' name='action'>Confirmer</button>" +
-                                        "<hr>" +
-                                        "<a href='Admin'>Annuler</a>" +
+                                        "<br>" +
+                                        "<button class='btn btn-danger right' type='submit' name='action' value='supprimerPhoto'>OUI</button>" +
+                                        "<button class='btn btn-success left' type='button' data-dismiss='modal'>NON</button>" +
                                     "</form>" +
                                 "</div>" +
                               "</div>" +

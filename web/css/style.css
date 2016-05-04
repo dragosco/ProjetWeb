@@ -465,6 +465,9 @@ h2 {
 .carousel-control.left {
     background-image: none !important;
 }
+.carousel-inner > .item > img, .carousel-inner > .item > a > img {
+    margin: auto;
+ }
 .ligne-details-annonce {
     padding: 10px;
     color: #00585F;

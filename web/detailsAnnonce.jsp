@@ -20,13 +20,6 @@
         <script src="js/jquery-2.2.0.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/main.js"></script>
-        <style>
-            .carousel-inner > .item > img,
-            .carousel-inner > .item > a > img {
-                //width: 70%;
-                margin: auto;
-            }
-        </style>
     </head>
     <body>
         <jsp:include page='navbar.jsp'/>
@@ -34,9 +27,7 @@
         <div class="container">
             <div class="main">
                 <div class="header">
-                    
                     <h3>${annonce.titre}</h3>
-                    
                 </div>
                 <c:if test="${fn:length(annonce.photos) > 0}">
                     <div id="myCarousel" class="carousel slide" data-ride="carousel">
@@ -84,24 +75,6 @@
                     </div>
                 </c:if>
                 <div class="contenu" style="position: relative;">
-                    <c:if test="${sessionScope.PRIVILEGE == 'admin'}">
-                        <a class="outil-link suppr on-element" type="submit" data-toggle="modal" data-target="#modalSupprAnnc${annonce.id}"><span class="glyphicon glyphicon-remove"></span></a>
-                        <div class="modal fade" id="modalSupprAnnc${annonce.id}" role="dialog">
-                            <button type="button" class="close dismiss-button" data-dismiss="modal" style="margin-top:-30px;margin-right: -30px;"><span class="glyphicon glyphicon-remove-circle"></span></button>
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    Etes-vous certain de vouloir supprimer cette annonce ?
-                                    <form action="Admin" method="post">
-                                        <input type="hidden" value="${annonce.id}" name="id" />
-                                        <button type="submit" value="supprimerAnnonce" name="action">Confirmer</button>
-                                        <hr>
-                                        <a href="Accueil">Annuler</a>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </c:if>
-                    
                     <div class="row ligne-details-annonce">
                         <div class="col-md-12">
                             <span style="color: #FFF; background-color: #FF3800; border-radius: 10px; font-weight: bold; padding: 5px; text-align: center; display:block;"><c:if test="${annonce.type == 0}">VENTE</c:if><c:if test="${annonce.type == 1}">RECHERCHE</c:if></span>
@@ -133,10 +106,10 @@
                         <div class="col-md-6" style="position: relative;">
                             <c:choose>
                                 <c:when test="${annonce.auteur.photo != null}">
-                                    <img src="Image/auteur/${annonce.auteur.id}" style="width: 100px; border-radius: 100%; float: right;">
+                                    <img src="Image/auteur/${annonce.auteur.id}" style="width: 64px; border-radius: 100%; float: right;">
                                 </c:when>
                                 <c:otherwise>
-                                    <img src="resources/default_profile.jpg" style="width: 100px; border-radius: 100%; float: right;">
+                                    <img src="resources/default_profile.jpg" style="width: 64px; border-radius: 100%; float: right;">
                                 </c:otherwise>
                             </c:choose>
                         </div>
@@ -147,10 +120,32 @@
                             Prix : <span style="font-size: 18px; color: #FF3800; font-weight: bold;">${annonce.prix} ¤</span>
                         </div>
                             
-                        <div class="col-md-8">
+                        <div class="col-md-8 text-justify">
                             Description : ${annonce.description}
                         </div>
                     </div>
+                        
+                    <div class="row ligne-details-annonce text-center">
+                        <div class="col-md-12">
+                            <c:if test="${sessionScope.PRIVILEGE == 'admin'}">
+                                <a class="suppr" type="submit" data-toggle="modal" data-target="#modalSupprAnnc${annonce.id}" style="cursor: pointer;">Supprimer l'annonce</a>
+                                <div class="modal fade" id="modalSupprAnnc${annonce.id}" role="dialog">
+                                    <button type="button" class="close dismiss-button" data-dismiss="modal" style="margin-top:-30px;margin-right: -30px;"><span class="glyphicon glyphicon-remove-circle"></span></button>
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            Etes-vous certain de vouloir supprimer cette annonce ?
+                                            <form action="Admin" method="post">
+                                                <input type="hidden" value="${annonce.id}" name="id" />
+                                                <button class="btn btn-danger right" type="submit" name="action" value="supprimerAnnonce">OUI</button>
+                                                <button class="btn btn-success left" type="button" data-dismiss="modal">NON</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </c:if>
+                        </div>
+                    </div>
+                    
                 </div>
             </div>
         </div>

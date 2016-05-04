@@ -35,28 +35,6 @@
             <div class="tab-content">
                 <!-- GESTIONNAIRE D'UTILISATEURS -->
                 <div class="tab-pane fade in active" id="gestionUtilisateursContainer">
-
-                    <div class="row">
-                        <form class="col-md-12" action="Admin" method="get">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    Pseudo : <input class="form-control" type="text" name="pseudo" />
-                                    Nom : <input class="form-control" type="text" name="nom" />
-                                </div>
-                                <div class="col-md-6">
-                                    Ecole : <select class="form-control" type="text" name="ecole">
-                                                <c:forEach var="e" items="${requestScope.allEcoles}">
-                                                    <option value="${e.nom}">${e.nom}</option>
-                                                </c:forEach>
-                                            </select>
-
-                                </div>  
-                            </div>
-                            <br>
-                            <button class="btn btn-success" type="submit" value="filtrerUtilisateurs" name="action" style="float:right;">Chercher</button>
-                        </form>
-                    </div>
-                    <br>
                     <div class="row">
                         <input type="hidden" id="totalUsers" value="${requestScope.totalUsers}" />
                         <div class="container">Afficher <input type="number" min="0" step="5" id="nParPage" style="width: 80px;"/> par page</div>
