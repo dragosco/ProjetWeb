@@ -380,9 +380,7 @@ h2 {
     margin-right: auto;
 }
 
-.photoDetailProduit {
-    width: 300px;
-}
+
 
 .iconPhoto {
     position: relative;
@@ -447,7 +445,32 @@ h2 {
     text-align: center;
 }
 
+/*
+    DETAILS ANNONCE
+*/
 
+#myCarousel {
+    width: 100% !important;
+}
+.photoDetailProduit {
+    height: 300px !important;
+    width: auto !important;
+}
+.carousel-control {
+    color: #FF3800 !important;
+}
+.carousel-control.right {
+    background-image: none !important;
+}
+.carousel-control.left {
+    background-image: none !important;
+}
+.ligne-details-annonce {
+    padding: 10px;
+    color: #00585F;
+    font-family: "Trebuchet MS";
+    font-size: 16px;
+}
 .link:hover {
     text-decoration: none;
 }

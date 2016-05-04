@@ -44,7 +44,7 @@
                         <div class="row">
                             <!-- TITRE -->
                             <div class="form-group col-md-9">
-                                <label for="inputTitre">Le titre de votre annonce *</label>
+                                <label for="inputTitre">Titre de l'annonce *</label>
                                 <input class="form-control" id="inputTitre" type="text" name="titre" placeholder="Titre" required />
                             </div>
                             
@@ -76,7 +76,7 @@
                         <div class="row">
                             <!-- PHOTOS -->
                             <div class="form-group col-md-12">
-                                <label for="inputTitre">Sélectionner une ou plusieurs images représentatives *</label>
+                                <label for="inputTitre">Sélectionner une ou plusieurs images représentatives</label>
                                 <div class="fileinput fileinput-new" data-provides="fileinput" style="width:100%;">
                                     <span class="btn btn-info btn-file blue-paca" style="width: 100%;"><span class="fileinput-new">Charger une image...</span><span class="fileinput-exists">Change</span>
                                         <input class="form-control blue-paca" type="file" name="files[]" accept="image/*" placeholder="Image" id="files" multiple />
@@ -87,7 +87,7 @@
                         <div class="row">
                             <!-- DROP AREA -->
                             <div class="form-group col-md-12">
-                                <div id="dropAreaAnnonce">Drop files here</div>
+                                <div id="dropAreaAnnonce">Déposer les images ici</div>
                             </div>
                         </div>
                         <div class="row">
@@ -98,7 +98,7 @@
                         <div class="row">
                             <!-- DESCRIPTION -->
                             <div class="form-group col-md-12">
-                                <label for="descriptionProduit">Description de votre produit</label>
+                                <label for="descriptionProduit">Description du produit</label>
                                 <textarea class="form-control" id="descriptionProduit" name="description" placeholder="Maximum 255 caractères" maxlength="254"></textarea>
                             </div>
                         </div>

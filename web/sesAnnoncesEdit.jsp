@@ -3,12 +3,10 @@
     "http://www.w3.org/TR/html4/loose.dtd">
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <ul class="list-group">
     <c:forEach var="a" items="${requestScope.sesAnnonces}">
-        <c:forEach var="p" items="${a.photos}">
-            <c:set var="totalPhotos" value="${totalPhotos+1}"/>
-        </c:forEach>
         <div style="text-align: right; margin-top: 20px;">
             <a class="outil-link view" href="Annonce?id=${a.id}" data-toggle="tooltip" data-placement="top" title="Visualiser l'annonce"><span class="glyphicon glyphicon-eye-open"></span></a>
             <span data-toggle="modal" data-target="#modalEditAnnc${a.id}">
@@ -50,7 +48,7 @@
                     <div class="photo-annonce-wrapper">
                         <img class="photo-annonce" src="Image/produit/${a.photos[0].id}">
                     <br>
-                    <a href="#" type="submit" data-toggle="modal" data-target="#modalAnncPhotos${a.id}">${totalPhotos}</a> photo(s) chargée(s)
+                    <a href="#" type="submit" data-toggle="modal" data-target="#modalAnncPhotos${a.id}">${fn:length(a.photos)}</a> photo(s) chargée(s)
                     <div class="modal fade" id="modalAnncPhotos${a.id}" role="dialog">
                         <div class="modal-dialog">
                             <button type="button" class="close dismiss-button" data-dismiss="modal" style="margin-top:-30px;margin-right: -30px;"><span class="glyphicon glyphicon-remove-circle"></span></button>
@@ -85,9 +83,8 @@
                             Valable jusqu'au <fmt:formatDate type="date" value="${a.dateFin}" />
                         </c:if>
                         <c:if test="${empty a.dateFin}">
-                            <i>Sans date de valabilité</i>
+                            <i>Sans date de validité</i>
                         </c:if>
-                        
                     </div>
                 </div>
             </div>

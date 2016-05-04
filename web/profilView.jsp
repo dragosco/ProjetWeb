@@ -3,7 +3,7 @@
     "http://www.w3.org/TR/html4/loose.dtd">
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <div class="row">
     <div class="contenu contenu-profil col-md-5">
@@ -63,7 +63,12 @@
                     <div class="row">
                         <div class="col-md-2">
                             <div class="photo-annonce-wrapper">
-                                <img class="photo-annonce"  src="Image/produit/${a.photos[0].id}">
+                                <c:if test="${fn:length(a.photos) > 0}">
+                                    <img class="photo-annonce"  src="Image/produit/${a.photos[0].id}">
+                                </c:if>
+                                <c:if test="${fn:length(a.photos) == 0}">
+                                    <img class="photo-annonce"  src="resources/no-image.png">
+                                </c:if>
                             <br>
                             <a href="#" type="submit" data-toggle="modal" data-target="#modalAnncPhotos${a.id}">${fn:length(a.photos)}</a> photo(s) chargée(s)
                             <div class="modal fade" id="modalAnncPhotos${a.id}" role="dialog">
@@ -108,7 +113,6 @@
                         </div>
                     </div>
                 </li>
-                <c:set var="totalPhotos" value="0"/>
             </c:forEach>
         </ul>
     </div>
